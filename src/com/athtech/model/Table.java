@@ -9,4 +9,8 @@ public class Table {
     private List<Team> teams;
     private List<Match> matches;
 
+    //Constructor
+    public Table(TableName tableName) {
+        this.tableName = tableName;
+    }
 }

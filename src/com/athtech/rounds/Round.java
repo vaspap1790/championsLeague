@@ -1,13 +1,20 @@
 package com.athtech.rounds;
 
-public interface Round {
+public abstract class Round {
 
-    void run();
+    public abstract void mainScreen();
 
-    void mainScreen();
+    public abstract void  navigationMenu();
 
-    void navigationMenu();
+    public void start(){
+        mainScreen();
+        navigationMenu();
+    };
 
-    void report();
+    public abstract void  runAuto();
+
+    public abstract void  runManual();
+
+    public abstract void  report();
 
 }
