@@ -1,6 +1,6 @@
-package com.athtech.rounds;
+package main.rounds;
 
-import static com.athtech.KickOff.scanner;
+import main.KickOff;
 
 public class FirstRound extends Round{
 
@@ -26,7 +26,7 @@ public class FirstRound extends Round{
             System.out.println("-If you want to end the Tournament, type...............................................'0'-");
             System.out.println("*******************************************************************************************" + "\n");
 
-            input = scanner.nextLine();
+            input = KickOff.scanner.nextLine();
 
             switch (input) {
                 case "0":

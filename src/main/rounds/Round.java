@@ -1,6 +1,6 @@
-package com.athtech.rounds;
+package main.rounds;
 
-import com.athtech.utils.DataInitializer;
+import main.utils.DataInitializer;
 
 public abstract class Round {
 

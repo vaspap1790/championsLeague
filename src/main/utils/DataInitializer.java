@@ -1,8 +1,8 @@
-package com.athtech.utils;
+package main.utils;
 
-import com.athtech.model.Table;
-import com.athtech.model.TableName;
-import com.athtech.model.Team;
+import main.model.Table;
+import main.model.TableName;
+import main.model.Team;
 
 import java.util.ArrayList;
 import java.util.Arrays;

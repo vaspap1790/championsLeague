@@ -1,4 +1,4 @@
-package com.athtech.model;
+package main.model;
 
 import java.time.LocalDate;
 
@@ -16,6 +16,18 @@ public class Match {
         this.matchDate = matchDate;
         this.homeTeam = homeTeam;
         this.guestTeam = guestTeam;
+    }
+
+    public Match(Team homeTeam, Team guestTeam) {
+        this.homeTeam = homeTeam;
+        this.guestTeam = guestTeam;
+    }
+
+    public Match(Team homeTeam, Team guestTeam, int goalsForHTeam, int goalsForGTeam) {
+        this.homeTeam = homeTeam;
+        this.guestTeam = guestTeam;
+        this.goalsForHTeam = goalsForHTeam;
+        this.goalsForGTeam = goalsForGTeam;
     }
 
     //Getters-Setters

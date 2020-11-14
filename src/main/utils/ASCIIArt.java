@@ -1,4 +1,4 @@
-package com.athtech.utils;
+package main.utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

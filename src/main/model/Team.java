@@ -1,6 +1,10 @@
-package com.athtech.model;
+package main.model;
 
-public class Team {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class Team implements Comparable<Team>{
 
     //Member Variables
     private String name;
@@ -11,11 +15,16 @@ public class Team {
     private int goalsFor;
     private int goalsAgainst;
     private QualificationCode qualificationCode;
+    private List<Match> matches;
 
-    //Constructor
+    //Constructors
     public Team(String name) {
         this.name = name;
         this.qualificationCode = QualificationCode.FirstRound;
+        this.matches = new ArrayList<>();
+    }
+
+    public Team() {
     }
 
     //Methods
@@ -25,6 +34,35 @@ public class Team {
 
     public int getGoalDifference(){
         return goalsFor-goalsAgainst;
+    }
+
+    public int resolveEqualRanking(Team team){
+
+        int teamGoals = 0;
+        int oppositeTeamGoals = 0;
+
+        for (Match match : getAgainstMatches(team)){
+            if(match.getHomeTeam().equals(team)){
+                oppositeTeamGoals += match.goalsForHTeam;
+                teamGoals += match.goalsForGTeam;
+            }else{
+                oppositeTeamGoals += match.goalsForGTeam;
+                teamGoals += match.goalsForHTeam;
+            }
+        }
+
+        if (teamGoals == oppositeTeamGoals){
+            return Integer.compare(getGoalsFor(), team.getGoalsFor());
+        }
+        else{
+            return Integer.compare(teamGoals, oppositeTeamGoals);
+        }
+    }
+
+    public List<Match> getAgainstMatches(Team team){
+        return getMatches().stream().filter(match ->
+            (match.getHomeTeam().equals(team) || match.getGuestTeam().equals(team))
+        ).collect(Collectors.toList());
     }
 
     //Getters-Setters
@@ -90,5 +128,23 @@ public class Team {
 
     public void setQualificationCode(QualificationCode qualificationCode) {
         this.qualificationCode = qualificationCode;
+    }
+
+    public List<Match> getMatches() {
+        return matches;
+    }
+
+    public void setMatches(List<Match> matches) {
+        this.matches = matches;
+    }
+
+    @Override
+    public int compareTo(Team o) {
+        if (getPoints() == o.getPoints()){
+            return 1;
+        }
+        else{
+            return Integer.compare(getPoints(), o.getPoints());
+        }
     }
 }

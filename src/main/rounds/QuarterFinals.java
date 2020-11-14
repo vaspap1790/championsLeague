@@ -1,4 +1,4 @@
-package com.athtech.rounds;
+package main.rounds;
 
 public class QuarterFinals {
 

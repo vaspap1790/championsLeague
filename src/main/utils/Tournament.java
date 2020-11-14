@@ -1,7 +1,7 @@
-package com.athtech.utils;
+package main.utils;
 
 
-import com.athtech.rounds.FirstRound;
+import main.rounds.FirstRound;
 
 public class Tournament {
 
