@@ -1,5 +1,6 @@
 package com.athtech.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Table {
@@ -12,5 +13,31 @@ public class Table {
     //Constructor
     public Table(TableName tableName) {
         this.tableName = tableName;
+        this.teams = new ArrayList<>();
+    }
+
+    //Getters and setters
+    public TableName getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(TableName tableName) {
+        this.tableName = tableName;
+    }
+
+    public List<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
+    }
+
+    public List<Match> getMatches() {
+        return matches;
+    }
+
+    public void setMatches(List<Match> matches) {
+        this.matches = matches;
     }
 }

@@ -7,6 +7,7 @@ public class Team {
     private int gamesPlayed;
     private int gamesWon;
     private int gamesLost;
+    private int gamesDrawn;
     private int goalsFor;
     private int goalsAgainst;
     private QualificationCode qualificationCode;
@@ -15,6 +16,15 @@ public class Team {
     public Team(String name) {
         this.name = name;
         this.qualificationCode = QualificationCode.FirstRound;
+    }
+
+    //Methods
+    public int getPoints(){
+        return 3*gamesWon + gamesDrawn;
+    }
+
+    public int getGoalDifference(){
+        return goalsFor-goalsAgainst;
     }
 
     //Getters-Setters
@@ -48,6 +58,14 @@ public class Team {
 
     public void setGamesLost(int gamesLost) {
         this.gamesLost = gamesLost;
+    }
+
+    public int getGamesDrawn() {
+        return gamesDrawn;
+    }
+
+    public void setGamesDrawn(int gamesDrawn) {
+        this.gamesDrawn = gamesDrawn;
     }
 
     public int getGoalsFor() {
