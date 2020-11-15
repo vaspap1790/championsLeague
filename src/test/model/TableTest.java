@@ -49,5 +49,4 @@ class TableTest {
         assertEquals("team1",qualificationTeams.get(1).getName());
     }
 
-
 }

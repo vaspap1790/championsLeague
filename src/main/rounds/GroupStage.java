@@ -168,7 +168,7 @@ public class GroupStage extends Round{
 
     @Override
     public void report() {
-        dataInitializer.getTables().forEach(System.out::println);
+        dataInitializer.getTables().forEach(Table::printTable);
     }
 
 }

@@ -1,9 +1,10 @@
 package main.model;
 
+import main.utils.TablePrinter;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.TreeSet;
 
 public class Table {
 
@@ -62,16 +63,17 @@ public class Table {
         this.matches = matches;
     }
 
-    @Override
-    public String toString() {
+    public void printTable(){
 
-        StringBuilder sb = new StringBuilder();
+        System.out.println("\n"+"Table " + tableName);
+        getTeams().sort(Collections.reverseOrder());
+        String[][] table = new String[][] { { "Teams", "Played", "Won", "Drawn", "Lost",
+                                                "For", "Against", "Goal Difference", "Points" },
+                                                getTeams().get(0).getStringForReport(),
+                                                getTeams().get(1).getStringForReport(),
+                                                getTeams().get(2).getStringForReport(),
+                                                getTeams().get(3).getStringForReport()};
 
-        sb.append("Table ").append(tableName);
-        sb.append(System.getProperty("line.separator"));
-
-        getTeams().forEach(team -> sb.append(team.toString()));
-
-        return sb.toString();
+        TablePrinter.tableWithLines(table);
     }
 }

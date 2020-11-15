@@ -64,6 +64,12 @@ public class Team implements Comparable<Team>{
             (match.getHomeTeam().equals(team) || match.getGuestTeam().equals(team))
         ).collect(Collectors.toList());
     }
+    
+    public String[] getStringForReport(){
+      return new String[]{name, String.valueOf(gamesPlayed), String.valueOf(gamesWon), String.valueOf(gamesDrawn),
+              String.valueOf(gamesLost), String.valueOf(goalsFor), String.valueOf(goalsAgainst),
+              String.valueOf(getGoalDifference()), String.valueOf(getPoints())};
+    }
 
     //Getters-Setters
     public String getName() {
@@ -147,9 +153,5 @@ public class Team implements Comparable<Team>{
             return Integer.compare(getPoints(), o.getPoints());
         }
     }
-
-    @Override
-    public String toString() {
-        return name + " " + gamesPlayed + " " + gamesWon + " " + gamesLost + " " + gamesDrawn + " " + goalsFor + " " + goalsAgainst + " " + getGoalDifference() + " " + getPoints()+ "\n";
-    }
+    
 }

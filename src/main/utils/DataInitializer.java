@@ -27,7 +27,7 @@ public class DataInitializer {
             "FC Krasnodar", "Atalanta BC", "Olympiacos FC", "FC Shakhtar Donetsk", "FC Salzburg");
 
     private List<String> randomTeamsGroupD = Arrays.asList("Instanbul Basaksehir", "Ferencvarosi TC", "Club Brugge",
-            "Stade Rennais FC", "FC Midtjylland", "Olympique de Marseille", "Vfl Borussia Monchengladbach", "FC Lolomotiv Moskva");
+            "Stade Rennais FC", "FC Midtjylland", "Olympique de Marseille", "VfL Borussia Monchengladbach", "FC Lolomotiv Moskva");
 
     private List<LocalDate> matchDates = Arrays.asList(LocalDate.of(2020,10,20),
             LocalDate.of(2020,10,27),LocalDate.of(2020,11,3),
