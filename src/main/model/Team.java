@@ -147,4 +147,9 @@ public class Team implements Comparable<Team>{
             return Integer.compare(getPoints(), o.getPoints());
         }
     }
+
+    @Override
+    public String toString() {
+        return name + " " + gamesPlayed + " " + gamesWon + " " + gamesLost + " " + gamesDrawn + " " + goalsFor + " " + goalsAgainst + " " + getGoalDifference() + " " + getPoints()+ "\n";
+    }
 }

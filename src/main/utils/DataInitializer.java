@@ -1,16 +1,22 @@
 package main.utils;
 
 import main.KickOff;
+import main.model.MatchDay;
 import main.model.Table;
 import main.model.TableName;
 import main.model.Team;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class DataInitializer {
 
+    //Member Variables
+    private List<Table> tables = new ArrayList<>(8);
+
+    //DummyData for Auto mode
     private List<String> randomTeamsGroupA = Arrays.asList("FC Barcelona", "Borussia Dortmund", "Chealsea FC",
             "Liverpool FC", "Manchester City FC", "Real Madrid CF", "FC Bayern Munchen", "Paris Saint-Germain");
 
@@ -22,9 +28,16 @@ public class DataInitializer {
 
     private List<String> randomTeamsGroupD = Arrays.asList("Instanbul Basaksehir", "Ferencvarosi TC", "Club Brugge",
             "Stade Rennais FC", "FC Midtjylland", "Olympique de Marseille", "Vfl Borussia Monchengladbach", "FC Lolomotiv Moskva");
-    
-    private List<Table> tables = new ArrayList<>(8);
 
+    private List<LocalDate> matchDates = Arrays.asList(LocalDate.of(2020,10,20),
+            LocalDate.of(2020,10,27),LocalDate.of(2020,11,3),
+            LocalDate.of(2020,11,24),LocalDate.of(2020,12,1),
+            LocalDate.of(2020,12,8),LocalDate.of(2021,3,16),
+            LocalDate.of(2021,3,23),LocalDate.of(2021,4,13),
+            LocalDate.of(2021,4,20),LocalDate.of(2021,5,5));
+
+
+    //Methods
     public void enterTables(){
         for (TableName tableName : TableName.getTableNames()){
             tables.add(new Table(tableName));
@@ -63,6 +76,28 @@ public class DataInitializer {
             tables.get(i).getTeams().add(new Team(randomTeamsGroupD.get(i)));
         }
 
+    }
+
+    public void setDatesGroupStage(List<MatchDay> matchDays){
+        for (int i = 0; i < matchDays.size(); i++){
+            matchDays.get(i).setDate(matchDates.get(i));
+        }
+    }
+
+    public void setDatesQuarterFinals(List<MatchDay> matchDays){
+        for (int i = 0; i < matchDays.size(); i++){
+            matchDays.get(i).setDate(matchDates.get(i+6));
+        }
+    }
+
+    public void setDatesSemiFinals(List<MatchDay> matchDays){
+        for (int i = 0; i < matchDays.size(); i++){
+            matchDays.get(i).setDate(matchDates.get(i+6));
+        }
+    }
+
+    public void setDateFinal(MatchDay matchDay){
+        matchDay.setDate(matchDates.get(11));
     }
 
     //Getters-Setters

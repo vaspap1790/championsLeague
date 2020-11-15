@@ -20,11 +20,22 @@ public enum QualificationCode {
     H1(TableName.H,1),
     H2(TableName.H,2);
 
-    public final TableName tableName;
-    public final int place;
+    //Member Variables
+    private final TableName tableName;
+    private final int place;
 
+    //Constructor
     QualificationCode(TableName tableName, int place){
         this.tableName = tableName;
         this.place = place;
+    }
+
+    //Getters
+    public TableName getTableName() {
+        return tableName;
+    }
+
+    public int getPlace() {
+        return place;
     }
 }

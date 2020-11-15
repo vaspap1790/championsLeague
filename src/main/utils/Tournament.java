@@ -1,7 +1,7 @@
 package main.utils;
 
 
-import main.rounds.FirstRound;
+import main.rounds.GroupStage;
 
 public class Tournament {
 
@@ -9,8 +9,8 @@ public class Tournament {
 
         ASCIIArt.printLogo();
 
-        FirstRound firstRound = new FirstRound();
-        firstRound.start();
+        GroupStage groupStage = new GroupStage();
+        groupStage.start();
 
     }
 
