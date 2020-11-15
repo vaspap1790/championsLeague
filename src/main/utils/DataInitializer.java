@@ -1,5 +1,6 @@
 package main.utils;
 
+import main.KickOff;
 import main.model.Table;
 import main.model.TableName;
 import main.model.Team;
@@ -25,13 +26,30 @@ public class DataInitializer {
     private List<Table> tables = new ArrayList<>(8);
 
     public void enterTables(){
-        for (TableName tableName : TableName.values()){
+        for (TableName tableName : TableName.getTableNames()){
             tables.add(new Table(tableName));
         }
     }
 
     public void enterTeamsManually(){
 
+        enterTables();
+        String input;
+
+        for(Table table : tables){
+            int counter = 1;
+            do {
+                System.out.println("\n");
+                System.out.println("- Please enter Team " + counter + " for the " + table.getTableName() + " Table or type '0' to cancel. -");
+                input = KickOff.scanner.nextLine();
+                table.getTeams().add(new Team(input));
+                counter++;
+            }while(!"0".equals(input) && counter < 5);
+
+            if("0".equals(input)){
+                break;
+            }
+        }
     }
 
     public void enterTeamsFromDummyData(){

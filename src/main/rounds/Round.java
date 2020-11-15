@@ -15,6 +15,8 @@ public abstract class Round {
         navigationMenu();
     }
 
+    public abstract void  selectMode();
+
     public abstract void  runAuto();
 
     public abstract void  runManual();

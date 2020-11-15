@@ -86,4 +86,8 @@ public class ASCIIArt {
 
     }
 
+    public static void end() {
+        System.out.println("\n" + "******************************* You ended the Tournament *********************************");
+    }
+
 }
