@@ -20,7 +20,6 @@ public class Team implements Comparable<Team>{
     //Constructors
     public Team(String name) {
         this.name = name;
-        this.qualificationCode = QualificationCode.FirstRound;
         this.matches = new ArrayList<>();
     }
 
@@ -153,5 +152,4 @@ public class Team implements Comparable<Team>{
             return Integer.compare(getPoints(), o.getPoints());
         }
     }
-    
 }

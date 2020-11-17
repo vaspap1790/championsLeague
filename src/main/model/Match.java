@@ -2,7 +2,7 @@ package main.model;
 
 import java.time.LocalDate;
 
-public class Match implements Comparable<Match>{
+public class Match {
 
     //Member Variables
     Team homeTeam;
@@ -12,7 +12,7 @@ public class Match implements Comparable<Match>{
     MatchDay matchDay;
 
     //Constructors
-    public Match( Team homeTeam, Team guestTeam) {
+    public Match(Team homeTeam, Team guestTeam) {
         this.homeTeam = homeTeam;
         this.guestTeam = guestTeam;
     }
@@ -30,29 +30,39 @@ public class Match implements Comparable<Match>{
         this.matchDay = matchDay;
     }
 
+    public Match(MatchDay matchDay) {
+        this.matchDay = matchDay;
+    }
+
+    public Match() {
+    }
+
     //Methods
-    public void runMatch(int goalsForHTeam, int goalsForGTeam){
+    public void runMatch(int goalsForH, int goalsForG){
 
-        homeTeam.setGoalsFor(homeTeam.getGoalsFor() + goalsForHTeam);
-        homeTeam.setGoalsAgainst(homeTeam.getGoalsAgainst() + goalsForGTeam);
+        goalsForHTeam = goalsForH;
+        goalsForGTeam = goalsForG;
 
-        guestTeam.setGoalsFor(guestTeam.getGoalsFor() + goalsForGTeam);
-        guestTeam.setGoalsAgainst(guestTeam.getGoalsAgainst() + goalsForHTeam);
+        homeTeam.setGoalsFor(homeTeam.getGoalsFor() + goalsForH);
+        homeTeam.setGoalsAgainst(homeTeam.getGoalsAgainst() + goalsForG);
+
+        guestTeam.setGoalsFor(guestTeam.getGoalsFor() + goalsForG);
+        guestTeam.setGoalsAgainst(guestTeam.getGoalsAgainst() + goalsForH);
 
         homeTeam.setGamesPlayed(homeTeam.getGamesPlayed() + 1);
         guestTeam.setGamesPlayed(guestTeam.getGamesPlayed() + 1);
 
-        if(goalsForHTeam > goalsForGTeam){
+        if(goalsForH > goalsForG){
             homeTeam.setGamesWon(homeTeam.getGamesWon() + 1);
             guestTeam.setGamesLost(guestTeam.getGamesLost() + 1);
         }
 
-        if(goalsForHTeam < goalsForGTeam){
+        if(goalsForH < goalsForG){
             guestTeam.setGamesWon(guestTeam.getGamesWon() + 1);
             homeTeam.setGamesLost(homeTeam.getGamesLost() + 1);
         }
 
-        if(goalsForHTeam == goalsForGTeam){
+        if(goalsForH == goalsForG){
             guestTeam.setGamesDrawn(guestTeam.getGamesDrawn() + 1);
             homeTeam.setGamesDrawn(homeTeam.getGamesDrawn() + 1);
         }
@@ -101,11 +111,7 @@ public class Match implements Comparable<Match>{
 
     @Override
     public String toString() {
-        return  matchDay.getDate().toString() + " " + homeTeam + " " + goalsForHTeam + " - " + goalsForGTeam + " " + guestTeam;
+        return homeTeam.getName() + " " + goalsForHTeam + " - " + goalsForGTeam + " " + guestTeam.getName();
     }
 
-    @Override
-    public int compareTo(Match o) {
-        return 0;
-    }
 }

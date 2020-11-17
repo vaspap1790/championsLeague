@@ -25,11 +25,13 @@ class TableTest {
         table.getTeams().get(0).setGamesWon(2);
         table.getTeams().get(1).setGamesWon(1);
 
-        Collections.sort(table.getTeams());
+       table.getTeams().sort(Collections.reverseOrder());
 
-        assertEquals("team4",table.getTeams().get(3).getName());
-        assertEquals("team1",table.getTeams().get(2).getName());
+        assertEquals("team4",table.getTeams().get(0).getName());
+        assertEquals("team1",table.getTeams().get(1).getName());
     }
+
+    //TODO//////////////////////////////////////////////
 
     @Test
     void getQualificationTeams() {
@@ -40,10 +42,10 @@ class TableTest {
 
         List<Team> qualificationTeams = new ArrayList<>(2);
 
-        Collections.sort(table.getTeams());
+        table.getTeams().sort(Collections.reverseOrder());
 
-        qualificationTeams.add(table.getTeams().get(3));
-        qualificationTeams.add(table.getTeams().get(2));
+        qualificationTeams.add(table.getTeams().get(0));
+        qualificationTeams.add(table.getTeams().get(1));
 
         assertEquals("team4",qualificationTeams.get(0).getName());
         assertEquals("team1",qualificationTeams.get(1).getName());

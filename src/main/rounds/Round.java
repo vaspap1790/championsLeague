@@ -23,4 +23,6 @@ public abstract class Round {
 
     public abstract void  report();
 
+    public abstract void proceedToNextRound();
+
 }

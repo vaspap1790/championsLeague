@@ -26,16 +26,26 @@ public class Table {
     }
 
     //Methods
-    public List<Team> getQualificationTeams(){
+    public void printTable(){
 
-        List<Team> qualificationTeams = new ArrayList<>(2);
+        System.out.println("\n"+"Table " + tableName);
+        getTeams().sort(Collections.reverseOrder());
+        String[][] table = new String[][] { { "Teams", "Played", "Won", "Drawn", "Lost",
+                "For", "Against", "Goal Difference", "Points" },
+                getTeams().get(0).getStringForReport(),
+                getTeams().get(1).getStringForReport(),
+                getTeams().get(2).getStringForReport(),
+                getTeams().get(3).getStringForReport()};
 
-        Collections.sort(teams);
+        TablePrinter.tableWithLines(table);
+    }
 
-        qualificationTeams.add(teams.get(3));
-        qualificationTeams.add(teams.get(2));
-
-        return qualificationTeams;
+    public void printTableForSelection(){
+        System.out.println("\n"+"Table " + tableName);
+        for (int i = 0 ; i < getTeams().size(); i++){
+            int index = i + 1;
+            System.out.println(index + ". " + getTeams().get(i).getName());
+        }
     }
 
     //Getters and setters
@@ -63,17 +73,4 @@ public class Table {
         this.matches = matches;
     }
 
-    public void printTable(){
-
-        System.out.println("\n"+"Table " + tableName);
-        getTeams().sort(Collections.reverseOrder());
-        String[][] table = new String[][] { { "Teams", "Played", "Won", "Drawn", "Lost",
-                                                "For", "Against", "Goal Difference", "Points" },
-                                                getTeams().get(0).getStringForReport(),
-                                                getTeams().get(1).getStringForReport(),
-                                                getTeams().get(2).getStringForReport(),
-                                                getTeams().get(3).getStringForReport()};
-
-        TablePrinter.tableWithLines(table);
-    }
 }
