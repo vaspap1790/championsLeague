@@ -90,4 +90,8 @@ public class ASCIIArt {
         System.out.println("\n" + "******************************* You ended the Tournament *********************************");
     }
 
+    public static void complete() {
+        System.out.println("\n" + "******************************* You completed the Tournament *********************************");
+    }
+
 }

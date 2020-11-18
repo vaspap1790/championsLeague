@@ -6,18 +6,24 @@ import main.model.*;
 import java.time.LocalDate;
 import java.util.*;
 
-import static main.Globals.QUALIFICATION_TEAMS_SIZE;
-import static main.Globals.TABLES_SIZE;
+import static main.Globals.*;
 
 public class DataInitializer {
 
     //Member Variables
-    private List<Table> tables = new ArrayList<>(TABLES_SIZE);
+    private List<Table> tables = new ArrayList<>(TABLES);
 
     private List<MatchDay> matchDays = Arrays.asList(MatchDay.MatchDay1,MatchDay.MatchDay2,MatchDay.MatchDay3,
             MatchDay.MatchDay4,MatchDay.MatchDay5,MatchDay.MatchDay6);
 
     List<Team> qualificationTeams = new ArrayList<>(QUALIFICATION_TEAMS_SIZE);
+    List<Match> quarterFinals = new ArrayList<>();
+
+    List<Team> semiFinalsTeams = new ArrayList<>(SEMIFINALS_TEAMS_SIZE);
+    List<Match> semiFinals = new ArrayList<>();
+
+    List<Team> finalTeams = new ArrayList<>(FINAL_TEAMS_SIZE);
+    Match finalMatch = new Match();
 
 
     //DummyData for Auto mode
@@ -29,12 +35,15 @@ public class DataInitializer {
 
     private List<String> randomTeamsGroupD = Arrays.asList( "Ferencvarosi TC", "Club Brugge", "Stade Rennais FC", "FC Midtjylland");
 
-    private List<LocalDate> matchDates = Arrays.asList(LocalDate.of(2020,10,20),
-            LocalDate.of(2020,10,27),LocalDate.of(2020,11,3),
-            LocalDate.of(2020,11,24),LocalDate.of(2020,12,1),
-            LocalDate.of(2020,12,8),LocalDate.of(2021,3,16),
-            LocalDate.of(2021,3,23),LocalDate.of(2021,4,13),
-            LocalDate.of(2021,4,20),LocalDate.of(2021,5,5));
+    private List<LocalDate> matchDates = Arrays.asList(
+            LocalDate.of(2020,10,20), LocalDate.of(2020,10,27),
+            LocalDate.of(2020,11,3), LocalDate.of(2020,11,24),
+            LocalDate.of(2020,12,1), LocalDate.of(2020,12,8),
+            LocalDate.of(2021,3,16),LocalDate.of(2021,3,17),
+            LocalDate.of(2021,3,23),LocalDate.of(2021,3,24),
+            LocalDate.of(2021,4,13),LocalDate.of(2021,4,14),
+            LocalDate.of(2021,4,20),LocalDate.of(2021,4,21),
+            LocalDate.of(2021,5,5));
 
 
     //Methods
@@ -78,28 +87,6 @@ public class DataInitializer {
 
     }
 
-    public void setDatesGroupStage(List<MatchDay> matchDays){
-        for (int i = 0; i < matchDays.size(); i++){
-            matchDays.get(i).setDate(matchDates.get(i));
-        }
-    }
-
-    public void setDatesQuarterFinals(List<MatchDay> matchDays){
-        for (int i = 0; i < matchDays.size(); i++){
-            matchDays.get(i).setDate(matchDates.get(i+6));
-        }
-    }
-
-    public void setDatesSemiFinals(List<MatchDay> matchDays){
-        for (int i = 0; i < matchDays.size(); i++){
-            matchDays.get(i).setDate(matchDates.get(i+6));
-        }
-    }
-
-    public void setDateFinal(MatchDay matchDay){
-        matchDay.setDate(matchDates.get(11));
-    }
-
     //Getters-Setters
     public List<Table> getTables() {
         return tables;
@@ -123,5 +110,53 @@ public class DataInitializer {
 
     public void setQualificationTeams(List<Team> qualificationTeams) {
         this.qualificationTeams = qualificationTeams;
+    }
+
+    public List<LocalDate> getMatchDates() {
+        return matchDates;
+    }
+
+    public void setMatchDates(List<LocalDate> matchDates) {
+        this.matchDates = matchDates;
+    }
+
+    public List<Match> getQuarterFinals() {
+        return quarterFinals;
+    }
+
+    public void setQuarterFinals(List<Match> quarterFinals) {
+        this.quarterFinals = quarterFinals;
+    }
+
+    public List<Team> getSemiFinalsTeams() {
+        return semiFinalsTeams;
+    }
+
+    public void setSemiFinalsTeams(List<Team> semiFinalsTeams) {
+        this.semiFinalsTeams = semiFinalsTeams;
+    }
+
+    public List<Match> getSemiFinals() {
+        return semiFinals;
+    }
+
+    public void setSemiFinals(List<Match> semiFinals) {
+        this.semiFinals = semiFinals;
+    }
+
+    public List<Team> getFinalTeams() {
+        return finalTeams;
+    }
+
+    public void setFinalTeams(List<Team> finalTeams) {
+        this.finalTeams = finalTeams;
+    }
+
+    public Match getFinalMatch() {
+        return finalMatch;
+    }
+
+    public void setFinalMatch(Match finalMatch) {
+        this.finalMatch = finalMatch;
     }
 }

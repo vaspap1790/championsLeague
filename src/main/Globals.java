@@ -3,12 +3,16 @@ package main;
  public class Globals {
 
     //Parameters
-    public static final int MATCHDAYS = 6;
-    public static final int TABLES = 8;
+    public static final int MATCHDAYS_GROUP_STAGE = 6;
+    public static final int TABLES = 4;
     public static final int TEAMS_PER_TABLE = 4;
     public static final int MATCHES_PER_MATCHDAY_PER_TABLE = 2;
     public static final int QUALIFICATION_TEAMS_SIZE = 8;
-    public static final int TABLES_SIZE = 4;
+    public static final int SEMIFINALS_TEAMS_SIZE = 4;
+    public static final int FINAL_TEAMS_SIZE = 2;
+    public static final int MATCHDAYS_QUARTERFINALS = 4;
+    public static final int MATCHDAYS_SEMIFINALS = 4;
+
 
      //Messages
      public static final String VALID = "Valid";
