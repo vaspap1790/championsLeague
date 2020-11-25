@@ -16,7 +16,7 @@ public class DataInitializer {
     private List<MatchDay> matchDays = Arrays.asList(MatchDay.MatchDay1,MatchDay.MatchDay2,MatchDay.MatchDay3,
             MatchDay.MatchDay4,MatchDay.MatchDay5,MatchDay.MatchDay6);
 
-    List<Team> qualificationTeams = new ArrayList<>(QUALIFICATION_TEAMS_SIZE);
+    List<Team> quarterFinalsTeams = new ArrayList<>(QUARTERFINALS_TEAMS_SIZE);
     List<Match> quarterFinals = new ArrayList<>();
 
     List<Team> semiFinalsTeams = new ArrayList<>(SEMIFINALS_TEAMS_SIZE);
@@ -104,12 +104,12 @@ public class DataInitializer {
         this.matchDays = matchDays;
     }
 
-    public List<Team> getQualificationTeams() {
-        return qualificationTeams;
+    public List<Team> getQuarterFinalsTeams() {
+        return quarterFinalsTeams;
     }
 
-    public void setQualificationTeams(List<Team> qualificationTeams) {
-        this.qualificationTeams = qualificationTeams;
+    public void setQuarterFinalsTeams(List<Team> quarterFinalsTeams) {
+        this.quarterFinalsTeams = quarterFinalsTeams;
     }
 
     public List<LocalDate> getMatchDates() {

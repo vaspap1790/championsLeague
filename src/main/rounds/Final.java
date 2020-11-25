@@ -1,7 +1,6 @@
 package main.rounds;
 
 import main.KickOff;
-import main.model.MatchDay;
 import main.utils.ASCIIArt;
 
 public class Final extends Round{
@@ -115,6 +114,11 @@ public class Final extends Round{
 
     @Override
     public void setMatchesDetailsManually() {
+
+    }
+
+    @Override
+    public void setQualifiers() {
 
     }
 

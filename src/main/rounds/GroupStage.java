@@ -163,7 +163,7 @@ public class GroupStage extends Round{
 
     @Override
     public void runManual() {
-        initializeTableMatches();
+        initializeMatches();
 
         System.out.println("There are 6 Match Days to be arranged in every Table.");
         System.out.println("You should enter data for two matches in every Match Day.");
@@ -333,7 +333,7 @@ public class GroupStage extends Round{
 
     }
 
-    public void initializeTableMatches(){
+    public void initializeMatches(){
         for(Table table : dataInitializer.getTables()){
             for(int i = 0 ; i< dataInitializer.getMatchDays().size(); i++){
                 table.getMatches().add(new Match(dataInitializer.getMatchDays().get(i)));
@@ -381,6 +381,7 @@ public class GroupStage extends Round{
         }
     }
 
+    @Override
     public void setQualifiers(){
 
         for (int i = 0 ; i < TABLES ; i++){
@@ -393,8 +394,8 @@ public class GroupStage extends Round{
             team1.setQualificationCode(new QualificationCode(dataInitializer.getTables().get(i).getTableName(),1));
             team2.setQualificationCode(new QualificationCode(dataInitializer.getTables().get(i).getTableName(),2));
 
-            dataInitializer.getQualificationTeams().add(team1);
-            dataInitializer.getQualificationTeams().add(team2);
+            dataInitializer.getQuarterFinalsTeams().set(i, team1);
+            dataInitializer.getQuarterFinalsTeams().set(i+4 ,team2);
 
         }
     }

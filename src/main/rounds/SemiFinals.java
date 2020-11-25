@@ -6,7 +6,7 @@ import main.utils.ASCIIArt;
 
 import static main.Globals.*;
 
-public class SemiFinals extends  Round{
+public class SemiFinals extends Round{
 
 
     @Override
@@ -147,6 +147,11 @@ public class SemiFinals extends  Round{
 
     @Override
     public void setMatchesDetailsManually() {
+
+    }
+
+    @Override
+    public void setQualifiers() {
 
     }
 

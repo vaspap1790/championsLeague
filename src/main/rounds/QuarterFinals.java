@@ -2,12 +2,14 @@ package main.rounds;
 
 import main.KickOff;
 import main.model.Match;
-import main.model.Table;
+import main.model.Team;
 import main.utils.ASCIIArt;
+import main.utils.Penalties;
 import main.utils.Validator;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import static main.Globals.*;
 
@@ -42,7 +44,7 @@ public class QuarterFinals extends Round{
                 case "0":
                     break;
                 case "1":
-                    showCouples();
+                    printPairs();
                     break;
                 case "2":
                     selectMode();
@@ -58,9 +60,6 @@ public class QuarterFinals extends Round{
         if("0".equals(input)){
             ASCIIArt.end();
         }
-    }
-
-    private void showCouples() {
     }
 
     @Override
@@ -98,6 +97,21 @@ public class QuarterFinals extends Round{
     @Override
     public void runAuto() {
 
+        Random random = new Random();
+
+        for(int i = 0; i < dataInitializer.getQuarterFinalsTeams().size()/2; i++) {
+
+            int opponentIndex = i + 4;
+
+            dataInitializer.getQuarterFinals().get(i).setHomeTeam(dataInitializer.getQuarterFinalsTeams().get(i));
+            dataInitializer.getQuarterFinals().get(i).setGuestTeam(dataInitializer.getQuarterFinalsTeams().get(opponentIndex));
+            dataInitializer.getQuarterFinals().get(i).runMatch(random.nextInt(6), random.nextInt(6));
+
+            dataInitializer.getQuarterFinals().get(i+4).setHomeTeam(dataInitializer.getQuarterFinalsTeams().get(opponentIndex));
+            dataInitializer.getQuarterFinals().get(i+4).setGuestTeam(dataInitializer.getQuarterFinalsTeams().get(i));
+            dataInitializer.getQuarterFinals().get(i+4).runMatch(random.nextInt(6), random.nextInt(6));
+
+        }
     }
 
     @Override
@@ -246,7 +260,75 @@ public class QuarterFinals extends Round{
         }while(!"back".equals(input) && counter < 2*MATCHDAYS_QUARTERFINALS);
     }
 
-    public void enterMatchInfo( int counter){
+    public Team findQualifiedTeam(Match match1, Match match2){
+
+        Team qualifiedTeam = new Team();
+        int team1Goals = match1.getHomeTeam().getGoalsFor() + match2.getGuestTeam().getGoalsFor();
+        int team2Goals = match1.getGuestTeam().getGoalsFor() + match2.getHomeTeam().getGoalsFor();
+
+        if(team1Goals > team2Goals){
+            qualifiedTeam = match1.getHomeTeam();
+        }
+        else if (team1Goals < team2Goals){
+            qualifiedTeam = match2.getHomeTeam();
+        }
+        else{
+
+            int team1GoalsAway = match2.getGuestTeam().getGoalsFor();
+            int team2GoalsAway = match2.getHomeTeam().getGoalsFor();
+
+            if(team1GoalsAway > team2GoalsAway){
+                qualifiedTeam = match1.getHomeTeam();
+            }
+            else if (team1GoalsAway < team2GoalsAway){
+                qualifiedTeam = match2.getHomeTeam();
+            }
+            else{
+                System.out.println(match1);
+                System.out.println(match2);
+                System.out.println(match1.getHomeTeam() + " and " + match1.getGuestTeam() +
+                        " need to solve their differences in Penalties!");
+                System.out.println("If you want to manually run penalties, type.........1");
+                System.out.println("If you want penalties to run automatically, type....2");
+
+                String input;
+                Penalties penalties = new Penalties(match1.getHomeTeam(), match1.getGuestTeam());
+                boolean penaltiesPlayed = false;
+                do {
+                    input = KickOff.scanner.nextLine();
+                    switch (input) {
+                        case "1":
+                            penalties.runManually();
+                            System.out.println(penalties);
+                            qualifiedTeam = penalties.getWinningTeam();
+                            penaltiesPlayed = true;
+                            break;
+                        case "2":
+                            penalties.runAuto();
+                            System.out.println(penalties);
+                            qualifiedTeam = penalties.getWinningTeam();
+                            penaltiesPlayed = true;
+                            break;
+                        default:
+                            System.out.println("\n" + "Invalid input. Try again." + "\n");
+                            break;
+                    }
+                }while(!penaltiesPlayed);
+            }
+        }
+
+        return qualifiedTeam;
+    }
+
+    @Override
+    public void setQualifiers() {
+        for (int i = 0; i < dataInitializer.getQuarterFinals().size()/2; i++) {
+            dataInitializer.getSemiFinalsTeams().add(findQualifiedTeam(dataInitializer.getQuarterFinals().get(i),
+                                                                        dataInitializer.getQuarterFinals().get(i+4)));
+        }
+    }
+
+    public void enterMatchInfo(int counter){
 
         String input;
 
@@ -269,6 +351,12 @@ public class QuarterFinals extends Round{
     }
 
     public void printPairs(){
-
+        for(int i = 0; i < dataInitializer.getQuarterFinalsTeams().size()/2; i++){
+            int matchNumber = i + 1;
+            int opponentIndex = i + 4;
+            System.out.println(matchNumber + ". " + dataInitializer.getQuarterFinalsTeams().get(i).getName()
+                                           + " - " + dataInitializer.getQuarterFinalsTeams().get(opponentIndex).getName());
+        }
     }
+
 }

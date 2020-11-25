@@ -36,7 +36,9 @@ public abstract class Round {
 
     public abstract void setMatchesDetailsManually();
 
-    public void enterMatchDayDate(int matchDayCounter){
+    public abstract void setQualifiers();
+
+        public void enterMatchDayDate(int matchDayCounter){
         String date;
         boolean correctFormat;
 
