@@ -16,14 +16,15 @@ public class DataInitializer {
     private List<MatchDay> matchDays = Arrays.asList(MatchDay.MatchDay1,MatchDay.MatchDay2,MatchDay.MatchDay3,
             MatchDay.MatchDay4,MatchDay.MatchDay5,MatchDay.MatchDay6);
 
-    List<Team> quarterFinalsTeams = new ArrayList<>(QUARTERFINALS_TEAMS_SIZE);
-    List<Match> quarterFinals = new ArrayList<>();
+    private List<Team> quarterFinalsTeams = new ArrayList<>(QUARTERFINALS_TEAMS_SIZE);
+    private List<Match> quarterFinals = new ArrayList<>();
 
-    List<Team> semiFinalsTeams = new ArrayList<>(SEMIFINALS_TEAMS_SIZE);
-    List<Match> semiFinals = new ArrayList<>();
+    private List<Team> semiFinalsTeams = new ArrayList<>(SEMIFINALS_TEAMS_SIZE);
+    private List<Match> semiFinals = new ArrayList<>();
 
-    List<Team> finalTeams = new ArrayList<>(FINAL_TEAMS_SIZE);
-    Match finalMatch = new Match();
+    private List<Team> finalTeams = new ArrayList<>(FINAL_TEAMS_SIZE);
+    private Match finalMatch = new Match();
+    private Team championTeam = new Team();
 
 
     //DummyData for Auto mode
@@ -158,5 +159,13 @@ public class DataInitializer {
 
     public void setFinalMatch(Match finalMatch) {
         this.finalMatch = finalMatch;
+    }
+
+    public Team getChampionTeam() {
+        return championTeam;
+    }
+
+    public void setChampionTeam(Team championTeam) {
+        this.championTeam = championTeam;
     }
 }

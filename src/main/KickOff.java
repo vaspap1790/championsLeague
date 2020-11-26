@@ -1,6 +1,6 @@
 package main;
 
-import main.utils.Tournament;
+import main.utils.TournamentUtils;
 
 import java.util.Scanner;
 
@@ -18,7 +18,7 @@ public class KickOff {
 
     public static void main(String[] args){
 
-        Tournament.startTournament();
+        TournamentUtils.startTournament();
 
     }
 }

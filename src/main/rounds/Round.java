@@ -1,6 +1,7 @@
 package main.rounds;
 
 import main.KickOff;
+import main.model.Table;
 import main.utils.DataInitializer;
 import main.utils.Validator;
 
@@ -9,8 +10,10 @@ import java.time.LocalDate;
 
 public abstract class Round {
 
+    //Member Variables
     protected DataInitializer dataInitializer = new DataInitializer();
 
+    //Start Methods
     public abstract void mainScreen();
 
     public abstract void  navigationMenu();
@@ -20,34 +23,28 @@ public abstract class Round {
         navigationMenu();
     }
 
+    //Mode Methods
     public abstract void  selectMode();
 
     public abstract void  runAuto();
 
     public abstract void  runManual();
 
-    public abstract void  report();
-
-    public abstract void proceedToNextRound();
+    //Utility Methods
+    public abstract void setDatesAuto();
 
     public abstract void setDatesManually();
 
-    public abstract void setDatesAuto();
-
     public abstract void setMatchesDetailsManually();
 
+    //Proceed Methods
     public abstract void setQualifiers();
 
-        public void enterMatchDayDate(int matchDayCounter){
-        String date;
-        boolean correctFormat;
+    public abstract void proceedToNextRound();
 
-        do {
-            System.out.println("\n" + "Enter Date for the " + matchDayCounter +" Match Day. ***Format YYYY-MM-DD***" + "\n");
-            date = KickOff.scanner.nextLine();
-            correctFormat = Validator.dateCheck(date);
-        } while (!correctFormat);
+    //Reporting Methods
+    public abstract void overview();
 
-        dataInitializer.getMatchDays().get(matchDayCounter).setDate(LocalDate.parse(date));
-    }
+    public abstract void  report();
+
 }
