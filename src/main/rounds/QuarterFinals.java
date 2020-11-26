@@ -97,6 +97,9 @@ public class QuarterFinals extends Round{
     @Override
     public void runAuto() {
 
+        TournamentUtils.setDatesAuto(MATCHDAYS_GROUP_STAGE,MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS,
+                dataInitializer.getMatchDays(),dataInitializer.getMatchDates());
+
         Random random = new Random();
 
         for(int i = 0; i < dataInitializer.getQuarterFinalsTeams().size()/2; i++) {
@@ -124,13 +127,6 @@ public class QuarterFinals extends Round{
     }
 
     //////////////////////////////////////////////Utility Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    @Override
-    public void setDatesAuto() {
-        for (int i = 0; i < dataInitializer.getMatchDays().size(); i++){
-            dataInitializer.getMatchDays().get(i).setDate(dataInitializer.getMatchDates().get(i+6));
-        }
-    }
-
     @Override
     public void setDatesManually() {
         System.out.println("Firstly, you have to set dates for the four Match Days of the Quarter Finals.");
@@ -230,6 +226,7 @@ public class QuarterFinals extends Round{
                                                                         dataInitializer.getQuarterFinals().get(i+4)));
         }
     }
+
     @Override
     public void proceedToNextRound() {
         String input;

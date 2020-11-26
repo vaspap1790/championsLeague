@@ -4,31 +4,26 @@ import java.time.LocalDate;
 
 public enum MatchDay {
 
-    MatchDay1(1),
-    MatchDay2(2),
-    MatchDay3(3),
-    MatchDay4(4),
-    MatchDay5(5),
-    MatchDay6(6),
-    QuarterFinals1(7),
-    QuarterFinals2(8),
-    SemiFinals1(9),
-    SemiFinals2(10),
-    Final(11);
+    MatchDay1,
+    MatchDay2,
+    MatchDay3,
+    MatchDay4,
+    MatchDay5,
+    MatchDay6,
+    QuarterFinals1,
+    QuarterFinals2,
+    QuarterFinals3,
+    QuarterFinals4,
+    SemiFinals1,
+    SemiFinals2,
+    SemiFinals3,
+    SemiFinals4,
+    Finals;
 
     //Member Variables
-    private final int count;
     private LocalDate date;
 
-    //Constructor
-    MatchDay(int count) {
-        this.count = count;
-    }
-
     //Getters-Setters
-    public int getCount() {
-        return count;
-    }
 
     public LocalDate getDate() {
         return date;

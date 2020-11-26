@@ -1,6 +1,5 @@
 package main.utils;
 
-
 import main.KickOff;
 import main.model.Match;
 import main.model.MatchDay;
@@ -21,6 +20,12 @@ public class TournamentUtils {
         GroupStage groupStage = new GroupStage();
         groupStage.start();
 
+    }
+
+    public static void setDatesAuto(int start, int end, List<MatchDay> matchDays, List<LocalDate> dates) {
+        for (int i = start; i < end; i++){
+            matchDays.get(i).setDate(dates.get(i));
+        }
     }
 
     public static Team findQualifiedTeam(Match match1, Match match2){

@@ -94,6 +94,10 @@ public class SemiFinals extends Round{
     @Override
     public void runAuto() {
 
+        TournamentUtils.setDatesAuto(MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS,
+                MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS + MATCHDAYS_SEMIFINALS,
+                dataInitializer.getMatchDays(),dataInitializer.getMatchDates());
+
         Random random = new Random();
 
         for(int i = 0; i < dataInitializer.getSemiFinalsTeams().size()/2; i++) {
@@ -121,13 +125,6 @@ public class SemiFinals extends Round{
     }
 
     //////////////////////////////////////////////Utility Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    @Override
-    public void setDatesAuto() {
-        for (int i = 0; i < dataInitializer.getMatchDays().size(); i++){
-            dataInitializer.getMatchDays().get(i).setDate(dataInitializer.getMatchDates().get(i+10));
-        }
-    }
-
     @Override
     public void setDatesManually() {
         System.out.println("Firstly, you have to set dates for the four Match Days of the Semi Finals.");

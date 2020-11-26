@@ -14,7 +14,9 @@ public class DataInitializer {
     private List<Table> tables = new ArrayList<>(TABLES);
 
     private List<MatchDay> matchDays = Arrays.asList(MatchDay.MatchDay1,MatchDay.MatchDay2,MatchDay.MatchDay3,
-            MatchDay.MatchDay4,MatchDay.MatchDay5,MatchDay.MatchDay6);
+            MatchDay.MatchDay4,MatchDay.MatchDay5,MatchDay.MatchDay6, MatchDay.QuarterFinals1, MatchDay.QuarterFinals2,
+            MatchDay.QuarterFinals3, MatchDay.QuarterFinals4, MatchDay.SemiFinals1, MatchDay.SemiFinals2, MatchDay.SemiFinals3,
+            MatchDay.SemiFinals4, MatchDay.Finals);
 
     private List<Team> quarterFinalsTeams = new ArrayList<>(QUARTERFINALS_TEAMS_SIZE);
     private List<Match> quarterFinals = new ArrayList<>();

@@ -101,7 +101,7 @@ public class GroupStage extends Round{
     @Override
     public void runAuto() {
 
-        setDatesAuto();
+        TournamentUtils.setDatesAuto(0,MATCHDAYS_GROUP_STAGE,dataInitializer.getMatchDays(),dataInitializer.getMatchDates());
 
         for (Table table : dataInitializer.getTables()) {
 
@@ -176,13 +176,6 @@ public class GroupStage extends Round{
     }
 
     //////////////////////////////////////////////Utility Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    @Override
-    public void setDatesAuto() {
-        for (int i = 0; i < dataInitializer.getMatchDays().size(); i++){
-            dataInitializer.getMatchDays().get(i).setDate(dataInitializer.getMatchDates().get(i));
-        }
-    }
-
     @Override
     public void setDatesManually(){
 

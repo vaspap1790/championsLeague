@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static main.Globals.*;
+
 public class Finals extends Round{
 
     ///////////////////////////////////////////////Start Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -95,6 +97,10 @@ public class Finals extends Round{
     @Override
     public void runAuto() {
 
+        TournamentUtils.setDatesAuto(MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS + MATCHDAYS_SEMIFINALS,
+                MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS + MATCHDAYS_SEMIFINALS + MATCHDAYS_FINALS,
+                dataInitializer.getMatchDays(),dataInitializer.getMatchDates());
+
         Random random = new Random();
 
         dataInitializer.getFinalMatch().setHomeTeam(dataInitializer.getFinalTeams().get(0));
@@ -112,11 +118,6 @@ public class Finals extends Round{
     }
 
     //////////////////////////////////////////////Utility Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    @Override
-    public void setDatesAuto(){
-        dataInitializer.getMatchDays().get(11).setDate(dataInitializer.getMatchDates().get(15));
-    }
-
     @Override
     public void setDatesManually() {
         System.out.println("Firstly, you have to set the date for the Match Day of the Final.");

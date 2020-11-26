@@ -12,6 +12,7 @@ package main;
     public static final int FINAL_TEAMS_SIZE = 2;
     public static final int MATCHDAYS_QUARTERFINALS = 4;
     public static final int MATCHDAYS_SEMIFINALS = 4;
+    public static final int MATCHDAYS_FINALS = 1;
 
 
      //Messages

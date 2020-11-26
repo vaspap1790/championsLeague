@@ -1,11 +1,6 @@
 package main.rounds;
 
-import main.KickOff;
-import main.model.Table;
 import main.utils.DataInitializer;
-import main.utils.Validator;
-
-import java.time.LocalDate;
 
 
 public abstract class Round {
@@ -31,8 +26,6 @@ public abstract class Round {
     public abstract void  runManual();
 
     //Utility Methods
-    public abstract void setDatesAuto();
-
     public abstract void setDatesManually();
 
     public abstract void setMatchesDetailsManually();
