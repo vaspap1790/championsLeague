@@ -146,7 +146,8 @@ public class TournamentUtils {
             int counter = 1;
             do {
                 System.out.println("\n");
-                System.out.println("- Please enter Team " + counter + " for the " + table.getTableName() + " Table or type 0 to cancel. -");
+                System.out.println("- Please enter Team " + counter + " for the " + table.getTableName() +
+                        " Table or type 0 to cancel (data will be lost) -");
                 input = KickOff.scanner.nextLine();
                 if(!"0".equals(input)){
                     table.getTeams().add(new Team(input));
@@ -155,6 +156,7 @@ public class TournamentUtils {
             }while(!"0".equals(input) && counter < 5);
 
             if("0".equals(input)){
+                tables.forEach(table1 -> {table1.getTeams().clear();});
                 return false;
             }
         }
