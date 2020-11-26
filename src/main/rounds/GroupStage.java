@@ -43,15 +43,10 @@ public class GroupStage extends Round{
                 case "0":
                     break;
                 case "1":
-                    TournamentUtils.enterTeamsManually(dataInitializer.getTables());
-                    selectMode();
-                    proceedToNextRound();
-                    proceed = true;
+                    proceed = TournamentUtils.enterTeamsManually(dataInitializer.getTables());
                     break;
                 case "2":
                     TournamentUtils.enterTeamsFromDummyData(dataInitializer.getTables());
-                    selectMode();
-                    proceedToNextRound();
                     proceed = true;
                     break;
                 default:
@@ -63,6 +58,8 @@ public class GroupStage extends Round{
         if("0".equals(input)){
             ASCIIArt.end();
         }
+
+        selectMode();
     }
 
     ////////////////////////////////////////////////////Mode Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -75,7 +72,7 @@ public class GroupStage extends Round{
             System.out.println("*******************************************************************************************");
             System.out.println("-If you want to enter all scores for all matches of Group Stage manually, type.........'1'-");
             System.out.println("-If you want Group Stage to run automatically, type....................................'2'-");
-            System.out.println("-If you want to go back, type..........................................................'0'-");
+            System.out.println("-If you want to end the Tournament, type...............................................'0'-");
             System.out.println("*******************************************************************************************" + "\n");
 
             input = KickOff.scanner.nextLine();
@@ -96,6 +93,10 @@ public class GroupStage extends Round{
                     break;
             }
         } while (!"0".equals(input) && !modeSelected);
+
+        if("0".equals(input)){
+            ASCIIArt.end();
+        }
     }
 
     @Override
@@ -162,6 +163,7 @@ public class GroupStage extends Round{
             table.getMatches().add(match12);
 
         }
+        proceedToNextRound();
     }
 
     @Override
@@ -344,6 +346,8 @@ public class GroupStage extends Round{
     /////////////////////////////////////////////////Proceed Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
     public void setQualifiers(){
+
+        TournamentUtils.listInitializer(QUARTERFINALS_TEAMS_SIZE,dataInitializer.getQuarterFinalsTeams());
 
         for (int i = 0 ; i < TABLES ; i++){
 

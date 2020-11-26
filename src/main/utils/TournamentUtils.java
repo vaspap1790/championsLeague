@@ -131,7 +131,13 @@ public class TournamentUtils {
         }
     }
 
-    public static void enterTeamsManually(List<Table> tables){
+    public static void listInitializer(int size, List<Team> teams){
+        for (int i = 0; i < size; i++) {
+            teams.add(new Team());
+        }
+    }
+
+    public static boolean enterTeamsManually(List<Table> tables){
 
         enterTables(tables);
         String input;
@@ -140,16 +146,19 @@ public class TournamentUtils {
             int counter = 1;
             do {
                 System.out.println("\n");
-                System.out.println("- Please enter Team " + counter + " for the " + table.getTableName() + " Table or type 'back' to cancel. -");
+                System.out.println("- Please enter Team " + counter + " for the " + table.getTableName() + " Table or type 0 to cancel. -");
                 input = KickOff.scanner.nextLine();
-                table.getTeams().add(new Team(input));
+                if(!"0".equals(input)){
+                    table.getTeams().add(new Team(input));
+                }
                 counter++;
-            }while(!"back".equals(input) && counter < 5);
+            }while(!"0".equals(input) && counter < 5);
 
-            if("back".equals(input)){
-                break;
+            if("0".equals(input)){
+                return false;
             }
         }
+        return true;
     }
 
     public static void enterTeamsFromDummyData(List<Table> tables){
