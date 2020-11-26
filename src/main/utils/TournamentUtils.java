@@ -1,9 +1,7 @@
 package main.utils;
 
 import main.KickOff;
-import main.model.Match;
-import main.model.MatchDay;
-import main.model.Team;
+import main.model.*;
 import main.rounds.GroupStage;
 
 import java.time.LocalDate;
@@ -125,6 +123,46 @@ public class TournamentUtils {
         } while (!correctFormat);
 
         matchDays.get(matchDayCounter).setDate(LocalDate.parse(date));
+    }
+
+    public static void enterTables(List<Table> tables){
+        for (TableName tableName : TableName.values()){
+            tables.add(new Table(tableName));
+        }
+    }
+
+    public static void enterTeamsManually(List<Table> tables){
+
+        enterTables(tables);
+        String input;
+
+        for(Table table : tables){
+            int counter = 1;
+            do {
+                System.out.println("\n");
+                System.out.println("- Please enter Team " + counter + " for the " + table.getTableName() + " Table or type 'back' to cancel. -");
+                input = KickOff.scanner.nextLine();
+                table.getTeams().add(new Team(input));
+                counter++;
+            }while(!"back".equals(input) && counter < 5);
+
+            if("back".equals(input)){
+                break;
+            }
+        }
+    }
+
+    public static void enterTeamsFromDummyData(List<Table> tables){
+
+        enterTables(tables);
+
+        for (int i = 0 ; i < 4 ; i++){
+            tables.get(i).getTeams().add(new Team(DataInitializer.getRandomTeamsGroupA().get(i)));
+            tables.get(i).getTeams().add(new Team(DataInitializer.getRandomTeamsGroupB().get(i)));
+            tables.get(i).getTeams().add(new Team(DataInitializer.getRandomTeamsGroupC().get(i)));
+            tables.get(i).getTeams().add(new Team(DataInitializer.getRandomTeamsGroupD().get(i)));
+        }
+
     }
 
 }

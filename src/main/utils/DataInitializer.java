@@ -30,13 +30,13 @@ public class DataInitializer {
 
 
     //DummyData for Auto mode
-    private List<String> randomTeamsGroupA = Arrays.asList("FC Barcelona", "Liverpool FC", "Real Madrid CF", "FC Bayern Munchen");
+    private static List<String> randomTeamsGroupA = Arrays.asList("FC Barcelona", "Liverpool FC", "Real Madrid CF", "FC Bayern Munchen");
 
-    private List<String> randomTeamsGroupB = Arrays.asList("Club Atletico de Madrid", "FC Internationale Milano", "Juventus", "Manchester United FC");
+    private static List<String> randomTeamsGroupB = Arrays.asList("Club Atletico de Madrid", "FC Internationale Milano", "Juventus", "Manchester United FC");
 
-    private List<String> randomTeamsGroupC = Arrays.asList("RB Leipzig", "Olympiacos FC", "FC Shakhtar Donetsk", "FC Salzburg");
+    private static List<String> randomTeamsGroupC = Arrays.asList("RB Leipzig", "Olympiacos FC", "FC Shakhtar Donetsk", "FC Salzburg");
 
-    private List<String> randomTeamsGroupD = Arrays.asList( "Ferencvarosi TC", "Club Brugge", "Stade Rennais FC", "FC Midtjylland");
+    private static List<String> randomTeamsGroupD = Arrays.asList( "Ferencvarosi TC", "Club Brugge", "Stade Rennais FC", "FC Midtjylland");
 
     private List<LocalDate> matchDates = Arrays.asList(
             LocalDate.of(2020,10,20), LocalDate.of(2020,10,27),
@@ -47,48 +47,6 @@ public class DataInitializer {
             LocalDate.of(2021,4,13),LocalDate.of(2021,4,14),
             LocalDate.of(2021,4,20),LocalDate.of(2021,4,21),
             LocalDate.of(2021,5,5));
-
-
-    //Methods
-    public void enterTables(){
-        for (TableName tableName : TableName.values()){
-            tables.add(new Table(tableName));
-        }
-    }
-
-    public void enterTeamsManually(){
-
-        enterTables();
-        String input;
-
-        for(Table table : tables){
-            int counter = 1;
-            do {
-                System.out.println("\n");
-                System.out.println("- Please enter Team " + counter + " for the " + table.getTableName() + " Table or type 'back' to cancel. -");
-                input = KickOff.scanner.nextLine();
-                table.getTeams().add(new Team(input));
-                counter++;
-            }while(!"back".equals(input) && counter < 5);
-
-            if("back".equals(input)){
-                break;
-            }
-        }
-    }
-
-    public void enterTeamsFromDummyData(){
-
-        enterTables();
-
-        for (int i = 0 ; i < 4 ; i++){
-            tables.get(i).getTeams().add(new Team(randomTeamsGroupA.get(i)));
-            tables.get(i).getTeams().add(new Team(randomTeamsGroupB.get(i)));
-            tables.get(i).getTeams().add(new Team(randomTeamsGroupC.get(i)));
-            tables.get(i).getTeams().add(new Team(randomTeamsGroupD.get(i)));
-        }
-
-    }
 
     //Getters-Setters
     public List<Table> getTables() {
@@ -169,5 +127,21 @@ public class DataInitializer {
 
     public void setChampionTeam(Team championTeam) {
         this.championTeam = championTeam;
+    }
+
+    public static List<String> getRandomTeamsGroupA() {
+        return randomTeamsGroupA;
+    }
+
+    public static List<String> getRandomTeamsGroupB() {
+        return randomTeamsGroupB;
+    }
+
+    public static List<String> getRandomTeamsGroupC() {
+        return randomTeamsGroupC;
+    }
+
+    public static List<String> getRandomTeamsGroupD() {
+        return randomTeamsGroupD;
     }
 }

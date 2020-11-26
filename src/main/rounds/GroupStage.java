@@ -43,13 +43,13 @@ public class GroupStage extends Round{
                 case "0":
                     break;
                 case "1":
-                    dataInitializer.enterTeamsManually();
+                    TournamentUtils.enterTeamsManually(dataInitializer.getTables());
                     selectMode();
                     proceedToNextRound();
                     proceed = true;
                     break;
                 case "2":
-                    dataInitializer.enterTeamsFromDummyData();
+                    TournamentUtils.enterTeamsFromDummyData(dataInitializer.getTables());
                     selectMode();
                     proceedToNextRound();
                     proceed = true;
