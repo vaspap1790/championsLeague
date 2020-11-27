@@ -23,12 +23,12 @@ public abstract class Round {
 
     public abstract void  runAuto();
 
-    public abstract void  runManual();
+    public abstract boolean  runManual();
 
     //Utility Methods
-    public abstract void setDatesManually();
+    public abstract boolean setDatesManually();
 
-    public abstract void setMatchesDetailsManually();
+    public abstract boolean setMatchesDetailsManually();
 
     //Proceed Methods
     public abstract void setQualifiers();

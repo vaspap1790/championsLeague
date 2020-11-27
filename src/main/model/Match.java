@@ -1,6 +1,7 @@
 package main.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Match {
 
@@ -107,6 +108,15 @@ public class Match {
 
     public void setMatchDay(MatchDay matchDay) {
         this.matchDay = matchDay;
+    }
+
+    //Override Object Methods
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Match)) return false;
+        Match match = (Match) o;
+        return getHomeTeam().equals(match.getHomeTeam()) && getGuestTeam().equals(match.getGuestTeam());
     }
 
     @Override

@@ -2,10 +2,14 @@ package main.rounds;
 
 import main.KickOff;
 import main.model.Match;
+import main.model.MatchDay;
 import main.utils.ASCIIArt;
 import main.utils.TournamentUtils;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import static main.Globals.*;
 
@@ -116,22 +120,25 @@ public class SemiFinals extends Round{
     }
 
     @Override
-    public void runManual() {
+    public boolean runManual() {
         System.out.println("There are 2 Match Days to be arranged.");
         System.out.println("Then you have to enter data for two matches in every Match Day.");
 
         setDatesManually();
         setMatchesDetailsManually();
+        return true;
     }
 
     //////////////////////////////////////////////Utility Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
-    public void setDatesManually() {
+    public boolean setDatesManually() {
         System.out.println("Firstly, you have to set dates for the four Match Days of the Semi Finals.");
         String input;
         int counter = MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS;
+        List<LocalDate> dates;
 
         do {
+            dates = dataInitializer.getMatchDays().stream().map(MatchDay::getDate).collect(Collectors.toList());
             System.out.println("\n");
             System.out.println("To enter the dates type '1', or type 'back' to cancel (data will be lost).");
             input = KickOff.scanner.nextLine();
@@ -143,7 +150,7 @@ public class SemiFinals extends Round{
                     System.out.println("\n");
                     System.out.println("Match Day " + counter);
                     System.out.println("\n");
-                    TournamentUtils.enterMatchDayDate(counter,dataInitializer.getMatchDays());
+                    TournamentUtils.enterMatchDayDate(counter,dates,dataInitializer.getMatchDays());
                     break;
                 default:
                     System.out.println("\n" + "Invalid input. Try again." + "\n");
@@ -152,10 +159,11 @@ public class SemiFinals extends Round{
             counter++;
 
         } while (!"back".equals(input) && counter <= (MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS + MATCHDAYS_SEMIFINALS));
+        return true;
     }
 
     @Override
-    public void setMatchesDetailsManually() {
+    public boolean setMatchesDetailsManually() {
 
         System.out.println("Now, you have to set the match details for the 4 matches of the Semifinals.");
         String input;
@@ -183,6 +191,7 @@ public class SemiFinals extends Round{
             counter++;
 
         }while(!"back".equals(input) && counter < 2*MATCHDAYS_QUARTERFINALS);
+        return true;
     }
 
     /////////////////////////////////////////////////Proceed Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

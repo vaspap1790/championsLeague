@@ -5,7 +5,9 @@ import main.model.*;
 import main.rounds.GroupStage;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static main.Globals.VALID;
 
@@ -112,17 +114,22 @@ public class TournamentUtils {
         matches.get(counter).runMatch(goalsH,goalsG);
     }
 
-    public static void enterMatchDayDate(int matchDayCounter, List<MatchDay> matchDays){
+    public static void enterMatchDayDate(int matchDayCounter, List<LocalDate> dates, List<MatchDay> matchDays){
+
         String date;
-        boolean correctFormat;
+        String result = "";
 
         do {
-            System.out.println("\n" + "Enter Date for the " + matchDayCounter +" Match Day. ***Format YYYY-MM-DD***" + "\n");
+            System.out.println("\n" + "Enter Date for the Match Day " + matchDayCounter + " ***Format YYYY-MM-DD***" + "\n");
             date = KickOff.scanner.nextLine();
-            correctFormat = Validator.dateCheck(date);
-        } while (!correctFormat);
+            result = Validator.dateCheck(date,dates,matchDayCounter-1);
 
-        matchDays.get(matchDayCounter).setDate(LocalDate.parse(date));
+            if(!result.equals(VALID)){
+                System.out.println(result + ". Try again.");
+            }
+        } while (!result.equals(VALID));
+
+        matchDays.get(matchDayCounter-1).setDate(LocalDate.parse(date));
     }
 
     public static void enterTables(List<Table> tables){
@@ -174,6 +181,14 @@ public class TournamentUtils {
             tables.get(i).getTeams().add(new Team(DataInitializer.getRandomTeamsGroupD().get(i)));
         }
 
+    }
+
+    public static ArrayList<Integer> arrayListIntegerInitializer(int size){
+        ArrayList<Integer> list = new ArrayList();
+        for (int i = 1; i <= size; i++) {
+            list.add(i);
+        }
+        return list;
     }
 
 }

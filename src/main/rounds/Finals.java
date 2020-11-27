@@ -2,13 +2,16 @@ package main.rounds;
 
 import main.KickOff;
 import main.model.Match;
+import main.model.MatchDay;
 import main.model.Team;
 import main.utils.ASCIIArt;
 import main.utils.TournamentUtils;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import static main.Globals.*;
 
@@ -109,28 +112,34 @@ public class Finals extends Round{
     }
 
     @Override
-    public void runManual() {
+    public boolean runManual() {
         System.out.println("There is the Finals Match Days to be arranged.");
         System.out.println("Then you have to enter the data for the Final.");
 
         setDatesManually();
         setMatchesDetailsManually();
+        return true;
     }
 
     //////////////////////////////////////////////Utility Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
-    public void setDatesManually() {
+    public boolean setDatesManually() {
+        List<LocalDate> dates = dataInitializer.getMatchDays().stream().map(MatchDay::getDate).collect(Collectors.toList());
         System.out.println("Firstly, you have to set the date for the Match Day of the Final.");
         System.out.println("\n");
-        TournamentUtils.enterMatchDayDate(15,dataInitializer.getMatchDays());
+        TournamentUtils.enterMatchDayDate(15,dates,dataInitializer.getMatchDays());
+        return true;
+
     }
 
     @Override
-    public void setMatchesDetailsManually() {
+    public boolean setMatchesDetailsManually() {
         int counter = 0;
         List<Match> matches = new ArrayList<>();
         matches.add(dataInitializer.getFinalMatch());
         TournamentUtils.enterMatchInfo(counter, matches);
+        return true;
+
     }
 
     /////////////////////////////////////////////////Proceed Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

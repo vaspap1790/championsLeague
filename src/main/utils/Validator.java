@@ -1,9 +1,6 @@
 package main.utils;
 
-import main.Globals;
-import main.KickOff;
-
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,18 +10,19 @@ import static main.Globals.*;
 
 public class Validator {
 
-    public static boolean dateCheck(String input) {
+    public static String dateCheck(String input, List<LocalDate> dates, int index) {
 
         final String DATE_PATTERN = "^((?:19|20)[0-9][0-9])-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$";
         Pattern pattern = Pattern.compile(DATE_PATTERN);
 
-        boolean result = false;
+        boolean validFormat = false;
+        String message= "";
         Matcher matcher = pattern.matcher(input);
 
         if (matcher.matches()) {
 
             // assign true first, later we will check the leap year and odd or even months
-            result = true;
+            validFormat = true;
 
             int year = Integer.parseInt(matcher.group(1));
 
@@ -37,18 +35,38 @@ public class Validator {
             if ((month.equals("4") || month.equals("6") || month.equals("9") ||
                     month.equals("04") || month.equals("06") || month.equals("09") ||
                     month.equals("11")) && day.equals("31")) {
-                result = false;
+                message = MONTH_DAYS_SURPASSED;
+                validFormat = false;
             } else if (month.equals("2") || month.equals("02")) {
                 if (day.equals("30") || day.equals("31")) {
-                    result = false;
+                    message = MONTH_DAYS_SURPASSED;
+                    validFormat = false;
                 } else if (day.equals("29")) {  // leap year? feb 29 days.
                     if (!isLeapYear(year)) {
-                        result = false;
+                        message = LEAP_YEAR;
+                        validFormat = false;
                     }
                 }
             }
+        }else{
+            message = INVALID_FORMAT;
         }
-        return result;
+
+        if(validFormat){
+            LocalDate date = LocalDate.parse(input);
+            if(dates.contains(date)){
+                message = ALREADY_USED;
+            }
+            else{
+                if(index != 0 && dates.get(index-1).isAfter(date)){
+                    message = BEFORE_PREVIOUS_DATE;
+                }
+                else{
+                    message = VALID;
+                }
+            }
+        }
+        return message;
     }
 
     private static boolean isLeapYear(int year) {
@@ -82,7 +100,7 @@ public class Validator {
                   return VALID;
             }
             else{
-                return OUT_OF_RANGE;
+                return NOT_IN_THE_LIST;
             }
         } catch (Exception e) {
             return INVALID_FORMAT;
