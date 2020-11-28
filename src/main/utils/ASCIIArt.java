@@ -1,5 +1,7 @@
 package main.utils;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -87,7 +89,40 @@ public class ASCIIArt {
     }
 
     public static void end() {
+        System.out.println("                                       -   \\O                                                   ");
+        System.out.println("                                      -    /\\                                                   ");
+        System.out.println("                                    -   __/\\ `                                                  ");
+        System.out.println("                                        `    \\, ()                                              ");
+        System.out.println("                                  ^^^^^^^^^^^^^^^^^^^^^^                                         ");
+
         System.out.println("\n" + "******************************* You ended the Tournament *********************************");
+
+        System.out.println("                                                  ______                                         ");
+        System.out.println("                               o__        __o__  |      |\\                                      ");
+        System.out.println("                              /|            |    |      |X\\                                     ");
+        System.out.println("                              / > o        /|    |      |XX\\                                    ");
+
+        System.out.println("\n" + "******************************* You ended the Tournament *********************************");
+
+        System.out.println("                                         ____________                                            ");
+        System.out.println("                                        |   _        |                                           ");
+        System.out.println("                                   o    |  _o=--'_   |                                           ");
+        System.out.println("                                   ()                                                            ");
+        System.out.println("                                   |\\, o                                                        ");
+
+        System.out.println("\n" + "******************************* You ended the Tournament *********************************");
+
+        System.out.println("                              ___________________________                                        ");
+        System.out.println("                             |             |             |                                       ");
+        System.out.println("                             |___          |          ___|                                       ");
+        System.out.println("                             |_  |         |         |  _|                                       ");
+        System.out.println("                            .| | |.       ,|.       .| | |.                                      ");
+        System.out.println("                            || | | )     ( | )     ( | | ||                                      ");
+        System.out.println("                            '|_| |'       `|'       `| |_|'                                      ");
+        System.out.println("                             |___|         |         |___|                                       ");
+        System.out.println("                             |             |             |                                       ");
+        System.out.println("                             |_____________|_____________|                                       ");
+
     }
 
     public static void complete() {
