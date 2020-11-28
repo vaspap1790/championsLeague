@@ -157,7 +157,7 @@ public class Finals extends Round{
         }else{
             System.out.println(getFinalMatch());
             Team championTeam = new Team();
-            TournamentUtils.runPenalties(getFinalMatch().getHomeTeam(),getFinalMatch().getGuestTeam(),championTeam);
+            TournamentUtils.runPenalties(getFinalMatch().getHomeTeam(),getFinalMatch().getGuestTeam());
             setChampionTeam(championTeam);
         }
     }

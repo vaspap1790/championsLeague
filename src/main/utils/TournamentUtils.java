@@ -6,15 +6,16 @@ import main.rounds.GroupStage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import static main.Globals.*;
 
 public class TournamentUtils {
 
+    //Member Variables
     protected static DataInitializer dataInitializer = new DataInitializer();
 
+    //Methods
     public static void startTournament(){
 
         ASCIIArt.printLogo();
@@ -36,7 +37,7 @@ public class TournamentUtils {
 
     public static Team findQualifiedTeam(Match match1, Match match2){
 
-        Team qualifiedTeam = new Team();
+        Team qualifiedTeam;
         int team1Goals = match1.getHomeTeam().getGoalsFor() + match2.getGuestTeam().getGoalsFor();
         int team2Goals = match1.getGuestTeam().getGoalsFor() + match2.getHomeTeam().getGoalsFor();
 
@@ -60,13 +61,15 @@ public class TournamentUtils {
             else{
                 System.out.println(match1);
                 System.out.println(match2);
-                runPenalties(match1.getHomeTeam(),match1.getGuestTeam(),qualifiedTeam);
+                qualifiedTeam = runPenalties(match1.getHomeTeam(),match1.getGuestTeam());
             }
         }
         return qualifiedTeam;
     }
 
-    public static void runPenalties(Team team1, Team team2, Team qualifiedTeam){
+    public static Team runPenalties(Team team1, Team team2){
+
+        Team qualifiedTeam = new Team();
 
         System.out.println(team1.getName() + " and " + team2.getName() +
                 " need to solve their differences in Penalties!");
@@ -96,8 +99,11 @@ public class TournamentUtils {
                     break;
             }
         }while(!penaltiesPlayed);
+
+        return qualifiedTeam;
     }
 
+    //User Input
     public static void enterMatchInfo(int counter, List<Match> matches){
 
         String input;
@@ -138,12 +144,6 @@ public class TournamentUtils {
         matchDays.get(matchDayCounter-1).setDate(LocalDate.parse(date));
     }
 
-    public static void enterTables(List<Table> tables){
-        for (TableName tableName : TableName.values()){
-            tables.add(new Table(tableName));
-        }
-    }
-
     public static boolean enterTeamsManually(List<Table> tables){
 
         enterTables(tables);
@@ -176,6 +176,13 @@ public class TournamentUtils {
             }
         }
         return true;
+    }
+
+    //Initializes
+    public static void enterTables(List<Table> tables){
+        for (TableName tableName : TableName.values()){
+            tables.add(new Table(tableName));
+        }
     }
 
     public static void enterTeamsFromDummyData(List<Table> tables){
@@ -227,6 +234,5 @@ public class TournamentUtils {
             matches.add(new Match(matchDays.get(i)));
         }
     }
-
 
 }
