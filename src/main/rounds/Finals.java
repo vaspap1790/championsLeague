@@ -3,6 +3,7 @@ package main.rounds;
 import main.KickOff;
 import main.model.Match;
 import main.model.MatchDay;
+import main.model.Table;
 import main.model.Team;
 import main.utils.ASCIIArt;
 import main.utils.TournamentUtils;
@@ -17,6 +18,13 @@ import static main.Globals.*;
 
 public class Finals extends Round{
 
+    //Constructor
+    public Finals(List<Table> tables, List<MatchDay> matchDays,
+                  List<Match> quarterFinals, List<Match> semiFinals,
+                  Match finalMatch, Team championTeam) {
+        super(tables, matchDays, quarterFinals, semiFinals, finalMatch, championTeam);
+    }
+    
     ///////////////////////////////////////////////Start Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
     public void mainScreen() {
@@ -101,14 +109,10 @@ public class Finals extends Round{
     public void runAuto() {
 
         TournamentUtils.setDatesAuto(MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS + MATCHDAYS_SEMIFINALS,
-                MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS + MATCHDAYS_SEMIFINALS + MATCHDAYS_FINALS,
-                dataInitializer.getMatchDays(),dataInitializer.getMatchDates());
+                MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS + MATCHDAYS_SEMIFINALS + MATCHDAYS_FINALS, getMatchDays());
 
         Random random = new Random();
-
-        dataInitializer.getFinalMatch().setHomeTeam(dataInitializer.getFinalTeams().get(0));
-        dataInitializer.getFinalMatch().setHomeTeam(dataInitializer.getFinalTeams().get(1));
-        dataInitializer.getFinalMatch().runMatch(random.nextInt(6), random.nextInt(6));
+        getFinalMatch().runMatch(random.nextInt(6), random.nextInt(6));
     }
 
     @Override
@@ -124,10 +128,10 @@ public class Finals extends Round{
     //////////////////////////////////////////////Utility Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
     public boolean setDatesManually() {
-        List<LocalDate> dates = dataInitializer.getMatchDays().stream().map(MatchDay::getDate).collect(Collectors.toList());
+        List<LocalDate> dates = getMatchDays().stream().map(MatchDay::getDate).collect(Collectors.toList());
         System.out.println("Firstly, you have to set the date for the Match Day of the Final.");
         System.out.println("\n");
-        TournamentUtils.enterMatchDayDate(15,dates,dataInitializer.getMatchDays());
+        TournamentUtils.enterMatchDayDate(15,dates,getMatchDays());
         return true;
 
     }
@@ -136,7 +140,7 @@ public class Finals extends Round{
     public boolean setMatchesDetailsManually() {
         int counter = 0;
         List<Match> matches = new ArrayList<>();
-        matches.add(dataInitializer.getFinalMatch());
+        matches.add(getFinalMatch());
         TournamentUtils.enterMatchInfo(counter, matches);
         return true;
 
@@ -145,16 +149,16 @@ public class Finals extends Round{
     /////////////////////////////////////////////////Proceed Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
     public void setQualifiers() {
-        if(dataInitializer.getFinalMatch().getHomeTeam().getGoalsFor() > dataInitializer.getFinalMatch().getGuestTeam().getGoalsFor() ){
-            dataInitializer.setChampionTeam(dataInitializer.getFinalMatch().getHomeTeam());
+        if(getFinalMatch().getHomeTeam().getGoalsFor() > getFinalMatch().getGuestTeam().getGoalsFor() ){
+            setChampionTeam(getFinalMatch().getHomeTeam());
         }
-        else if(dataInitializer.getFinalMatch().getHomeTeam().getGoalsFor() < dataInitializer.getFinalMatch().getGuestTeam().getGoalsFor() ){
-            dataInitializer.setChampionTeam(dataInitializer.getFinalMatch().getGuestTeam());
+        else if(getFinalMatch().getHomeTeam().getGoalsFor() < getFinalMatch().getGuestTeam().getGoalsFor() ){
+            setChampionTeam(getFinalMatch().getGuestTeam());
         }else{
-            System.out.println(dataInitializer.getFinalMatch());
+            System.out.println(getFinalMatch());
             Team championTeam = new Team();
-            TournamentUtils.runPenalties(dataInitializer.getFinalMatch().getHomeTeam(),dataInitializer.getFinalMatch().getGuestTeam(),championTeam);
-            dataInitializer.setChampionTeam(championTeam);
+            TournamentUtils.runPenalties(getFinalMatch().getHomeTeam(),getFinalMatch().getGuestTeam(),championTeam);
+            setChampionTeam(championTeam);
         }
     }
 
@@ -166,12 +170,11 @@ public class Finals extends Round{
     ////////////////////////////////////////////Reporting Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
     public void overview(){
-        System.out.println(dataInitializer.getFinalTeams().get(0).getName()
-                + " - " + dataInitializer.getFinalTeams().get(1).getName());
+        getFinalMatch().overview();
     }
 
     @Override
     public void report() {
-        System.out.println(dataInitializer.getFinalMatch());
+        System.out.println(getFinalMatch());
     }
 }

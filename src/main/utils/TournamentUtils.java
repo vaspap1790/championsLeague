@@ -6,25 +6,31 @@ import main.rounds.GroupStage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static main.Globals.VALID;
+import static main.Globals.*;
 
 public class TournamentUtils {
+
+    protected static DataInitializer dataInitializer = new DataInitializer();
 
     public static void startTournament(){
 
         ASCIIArt.printLogo();
 
-        GroupStage groupStage = new GroupStage();
+        GroupStage groupStage = new GroupStage(
+                new ArrayList<>(TABLES), dataInitializer.getMatchDays(),
+                new ArrayList<>(QUARTERFINALS_MATCHES), new ArrayList<>(SEMIFINALS_MATCHES),
+                new Match(), new Team());
+
         groupStage.start();
 
     }
 
-    public static void setDatesAuto(int start, int end, List<MatchDay> matchDays, List<LocalDate> dates) {
+    public static void setDatesAuto(int start, int end, List<MatchDay> matchDays) {
         for (int i = start; i < end; i++){
-            matchDays.get(i).setDate(dates.get(i));
+            matchDays.get(i).setDate(dataInitializer.getMatchDates().get(i));
         }
     }
 
@@ -117,7 +123,7 @@ public class TournamentUtils {
     public static void enterMatchDayDate(int matchDayCounter, List<LocalDate> dates, List<MatchDay> matchDays){
 
         String date;
-        String result = "";
+        String result;
 
         do {
             System.out.println("\n" + "Enter Date for the Match Day " + matchDayCounter + " ***Format YYYY-MM-DD***");
@@ -138,17 +144,11 @@ public class TournamentUtils {
         }
     }
 
-    public static void listInitializer(int size, List<Team> teams){
-        for (int i = 0; i < size; i++) {
-            teams.add(new Team());
-        }
-    }
-
     public static boolean enterTeamsManually(List<Table> tables){
 
         enterTables(tables);
         String input;
-        String result = "";
+        String result;
 
         for(Table table : tables){
             int counter = 1;
@@ -171,7 +171,7 @@ public class TournamentUtils {
             }while(!"back".equals(input) && counter < 5);
 
             if("back".equals(input)){
-                tables.forEach(objectTable -> {objectTable.getTeams().clear();});
+                tables.forEach(objectTable -> objectTable.getTeams().clear());
                 return false;
             }
         }
@@ -192,11 +192,41 @@ public class TournamentUtils {
     }
 
     public static ArrayList<Integer> arrayListIntegerInitializer(int size){
-        ArrayList<Integer> list = new ArrayList();
+        ArrayList<Integer> list = new ArrayList<>();
         for (int i = 1; i <= size; i++) {
             list.add(i);
         }
         return list;
     }
+
+    public static void initializeGroupStageMatches(List<Table> tables, List<MatchDay> matchDays){
+        for(Table table : tables){
+            for(int i = 0 ; i < MATCHDAYS_GROUP_STAGE; i++){
+                table.getMatches().add(new Match(matchDays.get(i)));
+                table.getMatches().add(new Match(matchDays.get(i)));
+            }
+        }
+    }
+
+    public static void initializeQuarterFinalsMatches(List<Match> matches, List<MatchDay> matchDays){
+
+        int end = MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS;
+
+        for (int i = MATCHDAYS_GROUP_STAGE; i < end; i++) {
+            matches.add(new Match(matchDays.get(i)));
+            matches.add(new Match(matchDays.get(i)));
+        }
+    }
+
+    public static void initializeSemiFinalsMatches(List<Match> matches, List<MatchDay> matchDays){
+
+        int start = MATCHDAYS_GROUP_STAGE + QUARTERFINALS_MATCHES;
+        int end = MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS + MATCHDAYS_SEMIFINALS;
+
+        for (int i = start; i < end; i++) {
+            matches.add(new Match(matchDays.get(i)));
+        }
+    }
+
 
 }

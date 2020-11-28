@@ -3,15 +3,24 @@ package main;
  public class Globals {
 
     //Parameters
-    public static final int MATCHDAYS_GROUP_STAGE = 6;
     public static final int TABLES = 4;
+    public static final int TEAMS = 4;
     public static final int TEAMS_PER_TABLE = 4;
-    public static final int MATCHES_PER_MATCHDAY_PER_TABLE = 2;
-    public static final int QUARTERFINALS_TEAMS_SIZE = 8;
-    public static final int SEMIFINALS_TEAMS_SIZE = 4;
-    public static final int FINAL_TEAMS_SIZE = 2;
+
+    public static final int GROUP_STAGE_TEAMS = 16;
+    public static final int GROUP_STAGE_MATCHES = 48;
+    public static final int MATCHDAYS_GROUP_STAGE = 6;
+
+    public static final int QUARTERFINALS_TEAMS = 8;
+    public static final int QUARTERFINALS_MATCHES = 8;
     public static final int MATCHDAYS_QUARTERFINALS = 4;
+
+    public static final int SEMIFINALS_TEAMS = 4;
+    public static final int SEMIFINALS_MATCHES = 4;
     public static final int MATCHDAYS_SEMIFINALS = 4;
+
+    public static final int FINALS_TEAMS = 2;
+    public static final int FINALS_MATCHES = 1;
     public static final int MATCHDAYS_FINALS = 1;
 
 

@@ -3,6 +3,8 @@ package main.rounds;
 import main.KickOff;
 import main.model.Match;
 import main.model.MatchDay;
+import main.model.Table;
+import main.model.Team;
 import main.utils.ASCIIArt;
 import main.utils.TournamentUtils;
 import main.utils.Validator;
@@ -17,6 +19,13 @@ import static main.Globals.*;
 
 public class QuarterFinals extends Round{
 
+    //Constructor
+    public QuarterFinals(List<Table> tables, List<MatchDay> matchDays,
+                         List<Match> quarterFinals, List<Match> semiFinals,
+                         Match finalMatch, Team championTeam) {
+        super(tables, matchDays, quarterFinals, semiFinals, finalMatch, championTeam);
+    }
+
     ///////////////////////////////////////////////Start Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
     public void mainScreen() {
@@ -29,6 +38,7 @@ public class QuarterFinals extends Round{
 
     @Override
     public void navigationMenu() {
+
         String input;
         boolean proceed = false;
 
@@ -49,8 +59,6 @@ public class QuarterFinals extends Round{
                     overview();
                     break;
                 case "2":
-                    selectMode();
-                    proceedToNextRound();
                     proceed = true;
                     break;
                 default:
@@ -58,6 +66,10 @@ public class QuarterFinals extends Round{
                     break;
             }
         } while (!"0".equals(input) && !proceed);
+
+        if(proceed){
+            selectMode();
+        }
 
         if("0".equals(input)){
             ASCIIArt.end();
@@ -67,8 +79,10 @@ public class QuarterFinals extends Round{
     ////////////////////////////////////////////////////Mode Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
     public void selectMode() {
+
         String input;
         boolean modeSelected = false;
+
         do {
             System.out.println("\n");
             System.out.println("*******************************************************************************************");
@@ -100,24 +114,11 @@ public class QuarterFinals extends Round{
     @Override
     public void runAuto() {
 
-        TournamentUtils.setDatesAuto(MATCHDAYS_GROUP_STAGE,MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS,
-                dataInitializer.getMatchDays(),dataInitializer.getMatchDates());
+        TournamentUtils.setDatesAuto(MATCHDAYS_GROUP_STAGE,MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS, getMatchDays());
 
         Random random = new Random();
+        getQuarterFinals().forEach(match -> match.runMatch(random.nextInt(6),random.nextInt(6)));
 
-        for(int i = 0; i < dataInitializer.getQuarterFinalsTeams().size()/2; i++) {
-
-            int opponentIndex = i + 4;
-
-            dataInitializer.getQuarterFinals().get(i).setHomeTeam(dataInitializer.getQuarterFinalsTeams().get(i));
-            dataInitializer.getQuarterFinals().get(i).setGuestTeam(dataInitializer.getQuarterFinalsTeams().get(opponentIndex));
-            dataInitializer.getQuarterFinals().get(i).runMatch(random.nextInt(6), random.nextInt(6));
-
-            dataInitializer.getQuarterFinals().get(i+4).setHomeTeam(dataInitializer.getQuarterFinalsTeams().get(opponentIndex));
-            dataInitializer.getQuarterFinals().get(i+4).setGuestTeam(dataInitializer.getQuarterFinalsTeams().get(i));
-            dataInitializer.getQuarterFinals().get(i+4).runMatch(random.nextInt(6), random.nextInt(6));
-
-        }
     }
 
     @Override
@@ -140,7 +141,7 @@ public class QuarterFinals extends Round{
         List<LocalDate> dates;
 
         do {
-            dates = dataInitializer.getMatchDays().stream().map(MatchDay::getDate).collect(Collectors.toList());
+            dates = getMatchDays().stream().map(MatchDay::getDate).collect(Collectors.toList());
             System.out.println("\n");
             System.out.println("To enter the dates type '1', or type 'back' to cancel (data will be lost).");
             input = KickOff.scanner.nextLine();
@@ -152,7 +153,7 @@ public class QuarterFinals extends Round{
                     System.out.println("\n");
                     System.out.println("Match Day " + counter);
                     System.out.println("\n");
-                    TournamentUtils.enterMatchDayDate(counter,dates,dataInitializer.getMatchDays());
+                    TournamentUtils.enterMatchDayDate(counter,dates,getMatchDays());
                     selectMatchForThisDate(counter, positions);
                     break;
                 default:
@@ -185,7 +186,7 @@ public class QuarterFinals extends Round{
                     System.out.println("\n");
                     System.out.println("Match Day " + counter + " Table ");
                     System.out.println("\n");
-                    TournamentUtils.enterMatchInfo(counter, dataInitializer.getQuarterFinals());
+                    TournamentUtils.enterMatchInfo(counter, getQuarterFinals());
                     System.out.println();
                     break;
                 default:
@@ -213,7 +214,7 @@ public class QuarterFinals extends Round{
 
         int indexOfMatch1 = Integer.parseInt(input);
         positions.remove(indexOfMatch1 - 1);
-        dataInitializer.getQuarterFinals().add(new Match(dataInitializer.getMatchDays().get(counter)));
+        getQuarterFinals().add(new Match(getMatchDays().get(counter)));
 
         do {
             System.out.println("\n" + "Enter the number of the pair for the 2st Match of the " + counter + " Match Day");
@@ -222,24 +223,34 @@ public class QuarterFinals extends Round{
 
         int indexOfMatch2 = Integer.parseInt(input);
         positions.remove(indexOfMatch2 - 1);
-        dataInitializer.getQuarterFinals().add(new Match(dataInitializer.getMatchDays().get(counter)));
+        getQuarterFinals().add(new Match(getMatchDays().get(counter)));
 
     }
 
     /////////////////////////////////////////////////Proceed Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
     public void setQualifiers() {
-        for (int i = 0; i < dataInitializer.getQuarterFinals().size()/2; i++) {
-            dataInitializer.getSemiFinalsTeams().add(TournamentUtils.findQualifiedTeam(dataInitializer.getQuarterFinals().get(i),
-                                                                        dataInitializer.getQuarterFinals().get(i+4)));
+
+        TournamentUtils.initializeSemiFinalsMatches(getQuarterFinals(), getMatchDays());
+
+        for (int i = 0; i < SEMIFINALS_MATCHES/2; i++) {
+
+            Team team1 = TournamentUtils.findQualifiedTeam(getQuarterFinals().get(i), getQuarterFinals().get(i + 4));
+            Team team2 = TournamentUtils.findQualifiedTeam(getQuarterFinals().get(i + 1), getQuarterFinals().get(i + 5));
+
+            getSemiFinals().get(i).setHomeTeam(team1);
+            getSemiFinals().get(i).setGuestTeam(team2);
+            //Revanche match
+            getSemiFinals().get(i + 2).setHomeTeam(team2);
+            getSemiFinals().get(i + 2).setGuestTeam(team1);
         }
     }
 
     @Override
     public void proceedToNextRound() {
+
         String input;
         boolean proceed = false;
-        SemiFinals semiFinals = new SemiFinals();
 
         do {
             System.out.println("\n");
@@ -256,6 +267,10 @@ public class QuarterFinals extends Round{
                     break;
                 case "1":
                     setQualifiers();
+                    SemiFinals semiFinals = new SemiFinals(
+                            getTables(), getMatchDays(),
+                            getQuarterFinals(), getSemiFinals(),
+                            getFinalMatch(), getChampionTeam());
                     semiFinals.start();
                     proceed = true;
                     break;
@@ -276,11 +291,9 @@ public class QuarterFinals extends Round{
     ////////////////////////////////////////////Reporting Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
     public void overview(){
-        for(int i = 0; i < dataInitializer.getQuarterFinalsTeams().size()/2; i++){
-            int matchNumber = i + 1;
-            int opponentIndex = i + 4;
-            System.out.println(matchNumber + ". " + dataInitializer.getQuarterFinalsTeams().get(i).getName()
-                                           + " - " + dataInitializer.getQuarterFinalsTeams().get(opponentIndex).getName());
+        for (int i = 0; i < QUARTERFINALS_MATCHES/2; i++) {
+            int number = i + 1;
+            System.out.println(number + ". " + getQuarterFinals().get(i).overview());
         }
     }
 
@@ -296,8 +309,8 @@ public class QuarterFinals extends Round{
 
         for(int i = MATCHDAYS_GROUP_STAGE; i < phaseTwoStart ; i++){
             System.out.println("Match Day " + i + "\n");
-            for(Match match : dataInitializer.getQuarterFinals()){
-                if(match.getMatchDay() == dataInitializer.getMatchDays().get(i)){
+            for(Match match : getQuarterFinals()){
+                if(match.getMatchDay() == getMatchDays().get(i)){
                     System.out.println(match);
                 }
             }
@@ -308,8 +321,8 @@ public class QuarterFinals extends Round{
 
         for(int i = phaseTwoStart; i < phaseTwoEnd; i++){
             System.out.println("Match Day " + i + "\n");
-            for(Match match : dataInitializer.getQuarterFinals()){
-                if(match.getMatchDay() == dataInitializer.getMatchDays().get(i)){
+            for(Match match : getQuarterFinals()){
+                if(match.getMatchDay() == getMatchDays().get(i)){
                     System.out.println(match);
                 }
             }

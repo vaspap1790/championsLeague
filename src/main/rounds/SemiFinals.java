@@ -3,10 +3,14 @@ package main.rounds;
 import main.KickOff;
 import main.model.Match;
 import main.model.MatchDay;
+import main.model.Table;
+import main.model.Team;
 import main.utils.ASCIIArt;
 import main.utils.TournamentUtils;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -14,6 +18,13 @@ import java.util.stream.Collectors;
 import static main.Globals.*;
 
 public class SemiFinals extends Round{
+
+    //Constructor
+    public SemiFinals(List<Table> tables, List<MatchDay> matchDays,
+                      List<Match> quarterFinals, List<Match> semiFinals,
+                      Match finalMatch, Team championTeam) {
+        super(tables, matchDays, quarterFinals, semiFinals, finalMatch, championTeam);
+    }
 
     ///////////////////////////////////////////////Start Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
@@ -99,24 +110,10 @@ public class SemiFinals extends Round{
     public void runAuto() {
 
         TournamentUtils.setDatesAuto(MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS,
-                MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS + MATCHDAYS_SEMIFINALS,
-                dataInitializer.getMatchDays(),dataInitializer.getMatchDates());
+                MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS + MATCHDAYS_SEMIFINALS, getMatchDays());
 
         Random random = new Random();
-
-        for(int i = 0; i < dataInitializer.getSemiFinalsTeams().size()/2; i++) {
-
-            int opponentIndex = i + 2;
-
-            dataInitializer.getSemiFinals().get(i).setHomeTeam(dataInitializer.getSemiFinalsTeams().get(i));
-            dataInitializer.getSemiFinals().get(i).setGuestTeam(dataInitializer.getSemiFinalsTeams().get(opponentIndex));
-            dataInitializer.getSemiFinals().get(i).runMatch(random.nextInt(6), random.nextInt(6));
-
-            dataInitializer.getSemiFinals().get(i+4).setHomeTeam(dataInitializer.getSemiFinalsTeams().get(opponentIndex));
-            dataInitializer.getSemiFinals().get(i+4).setGuestTeam(dataInitializer.getSemiFinalsTeams().get(i));
-            dataInitializer.getSemiFinals().get(i+4).runMatch(random.nextInt(6), random.nextInt(6));
-
-        }
+        getSemiFinals().forEach(match -> match.runMatch(random.nextInt(6),random.nextInt(6)));
     }
 
     @Override
@@ -138,7 +135,7 @@ public class SemiFinals extends Round{
         List<LocalDate> dates;
 
         do {
-            dates = dataInitializer.getMatchDays().stream().map(MatchDay::getDate).collect(Collectors.toList());
+            dates = getMatchDays().stream().map(MatchDay::getDate).collect(Collectors.toList());
             System.out.println("\n");
             System.out.println("To enter the dates type '1', or type 'back' to cancel (data will be lost).");
             input = KickOff.scanner.nextLine();
@@ -150,7 +147,7 @@ public class SemiFinals extends Round{
                     System.out.println("\n");
                     System.out.println("Match Day " + counter);
                     System.out.println("\n");
-                    TournamentUtils.enterMatchDayDate(counter,dates,dataInitializer.getMatchDays());
+                    TournamentUtils.enterMatchDayDate(counter,dates,getMatchDays());
                     break;
                 default:
                     System.out.println("\n" + "Invalid input. Try again." + "\n");
@@ -181,7 +178,7 @@ public class SemiFinals extends Round{
                     System.out.println("\n");
                     System.out.println("Match Day " + counter + " Table ");
                     System.out.println("\n");
-                    TournamentUtils.enterMatchInfo(counter, dataInitializer.getSemiFinals());
+                    TournamentUtils.enterMatchInfo(counter, getSemiFinals());
                     System.out.println();
                     break;
                 default:
@@ -197,17 +194,21 @@ public class SemiFinals extends Round{
     /////////////////////////////////////////////////Proceed Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
     public void setQualifiers() {
-        for (int i = 0; i < dataInitializer.getSemiFinals().size()/2; i++) {
-            dataInitializer.getSemiFinalsTeams().add(TournamentUtils.findQualifiedTeam(dataInitializer.getSemiFinals().get(i),
-                    dataInitializer.getSemiFinals().get(i+4)));
-        }
+
+        TournamentUtils.initializeSemiFinalsMatches(getSemiFinals(), getMatchDays());
+
+        Team team1 = TournamentUtils.findQualifiedTeam(getSemiFinals().get(0), getSemiFinals().get(2));
+        Team team2 = TournamentUtils.findQualifiedTeam(getSemiFinals().get(1), getSemiFinals().get(3));
+
+        getFinalMatch().setHomeTeam(team1);
+        getFinalMatch().setGuestTeam(team2);
     }
 
     @Override
     public void proceedToNextRound() {
+
         String input;
         boolean proceed = false;
-        Finals finals = new Finals();
 
         do {
             System.out.println("\n");
@@ -224,6 +225,10 @@ public class SemiFinals extends Round{
                     break;
                 case "1":
                     setQualifiers();
+                    Finals finals = new Finals(
+                            getTables(), getMatchDays(),
+                            getQuarterFinals(), getSemiFinals(),
+                            getFinalMatch(), getChampionTeam());
                     finals.start();
                     proceed = true;
                     break;
@@ -244,11 +249,9 @@ public class SemiFinals extends Round{
     ////////////////////////////////////////////Reporting Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
     public void overview(){
-        for(int i = 0; i < dataInitializer.getSemiFinalsTeams().size()/2; i++){
-            int matchNumber = i + 1;
-            int opponentIndex = i + 2;
-            System.out.println(matchNumber + ". " + dataInitializer.getSemiFinalsTeams().get(i).getName()
-                    + " - " + dataInitializer.getSemiFinalsTeams().get(opponentIndex).getName());
+        for (int i = 0; i < SEMIFINALS_MATCHES/2; i++) {
+            int number = i + 1;
+            System.out.println(number + ". " + getSemiFinals().get(i).overview());
         }
     }
 
@@ -264,8 +267,8 @@ public class SemiFinals extends Round{
 
         for(int i = MATCHDAYS_QUARTERFINALS; i < phaseTwoStart ; i++){
             System.out.println("Match Day " + i + "\n");
-            for(Match match : dataInitializer.getSemiFinals()){
-                if(match.getMatchDay() == dataInitializer.getMatchDays().get(i)){
+            for(Match match : getSemiFinals()){
+                if(match.getMatchDay() == getMatchDays().get(i)){
                     System.out.println(match);
                 }
             }
@@ -276,8 +279,8 @@ public class SemiFinals extends Round{
 
         for(int i = phaseTwoStart; i < phaseTwoEnd; i++){
             System.out.println("Match Day " + i + "\n");
-            for(Match match : dataInitializer.getSemiFinals()){
-                if(match.getMatchDay() == dataInitializer.getMatchDays().get(i)){
+            for(Match match : getSemiFinals()){
+                if(match.getMatchDay() == getMatchDays().get(i)){
                     System.out.println(match);
                 }
             }

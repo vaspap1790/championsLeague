@@ -13,6 +13,7 @@ public class Penalties {
     private Team team1;
     private Team team2;
     private Team winningTeam;
+    private Team losingTeam;
     private String result;
     private Random random = new Random();
 
@@ -35,9 +36,11 @@ public class Penalties {
 
         if(successfulPenaltiesForTeam1 > successfulPenaltiesForTeam2){
             winningTeam = team1;
+            losingTeam = team2;
         }
         else {
             winningTeam = team2;
+            losingTeam = team1;
         }
         result = successfulPenaltiesForTeam1 + " - " + successfulPenaltiesForTeam2;
     }
@@ -68,9 +71,11 @@ public class Penalties {
 
         if(successfulPenaltiesForTeam1 > successfulPenaltiesForTeam2){
             winningTeam = team1;
+            losingTeam = team2;
         }
         else {
             winningTeam = team2;
+            losingTeam = team1;
         }
         result = successfulPenaltiesForTeam1 + " - " + successfulPenaltiesForTeam2;
     }
@@ -80,6 +85,17 @@ public class Penalties {
         return winningTeam;
     }
 
+    public void setWinningTeam(Team winningTeam) {
+        this.winningTeam = winningTeam;
+    }
+
+    public Team getLosingTeam() {
+        return losingTeam;
+    }
+
+    public void setLosingTeam(Team losingTeam) {
+        this.losingTeam = losingTeam;
+    }
 
     @Override
     public String toString() {

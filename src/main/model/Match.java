@@ -69,6 +69,10 @@ public class Match {
         }
     }
 
+    public String overview() {
+        return homeTeam.getName() + " - " + guestTeam.getName();
+    }
+
     //Getters-Setters
     public Team getHomeTeam() {
         return homeTeam;
