@@ -27,4 +27,5 @@ package main;
      public static final String HOME_TEAM = "Home Team";
      public static final String GUEST_TEAM = "Guest Team";
      public static final String SCORE = "score";
+     public static final String EMPTY_STRING = "Empty string";
 }

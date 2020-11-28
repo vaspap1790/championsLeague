@@ -107,4 +107,13 @@ public class Validator {
         }
     }
 
+    public static String emptyStringCheck(String input) {
+        if(input.trim().equals("")){
+            return EMPTY_STRING;
+        }
+        else{
+            return VALID;
+        }
+    }
+
 }

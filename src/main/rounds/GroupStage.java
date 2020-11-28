@@ -57,11 +57,13 @@ public class GroupStage extends Round{
             }
         } while (!"0".equals(input) && !proceed);
 
+        if(proceed){
+            selectMode();
+        }
+
         if("0".equals(input)){
             ASCIIArt.end();
         }
-
-        selectMode();
     }
 
     ////////////////////////////////////////////////////Mode Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -95,7 +97,13 @@ public class GroupStage extends Round{
             }
         } while (!"0".equals(input) && !modeSelected);
 
-        ASCIIArt.end();
+        if(modeSelected){
+            proceedToNextRound();
+        }
+
+        if("0".equals(input)){
+            ASCIIArt.end();
+        }
     }
 
     @Override
@@ -162,7 +170,6 @@ public class GroupStage extends Round{
             table.getMatches().add(match12);
 
         }
-        proceedToNextRound();
     }
 
     @Override
@@ -176,41 +183,40 @@ public class GroupStage extends Round{
     @Override
     public boolean setDatesManually(){
 
-//        System.out.println("\n" + "Firstly, you have to set dates for the six Match Days of the Group Stage.");
-//        String input;
-//        int counter = 1;
-//        List<LocalDate> dates;
-//
-//        do {
-//            dates = dataInitializer.getMatchDays().stream().map(MatchDay::getDate).collect(Collectors.toList());
-//            System.out.println("\n" + "To enter the date of MatchDay " + counter
-//                    + " type '1', or type 'back' to cancel (data will be lost).");
-//            input = KickOff.scanner.nextLine();
-//
-//            switch (input) {
-//                case "back":
-//                    break;
-//                case "1":
-//                    TournamentUtils.enterMatchDayDate(counter,dates,dataInitializer.getMatchDays());
-//                    counter++;
-//                    break;
-//                default:
-//                    System.out.println("\n" + "Invalid input. Try again." + "\n");
-//                    break;
-//            }
-//
-//        } while (!"back".equals(input) && counter <= MATCHDAYS_GROUP_STAGE);
-//
-//        System.out.println("\n" + "You successfully arranged the MathDay Dates for the Group Stage!");
-//
-//        if ("back".equals(input)) {
-//            dataInitializer.getMatchDays().forEach(matchDay -> {matchDay.setDate(null);});
-//            return false;
-//        }
+        System.out.println("\n" + "Firstly, you have to set dates for the six Match Days of the Group Stage.");
+        String input;
+        int counter = 1;
+        List<LocalDate> dates;
 
-        TournamentUtils.setDatesAuto(0,MATCHDAYS_GROUP_STAGE,dataInitializer.getMatchDays(),dataInitializer.getMatchDates());
+        do {
+            dates = dataInitializer.getMatchDays().stream().map(MatchDay::getDate).collect(Collectors.toList());
+            System.out.println("\n" + "To enter the date of MatchDay " + counter
+                    + " type '1', or type 'back' to cancel (data will be lost).");
+            input = KickOff.scanner.nextLine();
+
+            switch (input) {
+                case "back":
+                    break;
+                case "1":
+                    TournamentUtils.enterMatchDayDate(counter,dates,dataInitializer.getMatchDays());
+                    counter++;
+                    break;
+                default:
+                    System.out.println("\n" + "Invalid input. Try again." + "\n");
+                    break;
+            }
+
+        } while (!"back".equals(input) && counter <= MATCHDAYS_GROUP_STAGE);
+
+        if ("back".equals(input)) {
+            dataInitializer.getMatchDays().forEach(matchDay -> {matchDay.setDate(null);});
+            return false;
+        }
+
+        System.out.println("\n" + "You successfully arranged the MathDay Dates for the Group Stage!");
 
         if(setMatchesDetailsManually()){
+            System.out.println("\n" + "You successfully arranged all matches for the Group Stage!");
             return true;
         }else{
             dataInitializer.getMatchDays().forEach(matchDay -> {matchDay.setDate(null);});
@@ -282,8 +288,28 @@ public class GroupStage extends Round{
 
         //Check if match between these two team has already been arranged
         if(matchDayCounter != 1){
-            checkIfMatchAlreadyArranged(matchDayCounter, matchCounter, matchArrayIndex, phase, table, input,
-                    result, positions, teamsIndexes);
+            boolean matchAlreadyArranged = false;
+
+            do{
+
+                Match match1 = new Match(table.getTeams().get(teamsIndexes.get("indexHomeTeam") - 1), table.getTeams().get(teamsIndexes.get("indexGuestTeam") - 1));
+                Match match2 = new Match(table.getTeams().get(teamsIndexes.get("indexGuestTeam") - 1), table.getTeams().get(teamsIndexes.get("indexHomeTeam") - 1));
+
+                for (int i = 0; i < matchArrayIndex; i++) {
+                    if (table.getMatches().get(i).equals(match1) || table.getMatches().get(i).equals(match2)) {
+                        matchAlreadyArranged = true;
+                        break;
+                    }
+                }
+
+                if(matchAlreadyArranged){
+                    System.out.println("\n" + "The matches between these two team have already been arranged. Try again");
+                    matchAlreadyArranged = false;
+                    positions = TournamentUtils.arrayListIntegerInitializer(4);
+                    teamsIndexes = enterMatchTeams(input, result, positions, table, matchCounter, matchDayCounter, phase);
+                }
+
+            }while(matchAlreadyArranged);
         }
 
         //Teams for the first Match of this MatchDay
@@ -345,34 +371,6 @@ public class GroupStage extends Round{
         HashMap<String,Integer> scores4 = enterScore(askForHTeamScore4, askForGTeamScore4);
         //Run match
         table.getMatches().get(phaseTwoMatchArrayIndex + 1).runMatch(scores4.get("goalsHomeTeam"), scores4.get("goalsGuestTeam"));
-
-    }
-
-    public void checkIfMatchAlreadyArranged(int matchDayCounter, int matchCounter, int matchArrayIndex, int phase,  Table table, String input,
-                                            String result, List<Integer> positions, HashMap<String,Integer> teamsIndexes){
-
-        boolean matchAlreadyArranged = false;
-
-        do{
-
-            Match match1 = new Match(table.getTeams().get(teamsIndexes.get("indexHomeTeam") - 1), table.getTeams().get(teamsIndexes.get("indexGuestTeam") - 1));
-            Match match2 = new Match(table.getTeams().get(teamsIndexes.get("indexGuestTeam") - 1), table.getTeams().get(teamsIndexes.get("indexHomeTeam") - 1));
-
-            for (int i = 0; i < matchArrayIndex; i++) {
-                if (table.getMatches().get(i).equals(match1) || table.getMatches().get(i).equals(match2)) {
-                    matchAlreadyArranged = true;
-                    break;
-                }
-            }
-
-            if(matchAlreadyArranged){
-                System.out.println("\n" + "The matches between these two team have already been arranged. Try again");
-                matchAlreadyArranged = false;
-                positions = TournamentUtils.arrayListIntegerInitializer(4);
-                teamsIndexes = enterMatchTeams(input, result, positions, table, matchCounter, matchDayCounter, phase);
-            }
-
-        }while(matchAlreadyArranged);
 
     }
 

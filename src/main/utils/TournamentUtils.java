@@ -120,7 +120,7 @@ public class TournamentUtils {
         String result = "";
 
         do {
-            System.out.println("\n" + "Enter Date for the Match Day " + matchDayCounter + " ***Format YYYY-MM-DD***" + "\n");
+            System.out.println("\n" + "Enter Date for the Match Day " + matchDayCounter + " ***Format YYYY-MM-DD***");
             date = KickOff.scanner.nextLine();
             result = Validator.dateCheck(date,dates,matchDayCounter-1);
 
@@ -148,22 +148,30 @@ public class TournamentUtils {
 
         enterTables(tables);
         String input;
+        String result = "";
 
         for(Table table : tables){
             int counter = 1;
             do {
-                System.out.println("\n");
-                System.out.println("- Please enter Team " + counter + " for the " + table.getTableName() +
-                        " Table or type 0 to cancel (data will be lost) -");
-                input = KickOff.scanner.nextLine();
-                if(!"0".equals(input)){
-                    table.getTeams().add(new Team(input));
-                }
-                counter++;
-            }while(!"0".equals(input) && counter < 5);
 
-            if("0".equals(input)){
-                tables.forEach(table1 -> {table1.getTeams().clear();});
+                System.out.println("Please enter Team " + counter + " for the " + table.getTableName() +
+                        " Table or type 'back' to cancel (data will be lost)");
+                input = KickOff.scanner.nextLine();
+                result = Validator.emptyStringCheck(input);
+
+                if(!"back".equals(input) && result.equals(VALID)){
+                    table.getTeams().add(new Team(input));
+                    counter++;
+                }
+
+                if(!result.equals(VALID)){
+                    System.out.println(result);
+                }
+
+            }while(!"back".equals(input) && counter < 5);
+
+            if("back".equals(input)){
+                tables.forEach(objectTable -> {objectTable.getTeams().clear();});
                 return false;
             }
         }
