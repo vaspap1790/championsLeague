@@ -28,6 +28,11 @@ public class SemiFinals extends Round{
         super(tables, matchDays, quarterFinals, semiFinals, finalMatch, championTeam);
     }
 
+    public SemiFinals(List<Match> semiFinals, List<MatchDay> matchDays) {
+        super.setSemiFinals(semiFinals);
+        super.setMatchDays(matchDays);
+    }
+
     ///////////////////////////////////////////////Start Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
     public void mainScreen() {

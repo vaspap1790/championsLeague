@@ -22,6 +22,11 @@ public class GroupStage extends Round{
         super(tables, matchDays, quarterFinals, semiFinals, finalMatch, championTeam);
     }
 
+    public GroupStage(List<Table> tables, List<MatchDay> matchDays) {
+        super.setTables(tables);
+        super.setMatchDays(matchDays);
+    }
+
     ///////////////////////////////////////////////Start Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
     public void mainScreen() {

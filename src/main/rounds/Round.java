@@ -36,6 +36,9 @@ public abstract class Round {
         this.championTeam = championTeam;
     }
 
+    public Round() {
+    }
+
     //Start Methods
     public abstract void mainScreen();
 

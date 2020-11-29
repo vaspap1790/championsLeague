@@ -28,6 +28,11 @@ public class QuarterFinals extends Round{
         super(tables, matchDays, quarterFinals, semiFinals, finalMatch, championTeam);
     }
 
+    public QuarterFinals(List<Match> quarterFinals, List<MatchDay> matchDays) {
+        super.setQuarterFinals(quarterFinals);
+        super.setMatchDays(matchDays);
+    }
+
     ///////////////////////////////////////////////Start Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
     public void mainScreen() {
