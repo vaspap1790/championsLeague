@@ -104,6 +104,6 @@ public class Penalties {
 
     @Override
     public String toString() {
-        return "Penalties" + team1.getName() + " " + result + " " + team2.getName();
+        return "Penalties: " + team1.getName() + " " + result + " " + team2.getName();
     }
 }

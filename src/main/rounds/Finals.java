@@ -170,7 +170,7 @@ public class Finals extends Round{
     ////////////////////////////////////////////Reporting Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
     public void overview(){
-        getFinalMatch().overview();
+        System.out.println(getFinalMatch().overview());
     }
 
     @Override

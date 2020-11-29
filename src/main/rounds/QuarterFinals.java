@@ -146,35 +146,33 @@ public class QuarterFinals extends Round{
         int matchDayIndex = matchDayCounter - 1;
         int matchDayIndexEnd = MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS;
         List<LocalDate> dates;
-//
-//        do {
-//            dates = getMatchDays().stream().map(MatchDay::getDate).collect(Collectors.toList());
-//            System.out.println("\n");
-//            System.out.println("To enter the dates type '1', or type 'back' to cancel (data will be lost).");
-//            input = KickOff.scanner.nextLine();
-//
-//            switch (input) {
-//                case "back":
-//                    break;
-//                case "1":
-//                    TournamentUtils.enterMatchDayDate(matchDayCounter, dates, getMatchDays());
-//                    matchDayCounter++;
-//                    break;
-//                default:
-//                    System.out.println("\n" + "Invalid input. Try again." + "\n");
-//                    break;
-//            }
-//
-//        } while (!"back".equals(input) && matchDayCounter <= matchDayIndexEnd);
-//
-//        if ("back".equals(input)) {
-//            TournamentUtils.resetMatchDaysDates(matchDayIndex, matchDayIndexEnd, getMatchDays());
-//            return false;
-//        }
-//
-//        System.out.println("\n" + "You successfully arranged the MathDay Dates for the Quarter Finals!");
 
-        TournamentUtils.setDatesAuto(MATCHDAYS_GROUP_STAGE,MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS, getMatchDays());
+        do {
+            dates = getMatchDays().stream().map(MatchDay::getDate).collect(Collectors.toList());
+            System.out.println("\n");
+            System.out.println("To enter the dates type '1', or type 'back' to cancel (data will be lost).");
+            input = KickOff.scanner.nextLine();
+
+            switch (input) {
+                case "back":
+                    break;
+                case "1":
+                    TournamentUtils.enterMatchDayDate(matchDayCounter, dates, getMatchDays());
+                    matchDayCounter++;
+                    break;
+                default:
+                    System.out.println("\n" + "Invalid input. Try again." + "\n");
+                    break;
+            }
+
+        } while (!"back".equals(input) && matchDayCounter <= matchDayIndexEnd);
+
+        if ("back".equals(input)) {
+            TournamentUtils.resetMatchDaysDates(matchDayIndex, matchDayIndexEnd, getMatchDays());
+            return false;
+        }
+
+        System.out.println("\n" + "You successfully arranged the MathDay Dates for the Quarter Finals!");
 
         if(setMatchesDetailsManually()){
             System.out.println("\n" + "You successfully arranged all matches for the Quarter Finals!");
