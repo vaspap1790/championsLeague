@@ -15,7 +15,7 @@ import static main.resources.Globals.*;
 
 public class GroupStage extends Round{
     
-    //Constructor
+    //Constructors
     public GroupStage(List<Table> tables, List<MatchDay> matchDays,
                       List<Match> quarterFinals, List<Match> semiFinals,
                       Match finalMatch, Team championTeam) {

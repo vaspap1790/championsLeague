@@ -1,9 +1,6 @@
 package main.model;
 
-import java.time.LocalDate;
-import java.util.Objects;
-
-public class Match {
+public class Match implements Cloneable {
 
     //Member Variables
     Team homeTeam;
@@ -128,4 +125,8 @@ public class Match {
         return homeTeam.getName() + " " + goalsForHTeam + " - " + goalsForGTeam + " " + guestTeam.getName();
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

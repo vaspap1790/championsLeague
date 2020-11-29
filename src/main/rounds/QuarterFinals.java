@@ -10,18 +10,15 @@ import main.utils.TournamentUtils;
 import main.utils.Validator;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static main.resources.Globals.*;
 import static main.utils.TournamentUtils.enterScore;
 
-public class QuarterFinals extends Round{
+public class QuarterFinals extends Round implements KnockOut{
 
-    //Constructor
+    //Constructors
     public QuarterFinals(List<Table> tables, List<MatchDay> matchDays,
                          List<Match> quarterFinals, List<Match> semiFinals,
                          Match finalMatch, Team championTeam) {
@@ -195,8 +192,13 @@ public class QuarterFinals extends Round{
         System.out.println("\n" + "Now, you have to set the match details for the 8 matches of the QuarterFinals.");
         String input;
 
+        List<Match> quarterFinalsCopy = null;
+        try {
+            quarterFinalsCopy = TournamentUtils.cloneList(getQuarterFinals());
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
         HashMap<String,Integer> scores;
-
         int matchCounter = 1;
 
         selectDates();
@@ -215,10 +217,10 @@ public class QuarterFinals extends Round{
                     System.out.println("\n" + "QuarterFinals Game " + matchCounter);
                     System.out.println(getQuarterFinals().get(matchIndex).overview() + "\n");
 
-                    scores = enterScore(askForMatchScore(getQuarterFinals().get(matchIndex).getHomeTeam().getName()),
-                               askForMatchScore(getQuarterFinals().get(matchIndex).getGuestTeam().getName()));
+                    scores = enterScore("\n" + "Enter score for " + getQuarterFinals().get(matchIndex).getHomeTeam().getName(),
+                                        "\n" + "Enter score for " + getQuarterFinals().get(matchIndex).getGuestTeam().getName());
 
-                    getQuarterFinals().get(matchIndex).runMatch(scores.get("goalsHomeTeam"), scores.get("goalsGuestTeam"));
+                    Objects.requireNonNull(quarterFinalsCopy).get(matchIndex).runMatch(scores.get("goalsHomeTeam"), scores.get("goalsGuestTeam"));
                     matchCounter++;
                     break;
                 default:
@@ -228,15 +230,26 @@ public class QuarterFinals extends Round{
 
         }while(!"back".equals(input) && matchCounter <= QUARTERFINALS_MATCHES);
 
-        if("back".equals(input)){
-            TournamentUtils.initializeQuarterFinalsMatches(getQuarterFinals());
+        if(!"back".equals(input)){
+            setQuarterFinals(quarterFinalsCopy);
+            return true;
+        }
+        else{
             return false;
         }
-
-        return true;
     }
 
-    ////////////////////////////////////Round Specific Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    //////////////////////////////////////////////KnockOut Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    public void setMatchDaysAuto(){
+
+        int end = MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS;
+
+        for (int matchDayIndex = MATCHDAYS_GROUP_STAGE, matchIndex = 0 ; matchDayIndex < end && matchIndex < 8 ;  matchDayIndex++, matchIndex = matchIndex + 2){
+            getQuarterFinals().get(matchIndex).setMatchDay(getMatchDays().get(matchDayIndex));
+            getQuarterFinals().get(matchIndex + 1).setMatchDay(getMatchDays().get(matchDayIndex));
+        }
+    }
+
     public void selectDates(){
 
         List<Integer> positions = TournamentUtils.arrayListIntegerInitializer(2);
@@ -300,27 +313,6 @@ public class QuarterFinals extends Round{
     public int getMatchDayIndexFromUserInput(Integer input){
         if(input == 1) return 6;
         else return 7;
-    }
-
-    public String askForMatchScore(String teamName){
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(System.lineSeparator());
-        sb.append("Enter score for ");
-        sb.append(teamName);
-
-        return sb.toString();
-    }
-
-    public void setMatchDaysAuto(){
-
-        int end = MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS;
-
-        for (int matchDayIndex = MATCHDAYS_GROUP_STAGE, matchIndex = 0 ; matchDayIndex < end && matchIndex < 8 ;  matchDayIndex++, matchIndex = matchIndex + 2){
-            getQuarterFinals().get(matchIndex).setMatchDay(getMatchDays().get(matchDayIndex));
-            getQuarterFinals().get(matchIndex + 1).setMatchDay(getMatchDays().get(matchDayIndex));
-        }
     }
 
     /////////////////////////////////////////////////Proceed Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

@@ -110,6 +110,13 @@ public class TournamentUtils {
         return qualifiedTeam;
     }
 
+    public static List<Match> cloneList(List<Match> list) throws CloneNotSupportedException {
+        List<Match> clone = new ArrayList<>(list.size());
+        for (Match item : list) clone.add((Match) item.clone());
+        return clone;
+    }
+
+
     //User Input
     public static void enterMatchDayDate(int matchDayCounter, List<LocalDate> dates, List<MatchDay> matchDays){
 
@@ -193,7 +200,7 @@ public class TournamentUtils {
         return scores;
     }
 
-    //Initializes
+    //Initializers
     public static void enterTables(List<Table> tables){
         for (TableName tableName : TableName.values()){
             tables.add(new Table(tableName));

@@ -7,10 +7,8 @@ import main.model.Table;
 import main.model.Team;
 import main.utils.ASCIIArt;
 import main.utils.TournamentUtils;
-import main.utils.Validator;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -125,7 +123,7 @@ public class Finals extends Round{
 
         TournamentUtils.setDatesAuto(MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS + MATCHDAYS_SEMIFINALS,
                 MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS + MATCHDAYS_SEMIFINALS + MATCHDAYS_FINALS, getMatchDays());
-        setMatchDaysAuto();
+        setMatchDayAuto();
 
         Random random = new Random();
         getFinalMatch().runMatch(random.nextInt(6), random.nextInt(6));
@@ -193,7 +191,7 @@ public class Finals extends Round{
 
         HashMap<String,Integer> scores;
 
-        setMatchDaysAuto();
+        setMatchDayAuto();
         System.out.println("\n" + "Time to enter the scores!");
 
         do {
@@ -208,8 +206,8 @@ public class Finals extends Round{
                     System.out.println("\n" + "Finals Game");
                     System.out.println(getFinalMatch().overview() + "\n");
 
-                    scores = enterScore(askForMatchScore(getFinalMatch().getHomeTeam().getName()),
-                            askForMatchScore(getFinalMatch().getGuestTeam().getName()));
+                    scores = enterScore("\n" + "Enter score for " + getFinalMatch().getHomeTeam().getName(),
+                                        "\n" + "Enter score for " + getFinalMatch().getGuestTeam().getName());
 
                     getFinalMatch().runMatch(scores.get("goalsHomeTeam"), scores.get("goalsGuestTeam"));
                     finalsTookPlace = true;
@@ -230,18 +228,8 @@ public class Finals extends Round{
 
     }
 
-    public String askForMatchScore(String teamName){
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(System.lineSeparator());
-        sb.append("Enter score for ");
-        sb.append(teamName);
-
-        return sb.toString();
-    }
-
-    public void setMatchDaysAuto(){
+    ///////////////////////////////////////////Round Specific Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    public void setMatchDayAuto(){
         getFinalMatch().setMatchDay(getMatchDays().get(14));
     }
     

@@ -10,18 +10,15 @@ import main.utils.TournamentUtils;
 import main.utils.Validator;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static main.resources.Globals.*;
 import static main.utils.TournamentUtils.enterScore;
 
-public class SemiFinals extends Round{
+public class SemiFinals extends Round  implements KnockOut{
 
-    //Constructor
+    //Constructors
     public SemiFinals(List<Table> tables, List<MatchDay> matchDays,
                       List<Match> quarterFinals, List<Match> semiFinals,
                       Match finalMatch, Team championTeam) {
@@ -194,8 +191,13 @@ public class SemiFinals extends Round{
         System.out.println("\n" + "Now, you have to set the match details for the 4 matches of the Semi Finals.");
         String input;
 
+        List<Match> semiFinalsCopy = null;
+        try {
+            semiFinalsCopy = TournamentUtils.cloneList(getSemiFinals());
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
         HashMap<String,Integer> scores;
-
         int matchCounter = 1;
 
         selectDates();
@@ -214,10 +216,10 @@ public class SemiFinals extends Round{
                     System.out.println("\n" + "SemiFinals Game " + matchCounter);
                     System.out.println(getSemiFinals().get(matchIndex).overview() + "\n");
 
-                    scores = enterScore(askForMatchScore(getSemiFinals().get(matchIndex).getHomeTeam().getName()),
-                            askForMatchScore(getSemiFinals().get(matchIndex).getGuestTeam().getName()));
+                    scores = enterScore("\n" + "Enter score for " + getSemiFinals().get(matchIndex).getHomeTeam().getName(),
+                                        "\n" + "Enter score for " + getSemiFinals().get(matchIndex).getGuestTeam().getName());
 
-                    getSemiFinals().get(matchIndex).runMatch(scores.get("goalsHomeTeam"), scores.get("goalsGuestTeam"));
+                    Objects.requireNonNull(semiFinalsCopy).get(matchIndex).runMatch(scores.get("goalsHomeTeam"), scores.get("goalsGuestTeam"));
                     matchCounter++;
                     break;
                 default:
@@ -227,14 +229,16 @@ public class SemiFinals extends Round{
 
         }while(!"back".equals(input) && matchCounter <= SEMIFINALS_MATCHES);
 
-        if("back".equals(input)){
-            TournamentUtils.initializeSemiFinalsMatches(getSemiFinals());
+        if(!"back".equals(input)){
+            setSemiFinals(semiFinalsCopy);
+            return true;
+        }
+        else{
             return false;
         }
-
-        return true;
     }
 
+    //////////////////////////////////////////////KnockOut Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void setMatchDaysAuto(){
 
         int start = MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS;
@@ -290,19 +294,6 @@ public class SemiFinals extends Round{
         if(input == 1) return 10;
         else return 11;
     }
-
-    public String askForMatchScore(String teamName){
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(System.lineSeparator());
-        sb.append("Enter score for ");
-        sb.append(teamName);
-
-        return sb.toString();
-    }
-
-
     /////////////////////////////////////////////////Proceed Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
     public void setQualifiers() {
