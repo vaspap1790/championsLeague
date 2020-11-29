@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static main.Globals.*;
+import static main.resources.Globals.*;
 
 
 public class Validator {

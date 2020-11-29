@@ -6,9 +6,10 @@ import main.rounds.GroupStage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import static main.Globals.*;
+import static main.resources.Globals.*;
 
 public class TournamentUtils {
 
@@ -29,6 +30,12 @@ public class TournamentUtils {
 
     }
 
+    public static void resetMatchDaysDates(int start, int end, List<MatchDay> matchDays){
+        for (int i = start; i < end; i++) {
+            matchDays.get(i).setDate(null);
+        }
+    }
+
     public static void setDatesAuto(int start, int end, List<MatchDay> matchDays) {
         for (int i = start; i < end; i++){
             matchDays.get(i).setDate(dataInitializer.getMatchDates().get(i));
@@ -38,8 +45,8 @@ public class TournamentUtils {
     public static Team findQualifiedTeam(Match match1, Match match2){
 
         Team qualifiedTeam;
-        int team1Goals = match1.getHomeTeam().getGoalsFor() + match2.getGuestTeam().getGoalsFor();
-        int team2Goals = match1.getGuestTeam().getGoalsFor() + match2.getHomeTeam().getGoalsFor();
+        int team1Goals = match1.getGoalsForHTeam() + match2.getGoalsForGTeam();
+        int team2Goals = match1.getGoalsForGTeam() + match2.getGoalsForHTeam();
 
         if(team1Goals > team2Goals){
             qualifiedTeam = match1.getHomeTeam();
@@ -49,8 +56,8 @@ public class TournamentUtils {
         }
         else{
 
-            int team1GoalsAway = match2.getGuestTeam().getGoalsFor();
-            int team2GoalsAway = match2.getHomeTeam().getGoalsFor();
+            int team1GoalsAway = match2.getGoalsForGTeam();
+            int team2GoalsAway = match1.getGoalsForGTeam();
 
             if(team1GoalsAway > team2GoalsAway){
                 qualifiedTeam = match1.getHomeTeam();
@@ -61,7 +68,7 @@ public class TournamentUtils {
             else{
                 System.out.println(match1);
                 System.out.println(match2);
-                qualifiedTeam = runPenalties(match1.getHomeTeam(),match1.getGuestTeam());
+                qualifiedTeam = runPenalties(match1.getHomeTeam(), match1.getGuestTeam());
             }
         }
         return qualifiedTeam;
@@ -71,8 +78,8 @@ public class TournamentUtils {
 
         Team qualifiedTeam = new Team();
 
-        System.out.println(team1.getName() + " and " + team2.getName() +
-                " need to solve their differences in Penalties!");
+        System.out.println("\n" + team1.getName() + " and " + team2.getName() +
+                " need to solve their differences in Penalties!" + "\n");
         System.out.println("If you want to manually run penalties, type.........1");
         System.out.println("If you want penalties to run automatically, type....2");
 
@@ -104,28 +111,6 @@ public class TournamentUtils {
     }
 
     //User Input
-    public static void enterMatchInfo(int counter, List<Match> matches){
-
-        String input;
-
-        //Goals Home Team
-        do {
-            System.out.println("\n" + "Enter score for "+ matches.get(counter).getHomeTeam() + "\n");
-            input = KickOff.scanner.nextLine();
-        } while (!Validator.intCheck(input, 0, 7).equals(VALID));
-        int goalsH = Integer.parseInt(input);
-
-        //Goals Guest Team
-        do {
-            System.out.println("\n" + "Enter score for " + matches.get(counter).getGuestTeam() + "\n");
-            input = KickOff.scanner.nextLine();
-        } while (!Validator.intCheck(input, 0, 7).equals(VALID));
-        int goalsG = Integer.parseInt(input);
-
-        //Run match1
-        matches.get(counter).runMatch(goalsH,goalsG);
-    }
-
     public static void enterMatchDayDate(int matchDayCounter, List<LocalDate> dates, List<MatchDay> matchDays){
 
         String date;
@@ -178,6 +163,36 @@ public class TournamentUtils {
         return true;
     }
 
+    public static HashMap<String,Integer> enterScore(String message1, String message2){
+
+        HashMap<String,Integer> scores = new HashMap<>();
+        String input;
+        String result;
+
+        //Goals Home Team
+        do {
+            System.out.println(message1);
+            input = KickOff.scanner.nextLine();
+            result = Validator.intCheck(input, 0, 10);
+            if (!result.equals(VALID)) System.out.println(result + ". Try again");
+        } while (!result.equals(VALID));
+        int goalsHomeTeam = Integer.parseInt(input);
+
+        //Goals Guest Team
+        do {
+            System.out.println(message2);
+            input = KickOff.scanner.nextLine();
+            result = Validator.intCheck(input, 0, 10);
+            if (!result.equals(VALID)) System.out.println(result + ". Try again");
+        } while (!result.equals(VALID));
+        int goalsGuestTeam = Integer.parseInt(input);
+
+        scores.put("goalsHomeTeam",goalsHomeTeam);
+        scores.put("goalsGuestTeam",goalsGuestTeam);
+
+        return scores;
+    }
+
     //Initializes
     public static void enterTables(List<Table> tables){
         for (TableName tableName : TableName.values()){
@@ -215,23 +230,15 @@ public class TournamentUtils {
         }
     }
 
-    public static void initializeQuarterFinalsMatches(List<Match> matches, List<MatchDay> matchDays){
-
-        int end = MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS;
-
-        for (int i = MATCHDAYS_GROUP_STAGE; i < end; i++) {
-            matches.add(new Match(matchDays.get(i)));
-            matches.add(new Match(matchDays.get(i)));
+    public static void initializeQuarterFinalsMatches(List<Match> matches){
+        for (int i = 0; i < QUARTERFINALS_MATCHES; i++) {
+            matches.add(new Match());
         }
     }
 
-    public static void initializeSemiFinalsMatches(List<Match> matches, List<MatchDay> matchDays){
-
-        int start = MATCHDAYS_GROUP_STAGE + QUARTERFINALS_MATCHES;
-        int end = MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS + MATCHDAYS_SEMIFINALS;
-
-        for (int i = start; i < end; i++) {
-            matches.add(new Match(matchDays.get(i)));
+    public static void initializeSemiFinalsMatches(List<Match> matches){
+        for (int i = 0; i < SEMIFINALS_MATCHES; i++) {
+            matches.add(new Match());
         }
     }
 

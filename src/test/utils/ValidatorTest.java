@@ -3,11 +3,10 @@ package test.utils;
 import main.utils.Validator;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static main.Globals.*;
+import static main.resources.Globals.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ValidatorTest {

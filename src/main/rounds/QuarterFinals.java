@@ -10,12 +10,14 @@ import main.utils.TournamentUtils;
 import main.utils.Validator;
 
 import java.time.LocalDate;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import static main.Globals.*;
+import static main.resources.Globals.*;
+import static main.utils.TournamentUtils.enterScore;
 
 public class QuarterFinals extends Round{
 
@@ -97,8 +99,7 @@ public class QuarterFinals extends Round{
                 case "0":
                     break;
                 case "1":
-                    runManual();
-                    modeSelected = true;
+                    modeSelected = runManual();
                     break;
                 case "2":
                     runAuto();
@@ -109,12 +110,21 @@ public class QuarterFinals extends Round{
                     break;
             }
         } while (!"0".equals(input) && !modeSelected);
+
+        if(modeSelected){
+            proceedToNextRound();
+        }
+
+        if("0".equals(input)){
+            ASCIIArt.end();
+        }
     }
 
     @Override
     public void runAuto() {
 
         TournamentUtils.setDatesAuto(MATCHDAYS_GROUP_STAGE,MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS, getMatchDays());
+        setMatchDaysAuto();
 
         Random random = new Random();
         getQuarterFinals().forEach(match -> match.runMatch(random.nextInt(6),random.nextInt(6)));
@@ -123,126 +133,213 @@ public class QuarterFinals extends Round{
 
     @Override
     public boolean runManual() {
-        System.out.println("There are 4 Match Days to be arranged.");
-        System.out.println("Then you have to enter data for two matches in every Match Day.");
-
-        setDatesManually();
-        setMatchesDetailsManually();
-        return true;
+        return setDatesManually();
     }
 
     //////////////////////////////////////////////Utility Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
     public boolean setDatesManually() {
+
         System.out.println("Firstly, you have to set dates for the four Match Days of the Quarter Finals.");
         String input;
-        List<Integer> positions = Arrays.asList(1,2,3,4);
-        int counter = MATCHDAYS_GROUP_STAGE;
+        int matchDayCounter = MATCHDAYS_GROUP_STAGE + 1;
+        int matchDayIndex = matchDayCounter - 1;
+        int matchDayIndexEnd = MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS;
         List<LocalDate> dates;
+//
+//        do {
+//            dates = getMatchDays().stream().map(MatchDay::getDate).collect(Collectors.toList());
+//            System.out.println("\n");
+//            System.out.println("To enter the dates type '1', or type 'back' to cancel (data will be lost).");
+//            input = KickOff.scanner.nextLine();
+//
+//            switch (input) {
+//                case "back":
+//                    break;
+//                case "1":
+//                    TournamentUtils.enterMatchDayDate(matchDayCounter, dates, getMatchDays());
+//                    matchDayCounter++;
+//                    break;
+//                default:
+//                    System.out.println("\n" + "Invalid input. Try again." + "\n");
+//                    break;
+//            }
+//
+//        } while (!"back".equals(input) && matchDayCounter <= matchDayIndexEnd);
+//
+//        if ("back".equals(input)) {
+//            TournamentUtils.resetMatchDaysDates(matchDayIndex, matchDayIndexEnd, getMatchDays());
+//            return false;
+//        }
+//
+//        System.out.println("\n" + "You successfully arranged the MathDay Dates for the Quarter Finals!");
 
-        do {
-            dates = getMatchDays().stream().map(MatchDay::getDate).collect(Collectors.toList());
-            System.out.println("\n");
-            System.out.println("To enter the dates type '1', or type 'back' to cancel (data will be lost).");
-            input = KickOff.scanner.nextLine();
+        TournamentUtils.setDatesAuto(MATCHDAYS_GROUP_STAGE,MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS, getMatchDays());
 
-            switch (input) {
-                case "back":
-                    break;
-                case "1":
-                    System.out.println("\n");
-                    System.out.println("Match Day " + counter);
-                    System.out.println("\n");
-                    TournamentUtils.enterMatchDayDate(counter,dates,getMatchDays());
-                    selectMatchForThisDate(counter, positions);
-                    break;
-                default:
-                    System.out.println("\n" + "Invalid input. Try again." + "\n");
-                    break;
-            }
-            counter++;
-
-        } while (!"back".equals(input) && counter <= (MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS));
-        return true;
+        if(setMatchesDetailsManually()){
+            System.out.println("\n" + "You successfully arranged all matches for the Quarter Finals!");
+            return true;
+        }else{
+            TournamentUtils.resetMatchDaysDates(matchDayIndex, matchDayIndexEnd, getMatchDays());
+            return false;
+        }
 
     }
 
     @Override
     public boolean setMatchesDetailsManually() {
 
-        System.out.println("Now, you have to set the match details for the 8 matches of the QuarterFinals.");
+        System.out.println("\n" + "Now, you have to set the match details for the 8 matches of the QuarterFinals.");
         String input;
-        int counter = 0;
+
+        HashMap<String,Integer> scores;
+
+        int matchCounter = 1;
+
+        selectDates();
+        System.out.println("\n" + "Time to enter the scores!");
 
         do {
-            System.out.println("\n");
-            System.out.println("To enter match data type '1', or type 'back' to cancel (data will be lost)");
+            System.out.println("\n" + "To enter match data type '1', or type 'back' to cancel (data will be lost)");
+
+            int matchIndex = matchCounter - 1;
             input = KickOff.scanner.nextLine();
 
             switch (input) {
                 case "back":
                     break;
                 case "1":
-                    System.out.println("\n");
-                    System.out.println("Match Day " + counter + " Table ");
-                    System.out.println("\n");
-                    TournamentUtils.enterMatchInfo(counter, getQuarterFinals());
-                    System.out.println();
+                    System.out.println("\n" + "QuarterFinals Game " + matchCounter);
+                    System.out.println(getQuarterFinals().get(matchIndex).overview() + "\n");
+
+                    scores = enterScore(askForMatchScore(getQuarterFinals().get(matchIndex).getHomeTeam().getName()),
+                               askForMatchScore(getQuarterFinals().get(matchIndex).getGuestTeam().getName()));
+
+                    getQuarterFinals().get(matchIndex).runMatch(scores.get("goalsHomeTeam"), scores.get("goalsGuestTeam"));
+                    matchCounter++;
                     break;
                 default:
                     System.out.println("\n" + "Invalid input. Try again." + "\n");
                     break;
             }
-            counter++;
 
-        }while(!"back".equals(input) && counter < 2*MATCHDAYS_QUARTERFINALS);
+        }while(!"back".equals(input) && matchCounter <= QUARTERFINALS_MATCHES);
+
+        if("back".equals(input)){
+            TournamentUtils.initializeQuarterFinalsMatches(getQuarterFinals());
+            return false;
+        }
+
         return true;
     }
 
     ////////////////////////////////////Round Specific Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    public void selectMatchForThisDate(int counter, List<Integer> positions){
+    public void selectDates(){
 
-        overview();
+        List<Integer> positions = TournamentUtils.arrayListIntegerInitializer(2);
+        List<Integer> results = new ArrayList<>();
+
+        int quarterFinalsIndex = 0;
+        int quarterFinalsIndexThreshold = QUARTERFINALS_MATCHES / 2;
+        int matchDayCounterIndex = 6;
+        int matchDayCounterPhaseTwoIndex = matchDayCounterIndex + 2;
+        int ones = 0, twos = 0;
+
         String input;
-
-        System.out.println("Select which two matches will take place at Match day "+ counter);
-
-        do {
-            System.out.println("\n" + "Enter the number of the pair for the 1st Match of the " + counter + " Match Day");
-            input = KickOff.scanner.nextLine();
-        } while (!Validator.intCheck(input, positions).equals(VALID));
-
-        int indexOfMatch1 = Integer.parseInt(input);
-        positions.remove(indexOfMatch1 - 1);
-        getQuarterFinals().add(new Match(getMatchDays().get(counter)));
+        String result;
+        boolean equallyDistributed = false;
 
         do {
-            System.out.println("\n" + "Enter the number of the pair for the 2st Match of the " + counter + " Match Day");
-            input = KickOff.scanner.nextLine();
-        } while (!Validator.intCheck(input, positions).equals(VALID));
+            do {
+                do {
+                    System.out.println("\n" + "For the Match " + getQuarterFinals().get(quarterFinalsIndex).overview() + " type:");
+                    System.out.println("'1' to take place in " + getMatchDays().get(matchDayCounterIndex) + " and the revanche match on " + getMatchDays().get(matchDayCounterPhaseTwoIndex));
+                    System.out.println("'2' to take place in " + getMatchDays().get(matchDayCounterIndex + 1) + " and the revanche match on " + getMatchDays().get(matchDayCounterPhaseTwoIndex + 1));
+                    System.out.println("***Remember that two QuarterFinals should take place in each Match Day***");
 
-        int indexOfMatch2 = Integer.parseInt(input);
-        positions.remove(indexOfMatch2 - 1);
-        getQuarterFinals().add(new Match(getMatchDays().get(counter)));
+                    input = KickOff.scanner.nextLine();
+                    result = Validator.intCheck(input, positions);
+                    if (!result.equals(VALID)) System.out.println(result + ". Try again");
 
+                } while (!result.equals(VALID));
+
+                results.add(Integer.parseInt(input));
+                quarterFinalsIndex++;
+
+            } while (quarterFinalsIndex < quarterFinalsIndexThreshold);
+
+            //Check for equal distribution
+
+            for (Integer item : results) {
+                if (item == 1) ones++;
+                else twos++;
+            }
+
+            if (ones == twos) equallyDistributed = true;
+            else {
+                System.out.println("Two QuarterFinals should take place in each Match Day, try again.");
+                quarterFinalsIndex = 0;
+                ones = 0;
+                twos = 0;
+                results.clear();
+            }
+
+        }while (!equallyDistributed);
+
+        for (int i = 0; i < quarterFinalsIndexThreshold ; i++) {
+            getQuarterFinals().get(i).setMatchDay(getMatchDays().get(getMatchDayIndexFromUserInput(results.get(i))));
+            getQuarterFinals().get(i + 4).setMatchDay(getMatchDays().get(getMatchDayIndexFromUserInput(results.get(i)) + 2));
+        }
+
+        System.out.println("You successfully arranged the Dates for the QuarterFinals!");
+    }
+
+    public int getMatchDayIndexFromUserInput(Integer input){
+        if(input == 1) return 6;
+        else return 7;
+    }
+
+    public String askForMatchScore(String teamName){
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(System.lineSeparator());
+        sb.append("Enter score for ");
+        sb.append(teamName);
+
+        return sb.toString();
+    }
+
+    public void setMatchDaysAuto(){
+
+        int end = MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS;
+
+        for (int matchDayIndex = MATCHDAYS_GROUP_STAGE, matchIndex = 0 ; matchDayIndex < end && matchIndex < 8 ;  matchDayIndex++, matchIndex = matchIndex + 2){
+            getQuarterFinals().get(matchIndex).setMatchDay(getMatchDays().get(matchDayIndex));
+            getQuarterFinals().get(matchIndex + 1).setMatchDay(getMatchDays().get(matchDayIndex));
+        }
     }
 
     /////////////////////////////////////////////////Proceed Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
     public void setQualifiers() {
 
-        TournamentUtils.initializeSemiFinalsMatches(getQuarterFinals(), getMatchDays());
+        TournamentUtils.initializeSemiFinalsMatches(getSemiFinals());
 
-        for (int i = 0; i < SEMIFINALS_MATCHES/2; i++) {
+        for (int semiFinalsIndex = 0, quarterFinalsIndex = 0;
+             semiFinalsIndex < SEMIFINALS_MATCHES/2 && quarterFinalsIndex < 3;
+             semiFinalsIndex++, quarterFinalsIndex = quarterFinalsIndex + 2) {
 
-            Team team1 = TournamentUtils.findQualifiedTeam(getQuarterFinals().get(i), getQuarterFinals().get(i + 4));
-            Team team2 = TournamentUtils.findQualifiedTeam(getQuarterFinals().get(i + 1), getQuarterFinals().get(i + 5));
+            Team team1 = TournamentUtils.findQualifiedTeam(getQuarterFinals().get(quarterFinalsIndex),
+                    getQuarterFinals().get(quarterFinalsIndex + 4));
+            Team team2 = TournamentUtils.findQualifiedTeam(getQuarterFinals().get(quarterFinalsIndex + 1),
+                    getQuarterFinals().get(quarterFinalsIndex + 5));
 
-            getSemiFinals().get(i).setHomeTeam(team1);
-            getSemiFinals().get(i).setGuestTeam(team2);
+            getSemiFinals().get(semiFinalsIndex).setHomeTeam(team1);
+            getSemiFinals().get(semiFinalsIndex).setGuestTeam(team2);
             //Revanche match
-            getSemiFinals().get(i + 2).setHomeTeam(team2);
-            getSemiFinals().get(i + 2).setGuestTeam(team1);
+            getSemiFinals().get(semiFinalsIndex + 2).setHomeTeam(team2);
+            getSemiFinals().get(semiFinalsIndex + 2).setGuestTeam(team1);
         }
     }
 
@@ -305,10 +402,10 @@ public class QuarterFinals extends Round{
 
         System.out.println("*****************QUARTER FINALS********************" + "\n");
 
-        System.out.println("*********************PHASE 1***********************" + "\n");
+        System.out.println("\n" + "*********************PHASE 1***********************" + "\n");
 
         for(int i = MATCHDAYS_GROUP_STAGE; i < phaseTwoStart ; i++){
-            System.out.println("Match Day " + i + "\n");
+            System.out.println("----------" + getMatchDays().get(i).toString() + "----------" + "\n");
             for(Match match : getQuarterFinals()){
                 if(match.getMatchDay() == getMatchDays().get(i)){
                     System.out.println(match);
@@ -317,10 +414,10 @@ public class QuarterFinals extends Round{
             System.out.println();
         }
 
-        System.out.println("*********************PHASE 2***********************" + "\n");
+        System.out.println("\n" + "*********************PHASE 2***********************" + "\n");
 
         for(int i = phaseTwoStart; i < phaseTwoEnd; i++){
-            System.out.println("Match Day " + i + "\n");
+            System.out.println("----------" + getMatchDays().get(i).toString() + "----------" + "\n");
             for(Match match : getQuarterFinals()){
                 if(match.getMatchDay() == getMatchDays().get(i)){
                     System.out.println(match);

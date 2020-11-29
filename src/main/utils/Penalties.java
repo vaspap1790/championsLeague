@@ -1,11 +1,12 @@
 package main.utils;
 
 import main.KickOff;
+import main.model.Match;
 import main.model.Team;
 
 import java.util.Random;
 
-import static main.Globals.VALID;
+import static main.resources.Globals.VALID;
 
 public class Penalties {
 
@@ -32,7 +33,7 @@ public class Penalties {
         do {
             successfulPenaltiesForTeam1 = random.nextInt(6);
             successfulPenaltiesForTeam2 = random.nextInt(6);
-        }while(successfulPenaltiesForTeam1 == successfulPenaltiesForTeam2);
+        }while(successfulPenaltiesForTeam1 == successfulPenaltiesForTeam2 || Math.abs(successfulPenaltiesForTeam1-successfulPenaltiesForTeam2) > 2);
 
         if(successfulPenaltiesForTeam1 > successfulPenaltiesForTeam2){
             winningTeam = team1;
@@ -52,13 +53,13 @@ public class Penalties {
         String input;
         do {
             do {
-                System.out.println("\n" + "Enter successful penalties for "+ team1 + "\n");
+                System.out.println("\n" + "Enter successful penalties for "+ team1.getName() + "\n");
                 input = KickOff.scanner.nextLine();
             } while (!Validator.intCheck(input, 0, 6).equals(VALID));
             successfulPenaltiesForTeam1 = Integer.parseInt(input);
 
             do {
-                System.out.println("\n" + "Enter successful penalties for "+ team2 + "\n");
+                System.out.println("\n" + "Enter successful penalties for "+ team2.getName() + "\n");
                 input = KickOff.scanner.nextLine();
             } while (!Validator.intCheck(input, 0, 6).equals(VALID));
             successfulPenaltiesForTeam2 = Integer.parseInt(input);
@@ -67,7 +68,11 @@ public class Penalties {
                 System.out.println("One team has to win! Try again");
             }
 
-        }while(successfulPenaltiesForTeam1 == successfulPenaltiesForTeam2);
+            if(Math.abs(successfulPenaltiesForTeam1-successfulPenaltiesForTeam2) > 2){
+                System.out.println("This is not valid, if the successful penalties difference is more than two then the game is over, try again");
+            }
+
+        }while(successfulPenaltiesForTeam1 == successfulPenaltiesForTeam2 || Math.abs(successfulPenaltiesForTeam1-successfulPenaltiesForTeam2) > 2);
 
         if(successfulPenaltiesForTeam1 > successfulPenaltiesForTeam2){
             winningTeam = team1;
@@ -99,6 +104,6 @@ public class Penalties {
 
     @Override
     public String toString() {
-        return team1.getName() + " " + result + " " + team2.getName();
+        return "Penalties" + team1.getName() + " " + result + " " + team2.getName();
     }
 }

@@ -104,11 +104,27 @@ public class ASCIIArt {
 
         System.out.println("\n" + "******************************* You ended the Tournament *********************************");
 
-        System.out.println("                                         ____________                                            ");
-        System.out.println("                                        |   _        |                                           ");
-        System.out.println("                                   o    |  _o=--'_   |                                           ");
+        System.out.println("                                         _____________                                           ");
+        System.out.println("                                        |   _         |                                          ");
+        System.out.println("                                   o    |  _o=--'_    |                                          ");
         System.out.println("                                   ()                                                            ");
         System.out.println("                                   |\\, o                                                        ");
+
+        System.out.println("\n" + "******************************* You ended the Tournament *********************************");
+
+        System.out.println("                                            _____________                                        ");
+        System.out.println("                                           |   _         |    o                                  ");
+        System.out.println("                                 /_o _\\   |  _o=--'_    |                                       ");
+        System.out.println("                                   |                       /                                     ");
+        System.out.println("                                  /|,    -   - -  -   -  -                                       ");
+
+        System.out.println("\n" + "******************************* You ended the Tournament *********************************");
+
+        System.out.println("                                            _____________                                        ");
+        System.out.println("                                           |   _         |                                       ");
+        System.out.println("                                 | o |     |  _o=--'_   o|                                       ");
+        System.out.println("                                   |                   /                                         ");
+        System.out.println("                                  /|,    -   - -  - -                                            ");
 
         System.out.println("\n" + "******************************* You ended the Tournament *********************************");
 

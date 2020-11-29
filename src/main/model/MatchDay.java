@@ -24,12 +24,18 @@ public enum MatchDay {
     private LocalDate date;
 
     //Getters-Setters
-
     public LocalDate getDate() {
         return date;
     }
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    //Overridden from Object
+
+    @Override
+    public String toString() {
+        return this.name() + " - " + date;
     }
 }

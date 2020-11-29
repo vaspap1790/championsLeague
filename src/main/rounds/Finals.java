@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import static main.Globals.*;
+import static main.resources.Globals.*;
 
 public class Finals extends Round{
 
@@ -141,7 +141,7 @@ public class Finals extends Round{
         int counter = 0;
         List<Match> matches = new ArrayList<>();
         matches.add(getFinalMatch());
-        TournamentUtils.enterMatchInfo(counter, matches);
+        //TournamentUtils.enterMatchInfo(counter, matches);
         return true;
 
     }

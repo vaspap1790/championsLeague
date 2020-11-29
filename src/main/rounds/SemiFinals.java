@@ -9,13 +9,11 @@ import main.utils.ASCIIArt;
 import main.utils.TournamentUtils;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import static main.Globals.*;
+import static main.resources.Globals.*;
 
 public class SemiFinals extends Round{
 
@@ -178,7 +176,7 @@ public class SemiFinals extends Round{
                     System.out.println("\n");
                     System.out.println("Match Day " + counter + " Table ");
                     System.out.println("\n");
-                    TournamentUtils.enterMatchInfo(counter, getSemiFinals());
+                    //TournamentUtils.enterMatchInfo(counter, getSemiFinals());
                     System.out.println();
                     break;
                 default:
@@ -195,7 +193,7 @@ public class SemiFinals extends Round{
     @Override
     public void setQualifiers() {
 
-        TournamentUtils.initializeSemiFinalsMatches(getSemiFinals(), getMatchDays());
+        TournamentUtils.initializeSemiFinalsMatches(getSemiFinals());
 
         Team team1 = TournamentUtils.findQualifiedTeam(getSemiFinals().get(0), getSemiFinals().get(2));
         Team team2 = TournamentUtils.findQualifiedTeam(getSemiFinals().get(1), getSemiFinals().get(3));
