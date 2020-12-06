@@ -51,25 +51,41 @@ public class Penalties {
         int successfulPenaltiesForTeam1;
         int successfulPenaltiesForTeam2;
         String input;
+        String score;
+
         do {
             do {
-                System.out.println("\n" + "Enter successful penalties for "+ team1.getName() + "\n");
+                System.out.println("\n" + "Enter successful penalties for "+ team1.getName());
                 input = KickOff.scanner.nextLine();
-            } while (!Validator.intCheck(input, 0, 6).equals(VALID));
+                score = Validator.intCheck(input, 0, 10);
+                if(!score.equals(VALID)){
+                    ASCIIArt.fail();
+                    System.out.println("\n" + score + ". Try again.");
+                }
+            } while (!score.equals(VALID));
+
             successfulPenaltiesForTeam1 = Integer.parseInt(input);
 
             do {
-                System.out.println("\n" + "Enter successful penalties for "+ team2.getName() + "\n");
+                System.out.println("\n" + "Enter successful penalties for "+ team2.getName());
                 input = KickOff.scanner.nextLine();
-            } while (!Validator.intCheck(input, 0, 6).equals(VALID));
+                score = Validator.intCheck(input, 0, 10);
+                if(!score.equals(VALID)){
+                    ASCIIArt.fail();
+                    System.out.println("\n" + score + ". Try again.");
+                }
+            } while (!score.equals(VALID));
+
             successfulPenaltiesForTeam2 = Integer.parseInt(input);
 
             if(successfulPenaltiesForTeam1 == successfulPenaltiesForTeam2){
-                System.out.println("One team has to win! Try again");
+                ASCIIArt.fail();
+                System.out.println("\n" + "One team has to win! Try again");
             }
 
             if(Math.abs(successfulPenaltiesForTeam1-successfulPenaltiesForTeam2) > 2){
-                System.out.println("This is not valid, if the successful penalties difference is more than two then the game is over, try again");
+                ASCIIArt.fail();
+                System.out.println("\n" + "This is not valid, if the successful penalties difference is more than two then the game is over, try again");
             }
 
         }while(successfulPenaltiesForTeam1 == successfulPenaltiesForTeam2 || Math.abs(successfulPenaltiesForTeam1-successfulPenaltiesForTeam2) > 2);

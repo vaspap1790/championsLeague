@@ -33,6 +33,16 @@ class ASCIIArtTest {
     }
 
     @Test
+    void penalties() {
+        ASCIIArt.penalties();
+    }
+
+    @Test
+    void champion() {
+        ASCIIArt.champion();
+    }
+
+    @Test
     void end() {
         ASCIIArt.end();
     }

@@ -57,11 +57,13 @@ public class Finals extends Round{
                     break;
                 case "1":
                     overview();
+                    ASCIIArt.next();
                     break;
                 case "2":
                     proceed = true;
                     break;
                 default:
+                    ASCIIArt.fail();
                     System.out.println("\n" + "Invalid input. Try again." + "\n");
                     break;
             }
@@ -88,7 +90,7 @@ public class Finals extends Round{
             System.out.println("*******************************************************************************************");
             System.out.println("-If you want to enter date and score manually, type....................................'1'-");
             System.out.println("-If you want the Final to run automatically, type......................................'2'-");
-            System.out.println("-If you want to go back, type..........................................................'0'-");
+            System.out.println("-If you want to end the Tournament, type...............................................'0'-");
             System.out.println("*******************************************************************************************" + "\n");
 
             input = KickOff.scanner.nextLine();
@@ -98,12 +100,24 @@ public class Finals extends Round{
                     break;
                 case "1":
                     modeSelected = runManual();
+                    if(modeSelected){
+                        ASCIIArt.success();
+                        System.out.println("\n" + "You have run Quarter Finals manually!");
+                    }else{
+                        ASCIIArt.fail();
+                        System.out.println("\n" + "You canceled running the Quarter Finals manually");
+                    }
+                    ASCIIArt.next();
                     break;
                 case "2":
                     runAuto();
                     modeSelected = true;
+                    ASCIIArt.success();
+                    System.out.println("\n" + "Quarter Finals have run automatically");
+                    ASCIIArt.next();
                     break;
                 default:
+                    ASCIIArt.fail();
                     System.out.println("\n" + "Invalid input. Try again." + "\n");
                     break;
             }
@@ -137,8 +151,10 @@ public class Finals extends Round{
     //////////////////////////////////////////////Utility Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
     public boolean setDatesManually() {
-        
-        System.out.println("Firstly, you have to set the date for the Match Day of the Final.");
+
+        ASCIIArt.enter();
+        System.out.println("\n" + "Firstly, you have to set the date for the Match Day of the Final.");
+
         String input;
         int matchDayCounter = MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS + MATCHDAYS_SEMIFINALS + 1;
         int matchDayIndex = matchDayCounter - 1;
@@ -159,6 +175,7 @@ public class Finals extends Round{
                     matchDayCounter++;
                     break;
                 default:
+                    ASCIIArt.fail();
                     System.out.println("\n" + "Invalid input. Try again." + "\n");
                     break;
             }
@@ -170,6 +187,7 @@ public class Finals extends Round{
             return false;
         }
 
+        ASCIIArt.success();
         System.out.println("\n" + "You successfully arranged the MathDay Date for the Finals!");
 
         if(setMatchesDetailsManually()){
@@ -185,13 +203,16 @@ public class Finals extends Round{
     @Override
     public boolean setMatchesDetailsManually() {
 
+        ASCIIArt.enter();
         System.out.println("\n" + "Now, you have to set the match details for the 4 matches of the Semi Finals.");
+
         String input;
         boolean finalsTookPlace = false;
-
         HashMap<String,Integer> scores;
 
         setMatchDayAuto();
+
+        ASCIIArt.enter();
         System.out.println("\n" + "Time to enter the scores!");
 
         do {
@@ -204,7 +225,7 @@ public class Finals extends Round{
                     break;
                 case "1":
                     System.out.println("\n" + "Finals Game");
-                    System.out.println(getFinalMatch().overview() + "\n");
+                    System.out.println(getFinalMatch().overview());
 
                     scores = enterScore("\n" + "Enter score for " + getFinalMatch().getHomeTeam().getName(),
                                         "\n" + "Enter score for " + getFinalMatch().getGuestTeam().getName());
@@ -213,6 +234,7 @@ public class Finals extends Round{
                     finalsTookPlace = true;
                     break;
                 default:
+                    ASCIIArt.fail();
                     System.out.println("\n" + "Invalid input. Try again." + "\n");
                     break;
             }
@@ -256,8 +278,8 @@ public class Finals extends Round{
 
         setQualifiers();
 
-        System.out.println("\n" + "*******************************************************************************************");
-        System.out.println(getChampionTeam().getName() + " is the Champion Team!!!");
+        ASCIIArt.champion();
+        System.out.println("\n" + getChampionTeam().getName() + " is the Champion Team!!!");
         System.out.println("*******************************************************************************************" + "\n");
 
         String input;
@@ -280,24 +302,30 @@ public class Finals extends Round{
                     break;
                 case "1":
                     report();
+                    ASCIIArt.next();
                     break;
                 case "2":
                     GroupStage groupStageForReport = new GroupStage(getTables(),getMatchDays());
                     groupStageForReport.report();
+                    ASCIIArt.next();
                     break;
                 case "3":
                     GroupStage groupStage = new GroupStage(getTables(),getMatchDays());
                     groupStage.overview();
+                    ASCIIArt.next();
                     break;
                 case "4":
                     QuarterFinals quarterFinals = new QuarterFinals(getQuarterFinals(), getMatchDays());
                     quarterFinals.report();
+                    ASCIIArt.next();
                     break;
                 case "5":
                     SemiFinals semiFinals = new SemiFinals(getSemiFinals(), getMatchDays());
                     semiFinals.report();
+                    ASCIIArt.next();
                     break;
                 default:
+                    ASCIIArt.fail();
                     System.out.println("\n" + "Invalid input. Try again." + "\n");
                     break;
             }

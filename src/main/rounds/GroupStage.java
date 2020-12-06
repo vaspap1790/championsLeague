@@ -58,12 +58,24 @@ public class GroupStage extends Round{
                     break;
                 case "1":
                     proceed = TournamentUtils.enterTeamsManually(getTables());
+                    if(proceed){
+                        ASCIIArt.success();
+                        System.out.println("\n" + "You entered the Teams!");
+                    }else{
+                        ASCIIArt.fail();
+                        System.out.println("\n" + "You canceled entering the Teams manually");
+                    }
+                    ASCIIArt.next();
                     break;
                 case "2":
                     TournamentUtils.enterTeamsFromDummyData(getTables());
                     proceed = true;
+                    ASCIIArt.success();
+                    System.out.println("\n" + "Teams were selected automatically!");
+                    ASCIIArt.next();
                     break;
                 default:
+                    ASCIIArt.fail();
                     System.out.println("\n" + "Invalid input. Try again." + "\n");
                     break;
             }
@@ -100,12 +112,24 @@ public class GroupStage extends Round{
                     break;
                 case "1":
                     modeSelected = runManual();
+                    if(modeSelected){
+                        ASCIIArt.success();
+                        System.out.println("\n" + "You have run Group Stage manually!");
+                    }else{
+                        ASCIIArt.fail();
+                        System.out.println("\n" + "You canceled running the Group Stage manually");
+                    }
+                    ASCIIArt.next();
                     break;
                 case "2":
                     runAuto();
                     modeSelected = true;
+                    ASCIIArt.success();
+                    System.out.println("\n" + "Group Stage has run automatically");
+                    ASCIIArt.next();
                     break;
                 default:
+                    ASCIIArt.fail();
                     System.out.println("\n" + "Invalid input. Try again." + "\n");
                     break;
             }
@@ -196,6 +220,7 @@ public class GroupStage extends Round{
     @Override
     public boolean setDatesManually(){
 
+        ASCIIArt.enter();
         System.out.println("\n" + "Firstly, you have to set dates for the six Match Days of the Group Stage.");
         String input;
         int matchDayCounter = 1;
@@ -217,6 +242,7 @@ public class GroupStage extends Round{
                     matchDayCounter++;
                     break;
                 default:
+                    ASCIIArt.fail();
                     System.out.println("\n" + "Invalid input. Try again." + "\n");
                     break;
             }
@@ -228,6 +254,7 @@ public class GroupStage extends Round{
             return false;
         }
 
+        ASCIIArt.success();
         System.out.println("\n" + "You successfully arranged the MathDay Dates for the Group Stage!");
 
         if(setMatchesDetailsManually()){
@@ -242,7 +269,8 @@ public class GroupStage extends Round{
     @Override
     public boolean setMatchesDetailsManually(){
 
-        System.out.println("\n" +"Now, you have to set the match details for the 12 matches of each table.");
+        ASCIIArt.enter();
+        System.out.println("\n" + "Now, you have to set the match details for the 12 matches of each table.");
         String input;
 
         for(Table table : getTables()){
@@ -266,6 +294,7 @@ public class GroupStage extends Round{
                         matchDayCounter++;
                         break;
                     default:
+                        ASCIIArt.fail();
                         System.out.println("\n" + "Invalid input. Try again." + "\n");
                         break;
                 }
@@ -315,6 +344,7 @@ public class GroupStage extends Round{
                 }
 
                 if(matchAlreadyArranged){
+                    ASCIIArt.fail();
                     System.out.println("\n" + "The matches between these two team have already been arranged. Try again");
                     matchAlreadyArranged = false;
                     positions = TournamentUtils.arrayListIntegerInitializer(4);
@@ -352,6 +382,7 @@ public class GroupStage extends Round{
         System.out.println("\n" + "The two teams left will play against each other");
 
         //Second Match of the MatchDay, Phase 1
+        System.out.println("\n" + table.getMatches().get(matchArrayIndex + 1).overview());
         //Enter Score
         String askForHTeamScore2 = askForMatchInfoGroupStage(SCORE, table.getMatches().get(matchArrayIndex + 1).getHomeTeam().getName(),
                 matchCounter + 1, matchDayCounter, table.getTableName().name(), phase);
@@ -365,6 +396,7 @@ public class GroupStage extends Round{
         System.out.println("\n" + "And also for the revanche games:");
 
         //First Match of the MatchDay, Phase 2
+        System.out.println("\n" + table.getMatches().get(phaseTwoMatchArrayIndex).overview());
         //Enter Score
         String askForHTeamScore3 = askForMatchInfoGroupStage(SCORE, table.getMatches().get(phaseTwoMatchArrayIndex).getHomeTeam().getName(),
                 matchCounter, phaseTwoMatchDayCounter, table.getTableName().name(), phase);
@@ -375,6 +407,7 @@ public class GroupStage extends Round{
         table.getMatches().get(phaseTwoMatchArrayIndex).runMatch(scores3.get("goalsHomeTeam"), scores3.get("goalsGuestTeam"));
 
         //Second Match of the MatchDay, Phase 2
+        System.out.println("\n" + table.getMatches().get(phaseTwoMatchArrayIndex + 1).overview());
         //Enter Score
         String askForHTeamScore4 = askForMatchInfoGroupStage(SCORE, table.getMatches().get(phaseTwoMatchArrayIndex + 1).getHomeTeam().getName(),
                 matchCounter + 1, phaseTwoMatchDayCounter, table.getTableName().name(), phase);
@@ -398,9 +431,13 @@ public class GroupStage extends Round{
 
             input = KickOff.scanner.nextLine();
             result = Validator.intCheck(input, positions);
-            if(!result.equals(VALID)) System.out.println(result + ". Try again");
+            if(!result.equals(VALID)) {
+                ASCIIArt.fail();
+                System.out.println("\n" + result + ". Try again");
+            }
 
         } while (!result.equals(VALID));
+
         int indexHomeTeam = Integer.parseInt(input);
         positions.remove(positions.indexOf(indexHomeTeam));
 
@@ -410,7 +447,10 @@ public class GroupStage extends Round{
 
             input = KickOff.scanner.nextLine();
             result = Validator.intCheck(input, positions);
-            if(!result.equals(VALID)) System.out.println(result + ". Try again");
+            if(!result.equals(VALID)){
+                ASCIIArt.fail();
+                System.out.println("\n" + result + ". Try again");
+            }
 
         } while (!result.equals(VALID));
         int indexGuestTeam = Integer.parseInt(input);
@@ -508,11 +548,14 @@ public class GroupStage extends Round{
                     break;
                 case "2":
                     report();
+                    ASCIIArt.next();
                     break;
                 case "3":
                     overview();
+                    ASCIIArt.next();
                     break;
                 default:
+                    ASCIIArt.fail();
                     System.out.println("\n" + "Invalid input. Try again." + "\n");
                     break;
             }

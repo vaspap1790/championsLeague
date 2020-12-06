@@ -1,5 +1,7 @@
 package main.utils;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -94,7 +96,7 @@ public class ASCIIArt {
 
         System.out.println("                                         _____________                                           ");
         System.out.println("                                        |    __o__    |                                          ");
-        System.out.println("                                   o    |     /\\     |                                          ");
+        System.out.println("                                   o    |     /\\      |                                         ");
         System.out.println("                                   ()                                                            ");
         System.out.println("                                   |\\,       o                                                  ");
 
@@ -120,7 +122,7 @@ public class ASCIIArt {
 
         System.out.println("                                            _____________                                        ");
         System.out.println("                                           |   _         |    o                                  ");
-        System.out.println("                                 /_o _\\   |  _o=--'_    |                                       ");
+        System.out.println("                                 /_o _\\    |  _o=--'_    |                                       ");
         System.out.println("                                   |                       /                                     ");
         System.out.println("                                  /|,    -   - -  -   -  -                                       ");
 
@@ -140,6 +142,41 @@ public class ASCIIArt {
         System.out.println("\n" + "***************************************** SUCCEED ****************************************");
     }
 
+    public static void penalties(){
+
+        System.out.println("\n" + "******************************************************************************************");
+
+        System.out.println("                                         _____________                                           ");
+        System.out.println("                                        |    __o__    |                                          ");
+        System.out.println("                                        |     /\\      |                                         ");
+        System.out.println("                               /   o       /_______/           /                                 ");
+        System.out.println("                              /    ()                         /                                  ");
+        System.out.println("                             /     |\\,      o                /                                  ");
+        System.out.println("                            /_______________________________/                                    ");
+        System.out.println("                                         '------'                                                ");
+
+        System.out.println("\n" + "************************************* PENALTIES ******************************************");
+
+    }
+
+    public static void champion(){
+
+        System.out.println("\n" + "******************************************************************************************");
+
+        System.out.println("                                       __________                                                ");
+        System.out.println("                                     _|          |_                                              ");
+        System.out.println("                                   /  |          |  \\                                           ");
+        System.out.println("                                   \\ _|          |_ /                                           ");
+        System.out.println("                                       \\        /                                               ");
+        System.out.println("                                          '___'                                                  ");
+        System.out.println("                                           | |                                                   ");
+        System.out.println("                                          _|_|_                                                  ");
+        System.out.println("                                         |_____|                                                 ");
+
+        System.out.println("\n" + "*************************************** CHAMPION! ****************************************");
+
+    }
+
     //End Application Sketches
     public static void end() {
 
@@ -151,7 +188,7 @@ public class ASCIIArt {
         System.out.println("                                        `    \\, ()                                              ");
         System.out.println("                                  ^^^^^^^^^^^^^^^^^^^^^^                                         ");
 
-        System.out.println("\n" + "******************************** You ended the Tournament ********************************");
+        System.out.println("\n" + "******************************** You ended the Tournament ********************************" + "\n");
 
     }
 
@@ -170,7 +207,7 @@ public class ASCIIArt {
         System.out.println("                             |             |             |                                       ");
         System.out.println("                             |_____________|_____________|                                       ");
 
-        System.out.println("\n" + "***************************** You completed the Tournament *******************************");
+        System.out.println("\n" + "***************************** You completed the Tournament *******************************" + "\n");
     }
 
 }

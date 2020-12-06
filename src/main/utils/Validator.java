@@ -19,7 +19,7 @@ public class Validator {
         String message= "";
         Matcher matcher = pattern.matcher(input);
 
-        if (matcher.matches()) {
+        if (matcher.matches() && input.length() == 10) {
 
             // assign true first, later we will check the leap year and odd or even months
             validFormat = true;

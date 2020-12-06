@@ -80,7 +80,8 @@ public class TournamentUtils {
 
         System.out.println("\n" + team1.getName() + " and " + team2.getName() +
                 " need to solve their differences in Penalties!" + "\n");
-        System.out.println("If you want to manually run penalties, type.........1");
+        ASCIIArt.penalties();
+        System.out.println("\n" + "If you want to manually run penalties, type.........1");
         System.out.println("If you want penalties to run automatically, type....2");
 
         String input;
@@ -91,17 +92,20 @@ public class TournamentUtils {
             switch (input) {
                 case "1":
                     penalties.runManually();
-                    System.out.println(penalties);
+                    ASCIIArt.success();
+                    System.out.println("\n" + penalties);
                     qualifiedTeam = penalties.getWinningTeam();
                     penaltiesPlayed = true;
                     break;
                 case "2":
                     penalties.runAuto();
-                    System.out.println(penalties);
+                    ASCIIArt.success();
+                    System.out.println("\n" + penalties);
                     qualifiedTeam = penalties.getWinningTeam();
                     penaltiesPlayed = true;
                     break;
                 default:
+                    ASCIIArt.fail();
                     System.out.println("\n" + "Invalid input. Try again." + "\n");
                     break;
             }
@@ -129,7 +133,14 @@ public class TournamentUtils {
             result = Validator.dateCheck(date,dates,matchDayCounter-1);
 
             if(!result.equals(VALID)){
-                System.out.println(result + ". Try again.");
+                ASCIIArt.fail();
+                StringBuilder sb = new StringBuilder();
+                sb.append(System.lineSeparator()).append(result);
+                if(result.equals(BEFORE_PREVIOUS_DATE)){
+                    sb.append(" (").append(dates.get(matchDayCounter - 2).toString()).append(")");
+                }
+                sb.append(". Try again");
+                System.out.println(sb.toString());
             }
         } while (!result.equals(VALID));
 
@@ -138,6 +149,7 @@ public class TournamentUtils {
 
     public static boolean enterTeamsManually(List<Table> tables){
 
+        ASCIIArt.enter();
         enterTables(tables);
         String input;
         String result;
@@ -146,7 +158,7 @@ public class TournamentUtils {
             int counter = 1;
             do {
 
-                System.out.println("Please enter Team " + counter + " for the " + table.getTableName() +
+                System.out.println("\n" + "Please enter Team " + counter + " for the " + table.getTableName() +
                         " Table or type 'back' to cancel (data will be lost)");
                 input = KickOff.scanner.nextLine();
                 result = Validator.emptyStringCheck(input);
@@ -157,7 +169,8 @@ public class TournamentUtils {
                 }
 
                 if(!result.equals(VALID)){
-                    System.out.println(result);
+                    ASCIIArt.fail();
+                    System.out.println("\n" + result + ". Try again.");
                 }
 
             }while(!"back".equals(input) && counter < 5);
