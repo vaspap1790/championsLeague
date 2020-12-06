@@ -69,13 +69,9 @@ public class Validator {
         return message;
     }
 
-    private static boolean isLeapYear(int year) {
+    public static boolean isLeapYear(int year) {
         return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
     }
-
-//    static boolean isWithinRange(Date testDate, Date startDate, Date endDate) {
-//        return !(testDate.before(startDate) || testDate.after(endDate));
-//    }
 
     public static String intCheck(String input, int startOfRange, int endOfRange) {
         int integer;
