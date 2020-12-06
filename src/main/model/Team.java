@@ -14,7 +14,6 @@ public class Team implements Comparable<Team>{
     private int gamesDrawn;
     private int goalsFor;
     private int goalsAgainst;
-    private QualificationCode qualificationCode;
     private List<Match> matches;
 
     //Constructors
@@ -125,14 +124,6 @@ public class Team implements Comparable<Team>{
 
     public void setGoalsAgainst(int goalsAgainst) {
         this.goalsAgainst = goalsAgainst;
-    }
-
-    public QualificationCode getQualificationCode() {
-        return qualificationCode;
-    }
-
-    public void setQualificationCode(QualificationCode qualificationCode) {
-        this.qualificationCode = qualificationCode;
     }
 
     public List<Match> getMatches() {

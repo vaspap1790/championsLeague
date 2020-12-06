@@ -163,11 +163,12 @@ public class ASCIIArt {
 
         System.out.println("\n" + "******************************************************************************************");
 
-        System.out.println("                                       __________                                                ");
-        System.out.println("                                     _|          |_                                              ");
-        System.out.println("                                   /  |          |  \\                                           ");
-        System.out.println("                                   \\ _|          |_ /                                           ");
-        System.out.println("                                       \\        /                                               ");
+        System.out.println("                                       ___________                                               ");
+        System.out.println("                                     _|           |_                                             ");
+        System.out.println("                                   /  |           |  \\                                          ");
+        System.out.println("                                   \\ _|           |_ /                                          ");
+        System.out.println("                                      |           |                                             ");
+        System.out.println("                                       \\         /                                              ");
         System.out.println("                                          '___'                                                  ");
         System.out.println("                                           | |                                                   ");
         System.out.println("                                          _|_|_                                                  ");
