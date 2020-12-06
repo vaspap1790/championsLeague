@@ -3,11 +3,11 @@ package main.model;
 public class Match implements Cloneable {
 
     //Member Variables
-    Team homeTeam;
-    Team guestTeam;
-    int goalsForHTeam;
-    int goalsForGTeam;
-    MatchDay matchDay;
+    private Team homeTeam;
+    private Team guestTeam;
+    private int goalsForHTeam;
+    private int goalsForGTeam;
+    private MatchDay matchDay;
 
     //Constructors
     public Match(Team homeTeam, Team guestTeam) {

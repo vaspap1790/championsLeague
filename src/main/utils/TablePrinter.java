@@ -8,18 +8,13 @@ import java.util.stream.Stream;
 public class TablePrinter {
 
     public static void tableWithLines(String[][] table) {
-        /*
-         * leftJustifiedRows - If true, it will add "-" as a flag to format string to
-         * make it left justified. Otherwise right justified.
-         */
+
+        //leftJustifiedRows - If true, it will add "-" as a flag to format string to
+        //make it left justified, otherwise right justified
         boolean leftJustifiedRows = false;
 
-        /*
-         * Calculate appropriate Length of each column by looking at width of data in
-         * each column.
-         *
-         * Map columnLengths is <column_number, column_length>
-         */
+        //Calculate appropriate Length of each column by looking at width of data in each column
+        //Map columnLengths is <column_number, column_length>
         Map<Integer, Integer> columnLengths = new HashMap<>();
         Arrays.stream(table).forEach(a -> Stream.iterate(0, (i -> i < a.length), (i -> ++i)).forEach(i -> {
             if (columnLengths.get(i) == null) {
@@ -45,7 +40,6 @@ public class TablePrinter {
             return ln + templn;
         }, (a, b) -> a + b);
         line = line + "+\n";
-
 
         //Print table
         System.out.print(line);

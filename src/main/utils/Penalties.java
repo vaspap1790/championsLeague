@@ -1,7 +1,6 @@
 package main.utils;
 
 import main.KickOff;
-import main.model.Match;
 import main.model.Team;
 
 import java.util.Random;
@@ -118,6 +117,7 @@ public class Penalties {
         this.losingTeam = losingTeam;
     }
 
+    //Overridden fro Object
     @Override
     public String toString() {
         return "Penalties: " + team1.getName() + " " + result + " " + team2.getName();

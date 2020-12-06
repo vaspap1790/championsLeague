@@ -15,9 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TableTest {
 
     private Table table = new Table(TableName.A, Arrays.asList(new Team("team1"),
-                                                                new Team("team2"),
-                                                                new Team("team3"),
-                                                                new Team("team4")));
+            new Team("team2"), new Team("team3"), new Team("team4")));
 
     @Test
     void sortTeams() {
@@ -30,8 +28,6 @@ class TableTest {
         assertEquals("team4",table.getTeams().get(0).getName());
         assertEquals("team1",table.getTeams().get(1).getName());
     }
-
-    //TODO//////////////////////////////////////////////
 
     @Test
     void getQualificationTeams() {

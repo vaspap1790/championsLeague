@@ -41,11 +41,11 @@ public class Team implements Comparable<Team>{
 
         for (Match match : getAgainstMatches(team)){
             if(match.getHomeTeam().equals(team)){
-                oppositeTeamGoals += match.goalsForHTeam;
-                teamGoals += match.goalsForGTeam;
+                oppositeTeamGoals += match.getGoalsForHTeam();
+                teamGoals += match.getGoalsForGTeam();
             }else{
-                oppositeTeamGoals += match.goalsForGTeam;
-                teamGoals += match.goalsForHTeam;
+                oppositeTeamGoals += match.getGoalsForGTeam();
+                teamGoals += match.getGoalsForHTeam();
             }
         }
 
@@ -134,6 +134,7 @@ public class Team implements Comparable<Team>{
         this.matches = matches;
     }
 
+    //Overridden from Object
     @Override
     public int compareTo(Team o) {
         if (getPoints() == o.getPoints()){

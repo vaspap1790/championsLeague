@@ -31,24 +31,14 @@ public class DataInitializer {
             LocalDate.of(2021,4,20),LocalDate.of(2021,4,21),
             LocalDate.of(2021,5,5));
 
-    //Getters-Setters
+    //Getters
     public List<MatchDay> getMatchDays() {
         return matchDays;
     }
 
-    public void setMatchDays(List<MatchDay> matchDays) {
-        this.matchDays = matchDays;
-    }
-
-
     public List<LocalDate> getMatchDates() {
         return matchDates;
     }
-
-    public void setMatchDates(List<LocalDate> matchDates) {
-        this.matchDates = matchDates;
-    }
-
 
     public static List<String> getRandomTeamsGroupA() {
         return randomTeamsGroupA;

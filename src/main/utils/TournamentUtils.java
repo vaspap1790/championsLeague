@@ -120,7 +120,6 @@ public class TournamentUtils {
         return clone;
     }
 
-
     //User Input
     public static void enterMatchDayDate(int matchDayCounter, List<LocalDate> dates, List<MatchDay> matchDays){
 

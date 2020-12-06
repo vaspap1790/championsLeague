@@ -33,7 +33,6 @@ public enum MatchDay {
     }
 
     //Overridden from Object
-
     @Override
     public String toString() {
         return this.name() + " - " + date;
