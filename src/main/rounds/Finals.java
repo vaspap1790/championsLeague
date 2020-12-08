@@ -106,15 +106,14 @@ public class Finals extends Round{
                     }else{
                         ASCIIArt.fail();
                         System.out.println("\n" + "You canceled running the Quarter Finals manually");
+                        ASCIIArt.next();
                     }
-                    ASCIIArt.next();
                     break;
                 case "2":
                     runAuto();
                     modeSelected = true;
                     ASCIIArt.success();
                     System.out.println("\n" + "Quarter Finals have run automatically");
-                    ASCIIArt.next();
                     break;
                 default:
                     ASCIIArt.fail();
@@ -124,6 +123,13 @@ public class Finals extends Round{
         } while (!"0".equals(input) && !modeSelected);
         
         if(modeSelected){
+
+            setQualifiers();
+
+            ASCIIArt.champion();
+            System.out.println("\n" + getChampionTeam().getName() + " is the Champion Team!!!");
+            System.out.println("\n" + "*******************************************************************************************" + "\n");
+
             proceedToNextRound();
         }
 
@@ -276,11 +282,7 @@ public class Finals extends Round{
     @Override
     public void proceedToNextRound() {
 
-        setQualifiers();
-
-        ASCIIArt.champion();
-        System.out.println("\n" + getChampionTeam().getName() + " is the Champion Team!!!");
-        System.out.println("*******************************************************************************************" + "\n");
+        ASCIIArt.next();
 
         String input;
 

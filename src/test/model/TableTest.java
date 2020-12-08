@@ -19,6 +19,7 @@ class TableTest {
 
     @Test
     void sortTeams() {
+
         table.getTeams().get(3).setGamesWon(3);
         table.getTeams().get(0).setGamesWon(2);
         table.getTeams().get(1).setGamesWon(1);
@@ -43,8 +44,8 @@ class TableTest {
         qualificationTeams.add(table.getTeams().get(0));
         qualificationTeams.add(table.getTeams().get(1));
 
-        assertEquals("team4",qualificationTeams.get(0).getName());
-        assertEquals("team1",qualificationTeams.get(1).getName());
+        assertEquals("team4", qualificationTeams.get(0).getName());
+        assertEquals("team1", qualificationTeams.get(1).getName());
     }
 
 }

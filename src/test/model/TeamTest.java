@@ -16,37 +16,49 @@ class TeamTest {
 
     @Test
     void getPointsPositive() {
+
         team1.setGamesWon(3);
         team1.setGamesLost(2);
         team1.setGamesDrawn(1);
+
         assertEquals(10, team1.getPoints());
     }
 
     @Test
     void getGoalDifferencePositive() {
+
         team1.setGoalsFor(3);
         team1.setGoalsAgainst(5);
+
         assertEquals(-2, team1.getGoalDifference());
     }
 
     @Test
     void compareToGreater() {
+
         team1.setGamesWon(3);
         team2.setGamesWon(2);
+
         assertEquals(1, team1.compareTo(team2));
     }
 
     @Test
     void compareToLess() {
+
         team1.setGamesWon(3);
         team2.setGamesWon(4);
+
         assertEquals(-1, team1.compareTo(team2));
     }
 
     @Test
     void compareToEquals() {
+
         team1.setGamesWon(0);
+        team1.setGamesDrawn(0);
         team2.setGamesWon(0);
+        team2.setGamesDrawn(0);
+
         assertEquals(0, team1.compareTo(team2));
     }
 

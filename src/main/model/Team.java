@@ -138,7 +138,7 @@ public class Team implements Comparable<Team>{
     @Override
     public int compareTo(Team o) {
         if (getPoints() == o.getPoints()){
-            return 1;
+            return resolveEqualRanking(o);
         }
         else{
             return Integer.compare(getPoints(), o.getPoints());
