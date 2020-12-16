@@ -1,10 +1,6 @@
-package main.rounds;
+package main.model;
 
 import main.KickOff;
-import main.model.Match;
-import main.model.MatchDay;
-import main.model.Table;
-import main.model.Team;
 import main.utils.ASCIIArt;
 import main.utils.TournamentUtils;
 

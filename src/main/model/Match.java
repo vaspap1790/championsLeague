@@ -40,6 +40,12 @@ public class Match implements Cloneable {
 
         goalsForHTeam = goalsForH;
         goalsForGTeam = goalsForG;
+    }
+
+    public void runGroupStageMatch(int goalsForH, int goalsForG){
+
+        goalsForHTeam = goalsForH;
+        goalsForGTeam = goalsForG;
 
         homeTeam.setGoalsFor(homeTeam.getGoalsFor() + goalsForH);
         homeTeam.setGoalsAgainst(homeTeam.getGoalsAgainst() + goalsForG);

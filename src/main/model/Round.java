@@ -1,4 +1,4 @@
-package main.rounds;
+package main.model;
 
 import main.model.Match;
 import main.model.MatchDay;

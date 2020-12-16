@@ -2,7 +2,7 @@ package main.utils;
 
 import main.KickOff;
 import main.model.*;
-import main.rounds.GroupStage;
+import main.model.GroupStage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

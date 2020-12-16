@@ -1,8 +1,7 @@
-package main.rounds;
+package main.model;
 
 import main.KickOff;
 
-import main.model.*;
 import main.utils.ASCIIArt;
 import main.utils.TournamentUtils;
 import main.utils.Validator;
@@ -155,56 +154,56 @@ public class GroupStage extends Round{
 
             //Run MatchDay1
             Match match1 = new Match(table.getTeams().get(0),table.getTeams().get(3),getMatchDays().get(0));
-            match1.runMatch(random.nextInt(6), random.nextInt(6));
+            match1.runGroupStageMatch(random.nextInt(6), random.nextInt(6));
             table.getMatches().add(match1);
 
             Match match2 = new Match(table.getTeams().get(1),table.getTeams().get(2),getMatchDays().get(0));
-            match2.runMatch(random.nextInt(6), random.nextInt(6));
+            match2.runGroupStageMatch(random.nextInt(6), random.nextInt(6));
             table.getMatches().add(match2);
 
             //Run MatchDay2
             Match match3 = new Match(table.getTeams().get(0),table.getTeams().get(1),getMatchDays().get(1));
-            match3.runMatch(random.nextInt(6), random.nextInt(6));
+            match3.runGroupStageMatch(random.nextInt(6), random.nextInt(6));
             table.getMatches().add(match3);
 
             Match match4 = new Match(table.getTeams().get(2),table.getTeams().get(3),getMatchDays().get(1));
-            match4.runMatch(random.nextInt(6), random.nextInt(6));
+            match4.runGroupStageMatch(random.nextInt(6), random.nextInt(6));
             table.getMatches().add(match4);
 
             //Run MatchDay3
             Match match5 = new Match(table.getTeams().get(0),table.getTeams().get(2),getMatchDays().get(2));
-            match5.runMatch(random.nextInt(6), random.nextInt(6));
+            match5.runGroupStageMatch(random.nextInt(6), random.nextInt(6));
             table.getMatches().add(match5);
 
             Match match6 = new Match(table.getTeams().get(1),table.getTeams().get(3),getMatchDays().get(2));
-            match6.runMatch(random.nextInt(6), random.nextInt(6));
+            match6.runGroupStageMatch(random.nextInt(6), random.nextInt(6));
             table.getMatches().add(match6);
 
             //Run MatchDay4
             Match match7 = new Match(table.getTeams().get(3),table.getTeams().get(0),getMatchDays().get(3));
-            match7.runMatch(random.nextInt(6), random.nextInt(6));
+            match7.runGroupStageMatch(random.nextInt(6), random.nextInt(6));
             table.getMatches().add(match7);
 
             Match match8 = new Match(table.getTeams().get(2),table.getTeams().get(1),getMatchDays().get(3));
-            match8.runMatch(random.nextInt(6), random.nextInt(6));
+            match8.runGroupStageMatch(random.nextInt(6), random.nextInt(6));
             table.getMatches().add(match8);
 
             //Run MatchDay5
             Match match9 = new Match(table.getTeams().get(1),table.getTeams().get(0),getMatchDays().get(4));
-            match9.runMatch(random.nextInt(6), random.nextInt(6));
+            match9.runGroupStageMatch(random.nextInt(6), random.nextInt(6));
             table.getMatches().add(match9);
 
             Match match10 = new Match(table.getTeams().get(3),table.getTeams().get(2),getMatchDays().get(4));
-            match10.runMatch(random.nextInt(6), random.nextInt(6));
+            match10.runGroupStageMatch(random.nextInt(6), random.nextInt(6));
             table.getMatches().add(match10);
 
             //Run MatchDay6
             Match match11 = new Match(table.getTeams().get(2),table.getTeams().get(0),getMatchDays().get(5));
-            match11.runMatch(random.nextInt(6), random.nextInt(6));
+            match11.runGroupStageMatch(random.nextInt(6), random.nextInt(6));
             table.getMatches().add(match11);
 
             Match match12 = new Match(table.getTeams().get(3),table.getTeams().get(1),getMatchDays().get(5));
-            match12.runMatch(random.nextInt(6), random.nextInt(6));
+            match12.runGroupStageMatch(random.nextInt(6), random.nextInt(6));
             table.getMatches().add(match12);
 
         }
@@ -377,7 +376,7 @@ public class GroupStage extends Round{
                 matchCounter, matchDayCounter, table.getTableName().name(), phase);
         HashMap<String,Integer> scores1 = TournamentUtils.enterScore(askForHTeamScore1, askForGTeamScore1);
         //Run match
-        table.getMatches().get(matchArrayIndex).runMatch(scores1.get("goalsHomeTeam"), scores1.get("goalsGuestTeam"));
+        table.getMatches().get(matchArrayIndex).runGroupStageMatch(scores1.get("goalsHomeTeam"), scores1.get("goalsGuestTeam"));
 
         System.out.println("\n" + "The two teams left will play against each other");
 
@@ -390,7 +389,7 @@ public class GroupStage extends Round{
                 matchCounter + 1, matchDayCounter, table.getTableName().name(), phase);
         HashMap<String,Integer> scores2 = TournamentUtils.enterScore(askForHTeamScore2, askForGTeamScore2);
         //Run match
-        table.getMatches().get(matchArrayIndex + 1).runMatch(scores2.get("goalsHomeTeam"), scores2.get("goalsGuestTeam"));
+        table.getMatches().get(matchArrayIndex + 1).runGroupStageMatch(scores2.get("goalsHomeTeam"), scores2.get("goalsGuestTeam"));
 
         phase++;
         System.out.println("\n" + "And also for the revanche games:");
@@ -404,7 +403,7 @@ public class GroupStage extends Round{
                 matchCounter, phaseTwoMatchDayCounter, table.getTableName().name(), phase);
         HashMap<String,Integer> scores3 = TournamentUtils.enterScore(askForHTeamScore3, askForGTeamScore3);
         //Run match
-        table.getMatches().get(phaseTwoMatchArrayIndex).runMatch(scores3.get("goalsHomeTeam"), scores3.get("goalsGuestTeam"));
+        table.getMatches().get(phaseTwoMatchArrayIndex).runGroupStageMatch(scores3.get("goalsHomeTeam"), scores3.get("goalsGuestTeam"));
 
         //Second Match of the MatchDay, Phase 2
         System.out.println("\n" + table.getMatches().get(phaseTwoMatchArrayIndex + 1).overview());
@@ -415,7 +414,7 @@ public class GroupStage extends Round{
                 matchCounter + 1, phaseTwoMatchDayCounter, table.getTableName().name(), phase);
         HashMap<String,Integer> scores4 = TournamentUtils.enterScore(askForHTeamScore4, askForGTeamScore4);
         //Run match
-        table.getMatches().get(phaseTwoMatchArrayIndex + 1).runMatch(scores4.get("goalsHomeTeam"), scores4.get("goalsGuestTeam"));
+        table.getMatches().get(phaseTwoMatchArrayIndex + 1).runGroupStageMatch(scores4.get("goalsHomeTeam"), scores4.get("goalsGuestTeam"));
 
     }
 

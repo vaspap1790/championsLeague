@@ -1,10 +1,6 @@
-package main.rounds;
+package main.model;
 
 import main.KickOff;
-import main.model.Match;
-import main.model.MatchDay;
-import main.model.Table;
-import main.model.Team;
 import main.utils.ASCIIArt;
 import main.utils.TournamentUtils;
 import main.utils.Validator;
@@ -16,17 +12,17 @@ import java.util.stream.Collectors;
 import static main.resources.Globals.*;
 import static main.utils.TournamentUtils.enterScore;
 
-public class SemiFinals extends Round  implements KnockOut{
+public class QuarterFinals extends Round implements KnockOut{
 
     //Constructors
-    public SemiFinals(List<Table> tables, List<MatchDay> matchDays,
-                      List<Match> quarterFinals, List<Match> semiFinals,
-                      Match finalMatch, Team championTeam) {
+    public QuarterFinals(List<Table> tables, List<MatchDay> matchDays,
+                         List<Match> quarterFinals, List<Match> semiFinals,
+                         Match finalMatch, Team championTeam) {
         super(tables, matchDays, quarterFinals, semiFinals, finalMatch, championTeam);
     }
 
-    public SemiFinals(List<Match> semiFinals, List<MatchDay> matchDays) {
-        super.setSemiFinals(semiFinals);
+    public QuarterFinals(List<Match> quarterFinals, List<MatchDay> matchDays) {
+        super.setQuarterFinals(quarterFinals);
         super.setMatchDays(matchDays);
     }
 
@@ -36,7 +32,7 @@ public class SemiFinals extends Round  implements KnockOut{
         System.out.println("\n");
         System.out.println("\n");
         System.out.println("*******************************************************************************************");
-        System.out.println("**                                     Semi Finals                                       **");
+        System.out.println("**                                    Quarter Finals                                     **");
         System.out.println("*******************************************************************************************");
     }
 
@@ -49,8 +45,8 @@ public class SemiFinals extends Round  implements KnockOut{
         do {
             System.out.println("\n");
             System.out.println("*******************************************************************************************");
-            System.out.println("-If you want to see the Semi finals couples, type......................................'1'-");
-            System.out.println("-If you want to run Semi Finals, type..................................................'2'-");
+            System.out.println("-If you want to see the Quarter finals couples, type...................................'1'-");
+            System.out.println("-If you want to run Quarter Finals, type...............................................'2'-");
             System.out.println("-If you want to end the Tournament, type...............................................'0'-");
             System.out.println("*******************************************************************************************" + "\n");
 
@@ -93,7 +89,7 @@ public class SemiFinals extends Round  implements KnockOut{
             System.out.println("\n");
             System.out.println("*******************************************************************************************");
             System.out.println("-If you want to enter dates and scores manually, type..................................'1'-");
-            System.out.println("-If you want Semi Finals to run automatically, type....................................'2'-");
+            System.out.println("-If you want Quarter Finals to run automatically, type.................................'2'-");
             System.out.println("-If you want to end the Tournament, type...............................................'0'-");
             System.out.println("*******************************************************************************************" + "\n");
 
@@ -106,10 +102,10 @@ public class SemiFinals extends Round  implements KnockOut{
                     modeSelected = runManual();
                     if(modeSelected){
                         ASCIIArt.success();
-                        System.out.println("\n" + "You have run Semi Finals manually!");
+                        System.out.println("\n" + "You have run Quarter Finals manually!");
                     }else{
                         ASCIIArt.fail();
-                        System.out.println("\n" + "You canceled running the Semi Finals manually");
+                        System.out.println("\n" + "You canceled running the Quarter Finals manually");
                     }
                     ASCIIArt.next();
                     break;
@@ -117,7 +113,7 @@ public class SemiFinals extends Round  implements KnockOut{
                     runAuto();
                     modeSelected = true;
                     ASCIIArt.success();
-                    System.out.println("\n" + "Semi Finals have run automatically");
+                    System.out.println("\n" + "Quarter Finals have run automatically");
                     ASCIIArt.next();
                     break;
                 default:
@@ -139,12 +135,12 @@ public class SemiFinals extends Round  implements KnockOut{
     @Override
     public void runAuto() {
 
-        TournamentUtils.setDatesAuto(MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS,
-                MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS + MATCHDAYS_SEMIFINALS, getMatchDays());
+        TournamentUtils.setDatesAuto(MATCHDAYS_GROUP_STAGE,MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS, getMatchDays());
         setMatchDaysAuto();
 
         Random random = new Random();
-        getSemiFinals().forEach(match -> match.runMatch(random.nextInt(6),random.nextInt(6)));
+        getQuarterFinals().forEach(match -> match.runMatch(random.nextInt(6),random.nextInt(6)));
+
     }
 
     @Override
@@ -157,12 +153,12 @@ public class SemiFinals extends Round  implements KnockOut{
     public boolean setDatesManually() {
 
         ASCIIArt.enter();
-        System.out.println("\n" +"Firstly, you have to set dates for the four Match Days of the Semi Finals.");
+        System.out.println("\n" + "Firstly, you have to set dates for the eight Match Days of the Quarter Finals.");
 
         String input;
-        int matchDayCounter = MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS + 1;
+        int matchDayCounter = MATCHDAYS_GROUP_STAGE + 1;
         int matchDayIndex = matchDayCounter - 1;
-        int matchDayIndexEnd = MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS + MATCHDAYS_SEMIFINALS;
+        int matchDayIndexEnd = MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS;
         List<LocalDate> dates;
 
         do {
@@ -191,34 +187,36 @@ public class SemiFinals extends Round  implements KnockOut{
             return false;
         }
 
-        System.out.println("\n" + "You successfully arranged the MathDay Dates for the Semi Finals!");
+        ASCIIArt.success();
+        System.out.println("\n" + "You successfully arranged the MathDay Dates for the Quarter Finals!");
 
         if(setMatchesDetailsManually()){
-            System.out.println("\n" + "You successfully arranged all matches for the Semi Finals!");
+            System.out.println("\n" + "You successfully arranged all matches for the Quarter Finals!");
             return true;
         }else{
             TournamentUtils.resetMatchDaysDates(matchDayIndex, matchDayIndexEnd, getMatchDays());
             return false;
         }
+
     }
 
     @Override
     public boolean setMatchesDetailsManually() {
 
         ASCIIArt.enter();
-        System.out.println("\n" + "Now, you have to set the match details for the 4 matches of the Semi Finals.");
+        System.out.println("\n" + "Now, you have to set the match details for the 8 matches of the QuarterFinals.");
 
         String input;
-        List<Match> semiFinalsCopy = null;
+        List<Match> quarterFinalsCopy = null;
         try {
-            semiFinalsCopy = TournamentUtils.cloneList(getSemiFinals());
+            quarterFinalsCopy = TournamentUtils.cloneList(getQuarterFinals());
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
         HashMap<String,Integer> scores;
         int matchCounter = 1;
 
-        selectDates(Objects.requireNonNull(semiFinalsCopy));
+        selectDates(Objects.requireNonNull(quarterFinalsCopy));
 
         ASCIIArt.enter();
         System.out.println("\n" + "Time to enter the scores!");
@@ -233,13 +231,13 @@ public class SemiFinals extends Round  implements KnockOut{
                 case "back":
                     break;
                 case "1":
-                    System.out.println("\n" + "SemiFinals Game " + matchCounter);
-                    System.out.println(getSemiFinals().get(matchIndex).overview());
+                    System.out.println("\n" + "QuarterFinals Game " + matchCounter);
+                    System.out.println(getQuarterFinals().get(matchIndex).overview());
 
-                    scores = enterScore("\n" + "Enter score for " + getSemiFinals().get(matchIndex).getHomeTeam().getName(),
-                                        "\n" + "Enter score for " + getSemiFinals().get(matchIndex).getGuestTeam().getName());
+                    scores = enterScore("\n" + "Enter score for " + getQuarterFinals().get(matchIndex).getHomeTeam().getName(),
+                                        "\n" + "Enter score for " + getQuarterFinals().get(matchIndex).getGuestTeam().getName());
 
-                    Objects.requireNonNull(semiFinalsCopy).get(matchIndex).runMatch(scores.get("goalsHomeTeam"), scores.get("goalsGuestTeam"));
+                    Objects.requireNonNull(quarterFinalsCopy).get(matchIndex).runMatch(scores.get("goalsHomeTeam"), scores.get("goalsGuestTeam"));
                     matchCounter++;
                     break;
                 default:
@@ -248,10 +246,10 @@ public class SemiFinals extends Round  implements KnockOut{
                     break;
             }
 
-        }while(!"back".equals(input) && matchCounter <= SEMIFINALS_MATCHES);
+        }while(!"back".equals(input) && matchCounter <= QUARTERFINALS_MATCHES);
 
         if(!"back".equals(input)){
-            setSemiFinals(semiFinalsCopy);
+            setQuarterFinals(quarterFinalsCopy);
             return true;
         }
         else{
@@ -262,72 +260,104 @@ public class SemiFinals extends Round  implements KnockOut{
     //////////////////////////////////////////////KnockOut Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void setMatchDaysAuto(){
 
-        int start = MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS;
-        int end = MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS + MATCHDAYS_SEMIFINALS;
+        int end = MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS;
 
-        for (int matchDayIndex = start, matchIndex = 0 ;
-             matchDayIndex < end && matchIndex < 4 ;
-             matchDayIndex++, matchIndex++){
-
-            getSemiFinals().get(matchIndex).setMatchDay(getMatchDays().get(matchDayIndex));
+        for (int matchDayIndex = MATCHDAYS_GROUP_STAGE, matchIndex = 0 ; matchDayIndex < end && matchIndex < 8 ;  matchDayIndex++, matchIndex = matchIndex + 2){
+            getQuarterFinals().get(matchIndex).setMatchDay(getMatchDays().get(matchDayIndex));
+            getQuarterFinals().get(matchIndex + 1).setMatchDay(getMatchDays().get(matchDayIndex));
         }
     }
 
-    public void selectDates(List<Match> semiFinalsCopy){
+    public void selectDates(List<Match> quarterFinalsCopy){
 
         List<Integer> positions = TournamentUtils.arrayListIntegerInitializer(2);
         List<Integer> results = new ArrayList<>();
 
-        int semiFinalsIndex = 0;
-        int semiFinalsIndexThreshold = 2;
-        int matchDayCounterIndex = 10;
+        int quarterFinalsIndex = 0;
+        int quarterFinalsIndexThreshold = QUARTERFINALS_MATCHES / 2;
+        int matchDayCounterIndex = 6;
         int matchDayCounterPhaseTwoIndex = matchDayCounterIndex + 2;
+        int ones = 0, twos = 0;
 
         String input;
         String result;
+        boolean equallyDistributed = false;
 
         do {
-            System.out.println("\n" + "For the Match " + semiFinalsCopy.get(semiFinalsIndex).overview() + " type:");
-            System.out.println("'1' to take place in " + getMatchDays().get(matchDayCounterIndex) + " and the revanche match on " + getMatchDays().get(matchDayCounterPhaseTwoIndex));
-            System.out.println("'2' to take place in " + getMatchDays().get(matchDayCounterIndex + 1) + " and the revanche match on " + getMatchDays().get(matchDayCounterPhaseTwoIndex + 1));
+            do {
+                do {
+                    System.out.println("\n" + "For the Match " + quarterFinalsCopy.get(quarterFinalsIndex).overview() + " type:");
+                    System.out.println("'1' to take place in " + getMatchDays().get(matchDayCounterIndex) + " and the revanche match on " + getMatchDays().get(matchDayCounterPhaseTwoIndex));
+                    System.out.println("'2' to take place in " + getMatchDays().get(matchDayCounterIndex + 1) + " and the revanche match on " + getMatchDays().get(matchDayCounterPhaseTwoIndex + 1));
+                    System.out.println("***Remember that two QuarterFinals should take place in each Match Day***");
 
-            input = KickOff.scanner.nextLine();
-            result = Validator.intCheck(input, positions);
-            if (!result.equals(VALID)){
-                ASCIIArt.fail();
-                System.out.println("\n" + result + ". Try again");
+                    input = KickOff.scanner.nextLine();
+                    result = Validator.intCheck(input, positions);
+                    if (!result.equals(VALID)){
+                        ASCIIArt.fail();
+                        System.out.println("\n" + result + ". Try again");
+                    }
+
+                } while (!result.equals(VALID));
+
+                results.add(Integer.parseInt(input));
+                quarterFinalsIndex++;
+
+            } while (quarterFinalsIndex < quarterFinalsIndexThreshold);
+
+            //Check for equal distribution
+
+            for (Integer item : results) {
+                if (item == 1) ones++;
+                else twos++;
             }
-        } while (!result.equals(VALID));
 
-        results.add(Integer.parseInt(input));
-        positions.remove(positions.indexOf(Integer.parseInt(input)));
-        results.add(positions.get(0));
+            if (ones == twos) equallyDistributed = true;
+            else {
+                ASCIIArt.fail();
+                System.out.println("\n" + "Two QuarterFinals should take place in each Match Day, try again.");
+                quarterFinalsIndex = 0;
+                ones = 0;
+                twos = 0;
+                results.clear();
+            }
 
+        }while (!equallyDistributed);
 
-        for (int i = 0; i < semiFinalsIndexThreshold ; i++) {
-            semiFinalsCopy.get(i).setMatchDay(getMatchDays().get(getMatchDayIndexFromUserInput(results.get(i))));
-            semiFinalsCopy.get(i + 2).setMatchDay(getMatchDays().get(getMatchDayIndexFromUserInput(results.get(i)) + 2));
+        for (int i = 0; i < quarterFinalsIndexThreshold ; i++) {
+            quarterFinalsCopy.get(i).setMatchDay(getMatchDays().get(getMatchDayIndexFromUserInput(results.get(i))));
+            quarterFinalsCopy.get(i + 4).setMatchDay(getMatchDays().get(getMatchDayIndexFromUserInput(results.get(i)) + 2));
         }
 
-        System.out.println("So, the second Semi final will take place on the other Match Day of the first Semi Finals Phase");
-        System.out.println("You successfully arranged the Dates for the SemiFinals!");
+        System.out.println("\n" + "You successfully arranged the Dates for the QuarterFinals!");
     }
 
     public int getMatchDayIndexFromUserInput(Integer input){
-        if(input == 1) return 10;
-        else return 11;
+        if(input == 1) return 6;
+        else return 7;
     }
+
     /////////////////////////////////////////////////Proceed Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
     public void setQualifiers() {
 
         TournamentUtils.initializeSemiFinalsMatches(getSemiFinals());
 
-        Team team1 = TournamentUtils.findQualifiedTeam(getSemiFinals().get(0), getSemiFinals().get(2));
-        Team team2 = TournamentUtils.findQualifiedTeam(getSemiFinals().get(1), getSemiFinals().get(3));
+        for (int semiFinalsIndex = 0, quarterFinalsIndex = 0;
+             semiFinalsIndex < SEMIFINALS_MATCHES/2 && quarterFinalsIndex < 3;
+             semiFinalsIndex++, quarterFinalsIndex = quarterFinalsIndex + 2) {
 
-        getFinalMatch().setHomeTeam(team1);
-        getFinalMatch().setGuestTeam(team2);
+            Team team1 = TournamentUtils.findQualifiedTeam(getQuarterFinals().get(quarterFinalsIndex),
+                    getQuarterFinals().get(quarterFinalsIndex + 4));
+            Team team2 = TournamentUtils.findQualifiedTeam(getQuarterFinals().get(quarterFinalsIndex + 1),
+                    getQuarterFinals().get(quarterFinalsIndex + 5));
+
+            getSemiFinals().get(semiFinalsIndex).setHomeTeam(team1);
+            getSemiFinals().get(semiFinalsIndex).setGuestTeam(team2);
+            //Revanche match
+            getSemiFinals().get(semiFinalsIndex + 2).setHomeTeam(team2);
+            getSemiFinals().get(semiFinalsIndex + 2).setGuestTeam(team1);
+        }
     }
 
     @Override
@@ -339,8 +369,8 @@ public class SemiFinals extends Round  implements KnockOut{
         do {
             System.out.println("\n");
             System.out.println("*******************************************************************************************");
-            System.out.println("-If you want to proceed to the Final, type.............................................'1'-");
-            System.out.println("-If you want to see the matches of the SemiFinals, type................................'2'-");
+            System.out.println("-If you want to proceed to SemiFinals, type............................................'1'-");
+            System.out.println("-If you want to see the matches of the QuarterFinals, type.............................'2'-");
             System.out.println("-If you want to end the Tournament, type...............................................'0'-");
             System.out.println("*******************************************************************************************" + "\n");
 
@@ -351,11 +381,11 @@ public class SemiFinals extends Round  implements KnockOut{
                     break;
                 case "1":
                     setQualifiers();
-                    Finals finals = new Finals(
+                    SemiFinals semiFinals = new SemiFinals(
                             getTables(), getMatchDays(),
                             getQuarterFinals(), getSemiFinals(),
                             getFinalMatch(), getChampionTeam());
-                    finals.start();
+                    semiFinals.start();
                     proceed = true;
                     break;
                 case "2":
@@ -377,26 +407,25 @@ public class SemiFinals extends Round  implements KnockOut{
     ////////////////////////////////////////////Reporting Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
     public void overview(){
-        for (int i = 0; i < SEMIFINALS_MATCHES/2; i++) {
+        for (int i = 0; i < QUARTERFINALS_MATCHES/2; i++) {
             int number = i + 1;
-            System.out.println(number + ". " + getSemiFinals().get(i).overview());
+            System.out.println(number + ". " + getQuarterFinals().get(i).overview());
         }
     }
 
     @Override
     public void report() {
 
-        int phaseOneStart = MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS;
-        int phaseTwoStart = MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS + MATCHDAYS_SEMIFINALS/2;
-        int phaseTwoEnd = MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS + MATCHDAYS_SEMIFINALS;
+        int phaseTwoStart = MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS/2;
+        int phaseTwoEnd = MATCHDAYS_GROUP_STAGE + MATCHDAYS_QUARTERFINALS;
 
-        System.out.println("******************SEMI FINALS**********************" + "\n");
+        System.out.println("*****************QUARTER FINALS********************" + "\n");
 
-        System.out.println("*********************PHASE 1***********************" + "\n");
+        System.out.println("\n" + "*********************PHASE 1***********************" + "\n");
 
-        for(int i = phaseOneStart; i < phaseTwoStart ; i++){
+        for(int i = MATCHDAYS_GROUP_STAGE; i < phaseTwoStart ; i++){
             System.out.println("----------" + getMatchDays().get(i).toString() + "----------" + "\n");
-            for(Match match : getSemiFinals()){
+            for(Match match : getQuarterFinals()){
                 if(match.getMatchDay() == getMatchDays().get(i)){
                     System.out.println(match);
                 }
@@ -404,11 +433,11 @@ public class SemiFinals extends Round  implements KnockOut{
             System.out.println();
         }
 
-        System.out.println("*********************PHASE 2***********************" + "\n");
+        System.out.println("\n" + "*********************PHASE 2***********************" + "\n");
 
         for(int i = phaseTwoStart; i < phaseTwoEnd; i++){
             System.out.println("----------" + getMatchDays().get(i).toString() + "----------" + "\n");
-            for(Match match : getSemiFinals()){
+            for(Match match : getQuarterFinals()){
                 if(match.getMatchDay() == getMatchDays().get(i)){
                     System.out.println(match);
                 }
@@ -416,5 +445,4 @@ public class SemiFinals extends Round  implements KnockOut{
             System.out.println();
         }
     }
-
 }
