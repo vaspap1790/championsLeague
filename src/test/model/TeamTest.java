@@ -8,6 +8,8 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//One of the most substantial classes because it has the most logic
+//All methods that contain logic are tested (100% Condition Code Coverage)
 class TeamTest {
 
     private Team team1 = new Team("team1");
@@ -75,7 +77,7 @@ class TeamTest {
     }
 
     @Test
-    void resolveEqualRankingUsingAgainstGoals() {
+    void resolveEqualRankingUsingAgainstGoals1() {
 
         team1.getMatches().add(new Match(team1, team2, 3, 2));
         team1.getMatches().add(new Match(team2, team1, 0,0));
@@ -84,7 +86,16 @@ class TeamTest {
     }
 
     @Test
-    void resolveEqualRankingUsingOffensiveGoals() {
+    void resolveEqualRankingUsingAgainstGoals2() {
+
+        team1.getMatches().add(new Match(team1, team2, 2, 2));
+        team1.getMatches().add(new Match(team2, team1, 1,0));
+
+        assertEquals(-1, team1.resolveEqualRanking(team2));
+    }
+
+    @Test
+    void resolveEqualRankingUsingOffensiveGoals1() {
 
         team1.setGoalsFor(10);
         team2.setGoalsFor(8);
@@ -92,6 +103,17 @@ class TeamTest {
         team1.getMatches().add(new Match(team2, team1,1,0));
 
         assertEquals(1, team1.resolveEqualRanking(team2));
+    }
+
+    @Test
+    void resolveEqualRankingUsingOffensiveGoals2() {
+
+        team1.setGoalsFor(7);
+        team2.setGoalsFor(8);
+        team1.getMatches().add(new Match(team1, team2,1,1));
+        team1.getMatches().add(new Match(team2, team1,2,2));
+
+        assertEquals(-1, team1.resolveEqualRanking(team2));
     }
 
 }
