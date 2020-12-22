@@ -31,7 +31,7 @@ public class TablePrinter {
         columnLengths.entrySet().stream().forEach(e -> formatString.append("| %" + flag + e.getValue() + "s "));
         formatString.append("|\n");
 
-        //Prepare line for top, bottom & below header row.
+        //Prepare line for top, bottom & below header row
         String line = columnLengths.entrySet().stream().reduce("", (ln, b) -> {
             String templn = "+-";
             templn = templn + Stream.iterate(0, (i -> i < b.getValue()), (i -> ++i)).reduce("", (ln1, b1) -> ln1 + "-",

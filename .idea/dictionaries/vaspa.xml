@@ -2,8 +2,13 @@
   <dictionary name="vaspa">
     <words>
       <w>initializers</w>
+      <w>matchdates</w>
       <w>matchdays</w>
       <w>papadimitrakopoulos</w>
+      <w>randomteamsgroupa</w>
+      <w>randomteamsgroupb</w>
+      <w>randomteamsgroupc</w>
+      <w>randomteamsgroupd</w>
       <w>revanche</w>
     </words>
   </dictionary>

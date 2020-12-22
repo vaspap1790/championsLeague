@@ -1,7 +1,5 @@
 package main.utils;
 
-import org.w3c.dom.ls.LSOutput;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -96,7 +94,7 @@ public class ASCIIArt {
 
         System.out.println("                                         _____________                                           ");
         System.out.println("                                        |    __o__    |                                          ");
-        System.out.println("                                   o    |     /\\      |                                         ");
+        System.out.println("                                   o    |     / \\     |                                         ");
         System.out.println("                                   ()                                                            ");
         System.out.println("                                   |\\,       o                                                  ");
 
@@ -122,7 +120,7 @@ public class ASCIIArt {
 
         System.out.println("                                            _____________                                        ");
         System.out.println("                                           |   _         |    o                                  ");
-        System.out.println("                                 /_o _\\    |  _o=--'_    |                                       ");
+        System.out.println("                                 /_o _\\    |  _o=--'_    |                                      ");
         System.out.println("                                   |                       /                                     ");
         System.out.println("                                  /|,    -   - -  -   -  -                                       ");
 
@@ -148,7 +146,7 @@ public class ASCIIArt {
 
         System.out.println("                                         _____________                                           ");
         System.out.println("                                        |    __o__    |                                          ");
-        System.out.println("                                        |     /\\      |                                         ");
+        System.out.println("                                        |     / \\     |                                         ");
         System.out.println("                               /   o       /_______/           /                                 ");
         System.out.println("                              /    ()                         /                                  ");
         System.out.println("                             /     |\\,      o                /                                  ");
@@ -184,9 +182,9 @@ public class ASCIIArt {
         System.out.println("\n" + "******************************************************************************************");
 
         System.out.println("                                       -   \\O                                                   ");
-        System.out.println("                                      -    /\\                                                   ");
-        System.out.println("                                    -   __/\\ `                                                  ");
-        System.out.println("                                        `    \\, ()                                              ");
+        System.out.println("                                      -   / \\                                                   ");
+        System.out.println("                                    -  __/ \\ `                                                  ");
+        System.out.println("                                       `     \\, ()                                              ");
         System.out.println("                                  ^^^^^^^^^^^^^^^^^^^^^^                                         ");
 
         System.out.println("\n" + "******************************** You ended the Tournament ********************************" + "\n");

@@ -10,17 +10,17 @@ import static main.resources.Globals.VALID;
 public class Penalties {
 
     //Member Variables
-    private Team team1;
-    private Team team2;
+    private final Team TEAM1;
+    private final Team TEAM2;
     private Team winningTeam;
     private Team losingTeam;
     private String result;
-    private Random random = new Random();
+    private final Random RANDOM = new Random();
 
     //Constructor
     public Penalties(Team team1, Team team2) {
-        this.team1 = team1;
-        this.team2 = team2;
+        this.TEAM1 = team1;
+        this.TEAM2 = team2;
     }
 
     //Methods
@@ -30,17 +30,17 @@ public class Penalties {
         int successfulPenaltiesForTeam2;
 
         do {
-            successfulPenaltiesForTeam1 = random.nextInt(6);
-            successfulPenaltiesForTeam2 = random.nextInt(6);
+            successfulPenaltiesForTeam1 = RANDOM.nextInt(6);
+            successfulPenaltiesForTeam2 = RANDOM.nextInt(6);
         }while(successfulPenaltiesForTeam1 == successfulPenaltiesForTeam2 || Math.abs(successfulPenaltiesForTeam1-successfulPenaltiesForTeam2) > 2);
 
         if(successfulPenaltiesForTeam1 > successfulPenaltiesForTeam2){
-            winningTeam = team1;
-            losingTeam = team2;
+            winningTeam = TEAM1;
+            losingTeam = TEAM2;
         }
         else {
-            winningTeam = team2;
-            losingTeam = team1;
+            winningTeam = TEAM2;
+            losingTeam = TEAM1;
         }
         result = successfulPenaltiesForTeam1 + " - " + successfulPenaltiesForTeam2;
     }
@@ -54,7 +54,7 @@ public class Penalties {
 
         do {
             do {
-                System.out.println("\n" + "Enter successful penalties for "+ team1.getName());
+                System.out.println("\n" + "Enter successful penalties for "+ TEAM1.getName());
                 input = KickOff.scanner.nextLine();
                 score = Validator.intCheck(input, 0, 10);
                 if(!score.equals(VALID)){
@@ -66,7 +66,7 @@ public class Penalties {
             successfulPenaltiesForTeam1 = Integer.parseInt(input);
 
             do {
-                System.out.println("\n" + "Enter successful penalties for "+ team2.getName());
+                System.out.println("\n" + "Enter successful penalties for "+ TEAM2.getName());
                 input = KickOff.scanner.nextLine();
                 score = Validator.intCheck(input, 0, 10);
                 if(!score.equals(VALID)){
@@ -90,36 +90,28 @@ public class Penalties {
         }while(successfulPenaltiesForTeam1 == successfulPenaltiesForTeam2 || Math.abs(successfulPenaltiesForTeam1-successfulPenaltiesForTeam2) > 2);
 
         if(successfulPenaltiesForTeam1 > successfulPenaltiesForTeam2){
-            winningTeam = team1;
-            losingTeam = team2;
+            winningTeam = TEAM1;
+            losingTeam = TEAM2;
         }
         else {
-            winningTeam = team2;
-            losingTeam = team1;
+            winningTeam = TEAM2;
+            losingTeam = TEAM1;
         }
         result = successfulPenaltiesForTeam1 + " - " + successfulPenaltiesForTeam2;
     }
 
-    //Getters-Setters
+    //Getters
     public Team getWinningTeam() {
         return winningTeam;
-    }
-
-    public void setWinningTeam(Team winningTeam) {
-        this.winningTeam = winningTeam;
     }
 
     public Team getLosingTeam() {
         return losingTeam;
     }
 
-    public void setLosingTeam(Team losingTeam) {
-        this.losingTeam = losingTeam;
-    }
-
-    //Overridden fro Object
+    //Overridden from Object
     @Override
     public String toString() {
-        return "Penalties: " + team1.getName() + " " + result + " " + team2.getName();
+        return "Penalties: " + TEAM1.getName() + " " + result + " " + TEAM2.getName();
     }
 }

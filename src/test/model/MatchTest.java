@@ -8,28 +8,28 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MatchTest {
 
-    private Team team1 = new Team("Team1");
-    private Team team2 = new Team("Team2");
-    private Team team3 = new Team("Team3");
+    private final Team TEAM1 = new Team("Team1");
+    private final Team TEAM2 = new Team("Team2");
+    private final Team TEAM3 = new Team("Team3");
 
-    private Match match1 = new Match(team1, team2);
-    private Match match2 = new Match(team1, team2);
-    private Match match3 = new Match(team2, team1);
-    private Match match4 = new Match(team1, team3);
+    private final Match MATCH1 = new Match(TEAM1, TEAM2);
+    private final Match MATCH2 = new Match(TEAM1, TEAM2);
+    private final Match MATCH3 = new Match(TEAM2, TEAM1);
+    private final Match MATCH4 = new Match(TEAM1, TEAM3);
 
     @Test
     void testEqualsPositive1() {
-        assertTrue(match1.equals(match2));
+        assertTrue(MATCH1.equals(MATCH2));
     }
 
     @Test
     void testEqualsNegative1() {
-        assertFalse(match1.equals(match3));
+        assertFalse(MATCH1.equals(MATCH3));
     }
 
     @Test
     void testEqualsNegative2() {
-        assertFalse(match1.equals(match4));
+        assertFalse(MATCH1.equals(MATCH4));
     }
 
 }

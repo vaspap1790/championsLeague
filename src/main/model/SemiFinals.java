@@ -313,6 +313,7 @@ public class SemiFinals extends Round  implements KnockOut{
         if(input == 1) return 10;
         else return 11;
     }
+
     /////////////////////////////////////////////////Proceed Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     @Override
     public void setQualifiers() {

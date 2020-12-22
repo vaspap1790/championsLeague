@@ -11,7 +11,7 @@ public class KickOff {
 //                                                                      \\
 //          - Object-Oriented Programming Coursework Handout -          \\
 //                                                                      \\
-//                     Papadimitrakopoulos Vasilis                      \\
+//                   Student Reg. Number : SD19037                      \\
 //**********************************************************************\\
 
     public static Scanner scanner = new Scanner(System.in);

@@ -8,20 +8,20 @@ import java.util.*;
 public class DataInitializer {
 
     //Member Variables
-    private List<MatchDay> matchDays = Arrays.asList(MatchDay.MatchDay1,MatchDay.MatchDay2,MatchDay.MatchDay3,
+    private final List<MatchDay> MATCHDAYS = Arrays.asList(MatchDay.MatchDay1,MatchDay.MatchDay2,MatchDay.MatchDay3,
             MatchDay.MatchDay4,MatchDay.MatchDay5,MatchDay.MatchDay6, MatchDay.QuarterFinals1, MatchDay.QuarterFinals2,
             MatchDay.QuarterFinals3, MatchDay.QuarterFinals4, MatchDay.SemiFinals1, MatchDay.SemiFinals2, MatchDay.SemiFinals3,
             MatchDay.SemiFinals4, MatchDay.Finals);
 
-    private static List<String> randomTeamsGroupA = Arrays.asList("FC Barcelona", "Liverpool FC", "Real Madrid CF", "FC Bayern Munchen");
+    private static final List<String> RANDOMTEAMSGROUPA = Arrays.asList("FC Barcelona", "Liverpool FC", "Real Madrid CF", "FC Bayern Munchen");
 
-    private static List<String> randomTeamsGroupB = Arrays.asList("Club Atletico de Madrid", "FC Internationale Milano", "Juventus", "Manchester United FC");
+    private static final List<String> RANDOMTEAMSGROUPB = Arrays.asList("Club Atletico de Madrid", "FC Internationale Milano", "Juventus", "Manchester United FC");
 
-    private static List<String> randomTeamsGroupC = Arrays.asList("RB Leipzig", "Olympiacos FC", "FC Shakhtar Donetsk", "FC Salzburg");
+    private static final List<String> RANDOMTEAMSGROUPC = Arrays.asList("RB Leipzig", "Olympiacos FC", "FC Shakhtar Donetsk", "FC Salzburg");
 
-    private static List<String> randomTeamsGroupD = Arrays.asList( "Ferencvarosi TC", "Club Brugge", "Stade Rennais FC", "FC Midtjylland");
+    private static final List<String> RANDOMTEAMSGROUPD = Arrays.asList( "Ferencvarosi TC", "Club Brugge", "Stade Rennais FC", "FC Midtjylland");
 
-    private List<LocalDate> matchDates = Arrays.asList(
+    private final List<LocalDate> MATCHDATES = Arrays.asList(
             LocalDate.of(2020,10,20), LocalDate.of(2020,10,27),
             LocalDate.of(2020,11,3), LocalDate.of(2020,11,24),
             LocalDate.of(2020,12,1), LocalDate.of(2020,12,8),
@@ -33,26 +33,26 @@ public class DataInitializer {
 
     //Getters
     public List<MatchDay> getMatchDays() {
-        return matchDays;
+        return MATCHDAYS;
     }
 
     public List<LocalDate> getMatchDates() {
-        return matchDates;
+        return MATCHDATES;
     }
 
     public static List<String> getRandomTeamsGroupA() {
-        return randomTeamsGroupA;
+        return RANDOMTEAMSGROUPA;
     }
 
     public static List<String> getRandomTeamsGroupB() {
-        return randomTeamsGroupB;
+        return RANDOMTEAMSGROUPB;
     }
 
     public static List<String> getRandomTeamsGroupC() {
-        return randomTeamsGroupC;
+        return RANDOMTEAMSGROUPC;
     }
 
     public static List<String> getRandomTeamsGroupD() {
-        return randomTeamsGroupD;
+        return RANDOMTEAMSGROUPD;
     }
 }

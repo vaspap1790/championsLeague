@@ -1,7 +1,5 @@
 package main.model;
 
-import main.model.Match;
-
 import java.util.List;
 
 public interface KnockOut {
