@@ -1,6 +1,7 @@
 package main.utils;
 
 import main.KickOff;
+import main.model.Match;
 import main.model.Team;
 
 import java.util.Random;
@@ -10,17 +11,15 @@ import static main.resources.Globals.VALID;
 public class Penalties {
 
     //Member Variables
-    private final Team TEAM1;
-    private final Team TEAM2;
+    private final Match MATCH;
     private Team winningTeam;
     private Team losingTeam;
     private String result;
     private final Random RANDOM = new Random();
 
     //Constructor
-    public Penalties(Team team1, Team team2) {
-        this.TEAM1 = team1;
-        this.TEAM2 = team2;
+    public Penalties(Match match) {
+        this.MATCH = match;
     }
 
     //Methods
@@ -35,14 +34,16 @@ public class Penalties {
         }while(successfulPenaltiesForTeam1 == successfulPenaltiesForTeam2 || Math.abs(successfulPenaltiesForTeam1-successfulPenaltiesForTeam2) > 2);
 
         if(successfulPenaltiesForTeam1 > successfulPenaltiesForTeam2){
-            winningTeam = TEAM1;
-            losingTeam = TEAM2;
+            winningTeam = MATCH.getHomeTeam();
+            losingTeam = MATCH.getGuestTeam();
         }
         else {
-            winningTeam = TEAM2;
-            losingTeam = TEAM1;
+            winningTeam = MATCH.getGuestTeam();
+            losingTeam = MATCH.getHomeTeam();
         }
+
         result = successfulPenaltiesForTeam1 + " - " + successfulPenaltiesForTeam2;
+        MATCH.setPenaltiesScore(result);
     }
 
     public void runManually(){
@@ -54,7 +55,7 @@ public class Penalties {
 
         do {
             do {
-                System.out.println("\n" + "Enter successful penalties for "+ TEAM1.getName());
+                System.out.println("\n" + "Enter successful penalties for "+ MATCH.getHomeTeam().getName());
                 input = KickOff.scanner.nextLine();
                 score = Validator.intCheck(input, 0, 10);
                 if(!score.equals(VALID)){
@@ -66,7 +67,7 @@ public class Penalties {
             successfulPenaltiesForTeam1 = Integer.parseInt(input);
 
             do {
-                System.out.println("\n" + "Enter successful penalties for "+ TEAM2.getName());
+                System.out.println("\n" + "Enter successful penalties for "+ MATCH.getGuestTeam().getName());
                 input = KickOff.scanner.nextLine();
                 score = Validator.intCheck(input, 0, 10);
                 if(!score.equals(VALID)){
@@ -90,14 +91,17 @@ public class Penalties {
         }while(successfulPenaltiesForTeam1 == successfulPenaltiesForTeam2 || Math.abs(successfulPenaltiesForTeam1-successfulPenaltiesForTeam2) > 2);
 
         if(successfulPenaltiesForTeam1 > successfulPenaltiesForTeam2){
-            winningTeam = TEAM1;
-            losingTeam = TEAM2;
+            winningTeam = MATCH.getHomeTeam();
+            losingTeam = MATCH.getGuestTeam();
         }
         else {
-            winningTeam = TEAM2;
-            losingTeam = TEAM1;
+            winningTeam = MATCH.getGuestTeam();
+            losingTeam = MATCH.getHomeTeam();
         }
+
         result = successfulPenaltiesForTeam1 + " - " + successfulPenaltiesForTeam2;
+        MATCH.setPenaltiesScore(result);
+
     }
 
     //Getters
@@ -112,6 +116,6 @@ public class Penalties {
     //Overridden from Object
     @Override
     public String toString() {
-        return "Penalties: " + TEAM1.getName() + " " + result + " " + TEAM2.getName();
+        return "Penalties: " + MATCH.getHomeTeam().getName() + " " + result + " " + MATCH.getGuestTeam().getName();
     }
 }

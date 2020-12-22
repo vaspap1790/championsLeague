@@ -271,7 +271,7 @@ public class Finals extends Round{
             setChampionTeam(getFinalMatch().getGuestTeam());
         }else{
             System.out.println(getFinalMatch());
-            setChampionTeam(TournamentUtils.runPenalties(getFinalMatch().getHomeTeam(),getFinalMatch().getGuestTeam()));
+            setChampionTeam(TournamentUtils.runPenalties(getFinalMatch()));
         }
     }
 

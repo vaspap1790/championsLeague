@@ -8,6 +8,7 @@ public class Match implements Cloneable {
     private int goalsForHTeam;
     private int goalsForGTeam;
     private MatchDay matchDay;
+    private String penaltiesScore;
 
     //Constructors
     public Match(Team homeTeam, Team guestTeam) {
@@ -117,6 +118,14 @@ public class Match implements Cloneable {
         this.matchDay = matchDay;
     }
 
+    public String getPenaltiesScore() {
+        return penaltiesScore;
+    }
+
+    public void setPenaltiesScore(String penaltiesScore) {
+        this.penaltiesScore = " (Pen: " + penaltiesScore + ")";
+    }
+
     //Override Object Methods
     @Override
     public boolean equals(Object o) {
@@ -128,7 +137,7 @@ public class Match implements Cloneable {
 
     @Override
     public String toString() {
-        return homeTeam.getName() + " " + goalsForHTeam + " - " + goalsForGTeam + " " + guestTeam.getName();
+        return homeTeam.getName() + " " + goalsForHTeam + " - " + goalsForGTeam + " " + guestTeam.getName() + (penaltiesScore != null ? penaltiesScore : "");
     }
 
     @Override

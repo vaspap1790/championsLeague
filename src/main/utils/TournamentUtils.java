@@ -68,24 +68,24 @@ public class TournamentUtils {
             else{
                 System.out.println(match1);
                 System.out.println(match2);
-                qualifiedTeam = runPenalties(match1.getHomeTeam(), match1.getGuestTeam());
+                qualifiedTeam = runPenalties(match2);
             }
         }
         return qualifiedTeam;
     }
 
-    public static Team runPenalties(Team team1, Team team2){
+    public static Team runPenalties(Match match){
 
         Team qualifiedTeam = new Team();
 
-        System.out.println("\n" + team1.getName() + " and " + team2.getName() +
+        System.out.println("\n" + match.getHomeTeam().getName() + " and " + match.getGuestTeam().getName() +
                 " need to solve their differences in Penalties!" + "\n");
         ASCIIArt.penalties();
         System.out.println("\n" + "If you want to manually run penalties, type.........1");
         System.out.println("If you want penalties to run automatically, type....2");
 
         String input;
-        Penalties penalties = new Penalties(team1, team2);
+        Penalties penalties = new Penalties(match);
         boolean penaltiesPlayed = false;
         do {
             input = KickOff.scanner.nextLine();
@@ -176,6 +176,7 @@ public class TournamentUtils {
 
             if("back".equals(input)){
                 tables.forEach(objectTable -> objectTable.getTeams().clear());
+                tables.clear();
                 return false;
             }
         }

@@ -32,4 +32,21 @@ class MatchTest {
         assertFalse(MATCH1.equals(MATCH4));
     }
 
+    @Test
+    void toStringTest1(){
+        MATCH1.setGoalsForHTeam(2);
+        MATCH1.setGoalsForGTeam(2);
+        MATCH1.setPenaltiesScore("4-3");
+
+        System.out.println(MATCH1);
+    }
+
+    @Test
+    void toStringTest2(){
+        MATCH1.setGoalsForHTeam(2);
+        MATCH1.setGoalsForGTeam(1);
+
+        System.out.println(MATCH1);
+    }
+
 }

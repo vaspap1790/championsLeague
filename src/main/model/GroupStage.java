@@ -250,6 +250,7 @@ public class GroupStage extends Round{
 
         if ("back".equals(input)) {
             TournamentUtils.resetMatchDaysDates(matchDayIndex, matchDayIndexEnd, getMatchDays());
+            getTables().forEach(table1 -> table1.getMatches().clear());
             return false;
         }
 
@@ -261,6 +262,7 @@ public class GroupStage extends Round{
             return true;
         }else{
             TournamentUtils.resetMatchDaysDates(matchDayIndex, matchDayIndexEnd, getMatchDays());
+            getTables().forEach(table1 -> table1.getMatches().clear());
             return false;
         }
     }
@@ -301,8 +303,6 @@ public class GroupStage extends Round{
             }while(!"back".equals(input) && matchDayCounter <= MATCHDAYS_GROUP_STAGE / 2);
 
             if("back".equals(input)){
-                getTables().forEach(table1 -> table1.getMatches().clear());
-                TournamentUtils.initializeGroupStageMatches(getTables(), getMatchDays());
                 return false;
             }
         }
