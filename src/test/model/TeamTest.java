@@ -4,12 +4,10 @@ import main.model.Match;
 import main.model.Team;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 //One of the most substantial classes because it has the most logic
-//All methods that contain logic are tested (100% Condition Code Coverage)
+//All methods that contain logic are tested
 class TeamTest {
 
     private Team team1 = new Team("team1");

@@ -1,11 +1,5 @@
 package main.model;
 
-import main.model.Match;
-import main.model.MatchDay;
-import main.model.Table;
-import main.model.Team;
-import main.utils.DataInitializer;
-
 import java.util.List;
 
 public abstract class Round {
@@ -22,9 +16,7 @@ public abstract class Round {
     private Match finalMatch;
     private Team championTeam;
 
-    protected DataInitializer dataInitializer = new DataInitializer();
-
-    //Constructor
+    //Constructors
     public Round(List<Table> tables, List<MatchDay> matchDays,
                  List<Match> quarterFinals, List<Match> semiFinals,
                  Match finalMatch, Team championTeam) {
