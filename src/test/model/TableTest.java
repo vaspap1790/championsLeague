@@ -18,7 +18,7 @@ class TableTest {
             new Team("team2"), new Team("team3"), new Team("team4")));
 
     @Test
-    void sortTeams() {
+    void sortTeamsTest() {
 
         TABLE.getTeams().get(3).setGamesWon(3);
         TABLE.getTeams().get(0).setGamesWon(2);
@@ -31,7 +31,7 @@ class TableTest {
     }
 
     @Test
-    void getQualificationTeams() {
+    void getQualificationTeamsTest() {
 
         TABLE.getTeams().get(3).setGamesWon(3);
         TABLE.getTeams().get(0).setGamesWon(2);

@@ -15,7 +15,7 @@ class TeamTest {
     private final Team TEAM3 = new Team("team3");
 
     @Test
-    void getPointsPositive() {
+    void getPointsPositiveTest() {
 
         TEAM1.setGamesWon(3);
         TEAM1.setGamesLost(2);
@@ -25,7 +25,7 @@ class TeamTest {
     }
 
     @Test
-    void getGoalDifferencePositive() {
+    void getGoalDifferencePositiveTest() {
 
         TEAM1.setGoalsFor(3);
         TEAM1.setGoalsAgainst(5);
@@ -34,7 +34,7 @@ class TeamTest {
     }
 
     @Test
-    void compareToGreater() {
+    void compareToGreaterTest() {
 
         TEAM1.setGamesWon(3);
         TEAM2.setGamesWon(2);
@@ -43,7 +43,7 @@ class TeamTest {
     }
 
     @Test
-    void compareToLess() {
+    void compareToLessTest() {
 
         TEAM1.setGamesWon(3);
         TEAM2.setGamesWon(4);
@@ -52,7 +52,7 @@ class TeamTest {
     }
 
     @Test
-    void compareToEquals() {
+    void compareToEqualsTest() {
 
         TEAM1.setGamesWon(0);
         TEAM1.setGamesDrawn(0);
@@ -63,7 +63,7 @@ class TeamTest {
     }
 
     @Test
-    void getAgainstMatchesPositive() {
+    void getAgainstMatchesPositiveTest() {
 
         TEAM1.getMatches().add(new Match(TEAM1, TEAM2));
         TEAM1.getMatches().add(new Match(TEAM2, TEAM1));
@@ -75,7 +75,7 @@ class TeamTest {
     }
 
     @Test
-    void resolveEqualRankingUsingAgainstGoals1() {
+    void resolveEqualRankingUsingAgainstGoalsTest1() {
 
         TEAM1.getMatches().add(new Match(TEAM1, TEAM2, 3, 2));
         TEAM1.getMatches().add(new Match(TEAM2, TEAM1, 0,0));
@@ -84,7 +84,7 @@ class TeamTest {
     }
 
     @Test
-    void resolveEqualRankingUsingAgainstGoals2() {
+    void resolveEqualRankingUsingAgainstGoalsTest2() {
 
         TEAM1.getMatches().add(new Match(TEAM1, TEAM2, 2, 2));
         TEAM1.getMatches().add(new Match(TEAM2, TEAM1, 1,0));
@@ -93,7 +93,7 @@ class TeamTest {
     }
 
     @Test
-    void resolveEqualRankingUsingOffensiveGoals1() {
+    void resolveEqualRankingUsingOffensiveGoalsTest1() {
 
         TEAM1.setGoalsFor(10);
         TEAM2.setGoalsFor(8);
@@ -104,7 +104,7 @@ class TeamTest {
     }
 
     @Test
-    void resolveEqualRankingUsingOffensiveGoals2() {
+    void resolveEqualRankingUsingOffensiveGoalsTest2() {
 
         TEAM1.setGoalsFor(7);
         TEAM2.setGoalsFor(8);

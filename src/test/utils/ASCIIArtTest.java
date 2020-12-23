@@ -3,52 +3,50 @@ package test.utils;
 import main.utils.ASCIIArt;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class ASCIIArtTest {
 
     @Test
-    void printLogo() {
+    void printLogoTest() {
         ASCIIArt.printLogo();
     }
 
     @Test
-    void enter() {
+    void enterTest() {
         ASCIIArt.enter();
     }
 
     @Test
-    void next() {
+    void nextTest() {
         ASCIIArt.next();
     }
 
     @Test
-    void fail() {
+    void failTest() {
         ASCIIArt.fail();
     }
 
     @Test
-    void success() {
+    void successTest() {
         ASCIIArt.success();
     }
 
     @Test
-    void penalties() {
+    void penaltiesTest() {
         ASCIIArt.penalties();
     }
 
     @Test
-    void champion() {
+    void championTest() {
         ASCIIArt.champion();
     }
 
     @Test
-    void end() {
+    void endTest() {
         ASCIIArt.end();
     }
 
     @Test
-    void complete() {
+    void completeTest() {
         ASCIIArt.complete();
     }
 }

@@ -16,79 +16,79 @@ class ValidatorTest {
     List<LocalDate> dates = new ArrayList<>();
 
     @Test
-    void dateCheckInvalidFormat(){
+    void dateCheckInvalidFormatTest(){
         dates.add(LocalDate.of(2020,11,1));
         assertEquals(INVALID_FORMAT, Validator.dateCheck("2020/11/02", dates, 1));
     }
 
     @Test
-    void dateCheckMontDaysSurpassed(){
+    void dateCheckMontDaysSurpassedTest(){
         dates.add(LocalDate.of(2020,11,1));
         assertEquals(MONTH_DAYS_SURPASSED, Validator.dateCheck("2020-02-30", dates, 1));
     }
 
     @Test
-    void dateCheckAlreadyUsed(){
+    void dateCheckAlreadyUsedTest(){
         dates.add(LocalDate.of(2020,11,1));
         assertEquals(ALREADY_USED, Validator.dateCheck("2020-11-01", dates, 1));
     }
 
     @Test
-    void dateCheckBeforePreviousDate(){
+    void dateCheckBeforePreviousDateTest(){
         dates.add(LocalDate.of(2020,11,1));
         assertEquals(BEFORE_PREVIOUS_DATE, Validator.dateCheck("2020-10-01", dates, 1));
     }
 
     @Test
-    void dateCheckValid(){
+    void dateCheckValidTest(){
         dates.add(LocalDate.of(2020,11,1));
         assertEquals(VALID, Validator.dateCheck("2020-11-02", dates, 1));
     }
 
     @Test
-    void isLeapYearPositive(){
+    void isLeapYearPositiveTest(){
         assertTrue(Validator.isLeapYear(2020));
     }
 
     @Test
-    void isLeapYearNegative(){
+    void isLeapYearNegativeTest(){
         assertFalse(Validator.isLeapYear(2021));
     }
 
     @Test
-    void intCheckValidRange() {
+    void intCheckValidRangeTest() {
         assertEquals(VALID, Validator.intCheck("2",0,3));
     }
 
     @Test
-    void intCheckValidList() {
+    void intCheckValidListTest() {
         List<Integer> list = Arrays.asList(1,2,3,4);
         assertEquals(VALID, Validator.intCheck("2", list));
     }
 
     @Test
-    void intCheckNotInTheList() {
+    void intCheckNotInTheListTest() {
         List<Integer> list = Arrays.asList(1,2,3,4);
         assertEquals(NOT_IN_THE_LIST, Validator.intCheck("6", list));
     }
 
     @Test
-    void intCheckInvalidFormat() {
+    void intCheckInvalidFormatTest() {
         assertEquals(INVALID_FORMAT, Validator.intCheck("2sa",0,3));
     }
 
     @Test
-    void intCheckOutOfRange() {
+    void intCheckOutOfRangeTest() {
         assertEquals(OUT_OF_RANGE, Validator.intCheck("5",0,3));
     }
 
     @Test
-    void emptyStringCheckPositive(){
+    void emptyStringCheckPositiveTest(){
         assertEquals(VALID, Validator.emptyStringCheck("Some string"));
     }
 
     @Test
-    void emptyStringCheckNegative(){
+    void emptyStringCheckNegativeTest(){
         assertEquals(EMPTY_STRING, Validator.emptyStringCheck(" "));
     }
 

@@ -18,17 +18,17 @@ class MatchTest {
     private final Match MATCH4 = new Match(TEAM1, TEAM3);
 
     @Test
-    void testEqualsPositive1() {
+    void testEqualsPositiveTest1() {
         assertTrue(MATCH1.equals(MATCH2));
     }
 
     @Test
-    void testEqualsNegative1() {
+    void testEqualsNegativeTest1() {
         assertFalse(MATCH1.equals(MATCH3));
     }
 
     @Test
-    void testEqualsNegative2() {
+    void testEqualsNegativeTest2() {
         assertFalse(MATCH1.equals(MATCH4));
     }
 

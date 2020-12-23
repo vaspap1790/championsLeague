@@ -12,7 +12,7 @@ class PenaltiesTest {
     private final Match MATCH = new Match(TEAM1, TEAM2);
 
     @Test
-    void runAuto() {
+    void runAutoTest() {
         Penalties penalties = new Penalties(MATCH);
         penalties.runAuto();
         System.out.println(penalties);
